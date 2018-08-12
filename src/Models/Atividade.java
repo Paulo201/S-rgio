@@ -10,6 +10,15 @@ public class Atividade {
     private String nome;
     private Categoria categoria;
     private int quantHoras;
+    
+    public Atividade(String nome, Categoria categoria, int quantHoras){
+        if(categoria != null && quantHoras > 0){
+            this.nome = nome;
+            this.categoria = categoria;
+            this.quantHoras = quantHoras;
+            this.categoria.setQuantHoras(quantHoras);
+        }
+    }
 
     public int getId() {
         return id;
@@ -42,7 +51,17 @@ public class Atividade {
     public void setQuantHoras(int quantHoras) {
         this.quantHoras = quantHoras;
     }
-    
-    //aqui fica o método pra debitar a hora
-    
+    public void calcularHoras(Aluno aluno){
+        if(aluno != null && this.categoria != null){
+            if(this.categoria.getQuantHoras() < this.categoria.getLimiteHoras()){
+                if(aluno.getQuantHoras() + this.categoria.getQuantHoras() < this.categoria.getCurso().getMaximoHorasComplementares()){
+                    aluno.setQuantHoras(this.categoria.getQuantHoras());
+                }
+            } else {
+               if(aluno.getQuantHoras() + this.categoria.getLimiteHoras() < this.categoria.getCurso().getMaximoHorasComplementares()){
+                     aluno.setQuantHoras(this.categoria.getLimiteHoras());
+                }
+            }
+        }  
+    }
 }

@@ -54,7 +54,7 @@ public class Aluno {
     }
 
     public void setQuantHoras(int quantHoras) {
-        this.quantHoras = quantHoras;
+        this.quantHoras += quantHoras;
     }
 
     public int getPontuacaoPAC() {

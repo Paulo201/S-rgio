@@ -60,7 +60,7 @@ public class Categoria {
     }
 
     public void setQuantHoras(int quantHoras) {
-        this.quantHoras = quantHoras;
+        this.quantHoras += quantHoras;
     }
     
     
