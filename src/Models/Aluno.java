@@ -117,13 +117,35 @@ public class Aluno extends Document{
                               
                 titulo.setFont(new Font(Font.FontFamily.TIMES_ROMAN, Font.BOLDITALIC, 40));
                 
-                
+                titulo.setSpacingAfter((float) 20.00);
                         
-                  
-                //font = getFont(Font.FontFamily.TIMES_ROMAN, Font.BOLDITALIC, 40); 
-                
-               
                 documento.add(titulo);
+                
+                Paragraph matricula = new Paragraph();
+                
+                matricula.add("Matricula: ");
+                
+                matricula.add(""+this.matricula);
+                
+                matricula.setAlignment(Element.ALIGN_LEFT);
+                
+                matricula.setSpacingAfter((float)10.00);
+                
+                documento.add(matricula);
+                
+                Paragraph nome = new Paragraph();
+                
+                nome.add("Nome: ");
+                
+                nome.add(""+this.nome);
+                
+                nome.setAlignment(Element.ALIGN_LEFT);
+                
+                nome.setSpacingAfter((float)10.00);
+                
+                documento.add(nome);
+                
+                //AGORA È A TABELA
                 /*Paragraph pImagem = new Paragraph();
                 pImagem.add(imagem);
                 pImagem.setAlignment(Element.ALIGN_CENTER);
