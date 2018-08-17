@@ -11,6 +11,11 @@ public class Atividade {
     private Categoria categoria;
     private int quantHoras;
     
+    
+    public Atividade(){
+        super();
+    }
+    
     public Atividade(String nome, Categoria categoria, int quantHoras){
         if(categoria != null && quantHoras > 0){
             this.nome = nome;
@@ -19,7 +24,7 @@ public class Atividade {
             this.categoria.setQuantHoras(quantHoras);
         }
     }
-
+    
     public int getId() {
         return id;
     }
@@ -63,5 +68,9 @@ public class Atividade {
                 }
             }
         }  
+    }
+
+    public Atividade buscar(int aInt) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

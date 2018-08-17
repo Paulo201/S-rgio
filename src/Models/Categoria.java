@@ -62,6 +62,10 @@ public class Categoria {
     public void setQuantHoras(int quantHoras) {
         this.quantHoras += quantHoras;
     }
+
+    public void buscar(int aInt) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     

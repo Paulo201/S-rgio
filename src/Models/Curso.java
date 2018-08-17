@@ -35,6 +35,10 @@ public class Curso {
     public void setMaximoHorasComplementares(int maximoHorasComplementares) {
         this.maximoHorasComplementares = maximoHorasComplementares;
     }
+
+    public void buscar(int aInt) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     

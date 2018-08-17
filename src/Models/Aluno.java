@@ -1,4 +1,3 @@
-
 package Models;
 
 import static com.itextpdf.text.Annotation.URL;
@@ -10,23 +9,27 @@ import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.List;
+import com.itextpdf.text.ListItem;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
 import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.RomanList;
 import com.itextpdf.text.pdf.BaseFont;
 import static com.itextpdf.text.pdf.PdfPKCS7.X509Name.C;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.io.File;
-
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
  * @author willi
  */
-public class Aluno extends Document{
-    
+public class Aluno extends Document implements InterfaceManter{
+
     private int matricula;
     private String nome;
     private Curso curso;
@@ -34,15 +37,16 @@ public class Aluno extends Document{
     private int quantHoras;//quantas horas acumuladas o aluno tem
     private int pontuacaoPAC;//ainda não sei o que é!
     private String advertencia;
+    private ArrayList<Atividade> atividades = new ArrayList<Atividade>();//preencher fazendo uma consulta de todas as atividades que tem do mesmo aluno na tabela Debitar Hora
 
     public int getMatricula() {
         return matricula;
     }
 
     public void setMatricula(int matricula) {
-       if(matricula > 0){
+        if (matricula > 0) {
             this.matricula = matricula;
-       }
+        }
     }
 
     public String getNome() {
@@ -92,69 +96,85 @@ public class Aluno extends Document{
     public void setAdvertencia(String advertencia) {
         this.advertencia = advertencia;
     }
-    
-    public void emitirRelatorio(){
-        
+
+    public ArrayList<Atividade> getAtividades() {
+        return atividades;
+    }
+
+    public void addAtividade(Atividade atividade) {
+        if (atividade != null) {
+            this.atividades.add(atividade);
+        }
+    }
+
+    public static final String RESULT
+            = "C:\\Users\\higor\\Desktop\\proj_iText\\arqPDFexemplo7.pdf";
+
+    public static final Font BOLD_UNDERLINED = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
+
+    public static final Font NORMAL = new Font(Font.FontFamily.TIMES_ROMAN, 12);
+
+    public void emitirRelatorio() {
+
         Document documento = new Document();
-        
+
         try {
-              
-                PdfWriter.getInstance(documento, new FileOutputStream("C:\\Users\\willi\\OneDrive\\Documentos\\2018.2\\Processos de Software\\Parte 1\\Trabalho\\Relatorios\\relatorio.pdf"));
-                
-                documento.open();
-                
-                Image imagemLogoUFC = Image.getInstance("C:/Users/willi/Desktop/a.png");
-                
-                imagemLogoUFC.setAlignment(Element.ALIGN_CENTER);
-                
-                documento.add(imagemLogoUFC);
-                
-                Paragraph titulo = new Paragraph();
-                
-                titulo.add("RELATÓRIO - ATIVIDADES COMPLEMENTARES");
-                
-                titulo.setAlignment(Element.ALIGN_CENTER);
-                              
-                titulo.setFont(new Font(Font.FontFamily.TIMES_ROMAN, Font.BOLDITALIC, 40));
-                
-                titulo.setSpacingAfter((float) 20.00);
-                        
-                documento.add(titulo);
-                
-                Paragraph matricula = new Paragraph();
-                
-                matricula.add("Matricula: ");
-                
-                matricula.add(""+this.matricula);
-                
-                matricula.setAlignment(Element.ALIGN_LEFT);
-                
-                matricula.setSpacingAfter((float)10.00);
-                
-                documento.add(matricula);
-                
-                Paragraph nome = new Paragraph();
-                
-                nome.add("Nome: ");
-                
-                nome.add(""+this.nome);
-                
-                nome.setAlignment(Element.ALIGN_LEFT);
-                
-                nome.setSpacingAfter((float)10.00);
-                
-                documento.add(nome);
-                
-                //AGORA È A TABELA
-                /*Paragraph pImagem = new Paragraph();
+
+            PdfWriter.getInstance(documento, new FileOutputStream("C:\\Users\\willi\\OneDrive\\Documentos\\2018.2\\Processos de Software\\Parte 1\\Trabalho\\Relatorios\\relatorio.pdf"));
+
+            documento.open();
+
+            Image imagemLogoUFC = Image.getInstance("C:/Users/willi/Desktop/a.png");
+
+            imagemLogoUFC.setAlignment(Element.ALIGN_CENTER);
+
+            documento.add(imagemLogoUFC);
+
+            Paragraph titulo = new Paragraph();
+
+            titulo.add("RELATÓRIO - ATIVIDADES COMPLEMENTARES");
+
+            titulo.setAlignment(Element.ALIGN_CENTER);
+
+            titulo.setFont(new Font(Font.FontFamily.TIMES_ROMAN, Font.BOLDITALIC, 40));
+
+            titulo.setSpacingAfter((float) 20.00);
+
+            documento.add(titulo);
+
+            Paragraph matricula = new Paragraph();
+
+            matricula.add("Matricula: ");
+
+            matricula.add("" + this.matricula);
+
+            matricula.setAlignment(Element.ALIGN_LEFT);
+
+            matricula.setSpacingAfter((float) 10.00);
+
+            documento.add(matricula);
+
+            Paragraph nome = new Paragraph();
+
+            nome.add("Nome: ");
+
+            nome.add("" + this.nome);
+
+            nome.setAlignment(Element.ALIGN_LEFT);
+
+            nome.setSpacingAfter((float) 10.00);
+
+            documento.add(nome);
+
+            //AGORA È A TABELA
+            /*Paragraph pImagem = new Paragraph();
                 pImagem.add(imagem);
                 pImagem.setAlignment(Element.ALIGN_CENTER);
                 documento.add(pImagem);
                 Paragraph p = new Paragraph();
                 
-                */
-                
-                /*
+             */
+ /*
                 Phrase a = new Phrase("Titulo: ");
                 a.setFont(new Font(Font.FontFamily.TIMES_ROMAN, Font.BOLDITALIC, 40));
                 documento.add(a);
@@ -166,41 +186,76 @@ public class Aluno extends Document{
                 p.add(" ");
                 p.add(new Phrase("Titulo 2: ", BOLD_UNDERLINED));
                 p.add("Teste de Titulo 2");
-                 */   
-                
-               
-             
-             documento.add(new Paragraph("Gerando PDF - Java aaaa"));             
-}
-          catch(DocumentException de) {
-              System.err.println(de.getMessage());
-          }
-          catch(IOException ioe) {
-              System.err.println(ioe.getMessage());
-          }
-          documento.close();
-        
-       /*
+             */
+            //TESTANDO LISTA
+            List list = new List(true, 20);
+            list.add(new ListItem("Primeira Linha"));
+            list.add(new ListItem("Essa linha tem o intuito de ser um pouco maior que uma linha apenas. Por isso estamos nos alongando neste texto para ver o que acontece, será que uma nova linha é criada ou teremos tudo numa mesma linha?"));
+            list.add(new ListItem("Terceira Linha"));
+            documento.add(list);
+
+            
+            //
+            
+            List lista = new RomanList();
+       
+           
+       ListItem item1 = new ListItem("Teste ListItem 1", BOLD_UNDERLINED);
+       ListItem item2 = new ListItem("Teste ListItem 2", BOLD_UNDERLINED);
+       ListItem item3 = new ListItem("Teste ListItem 3");
+  
+       lista.add(item3);
+              
+       lista.add(item1);
+       lista.add(item2);
+              
+       documento.add(lista);
+            
+            documento.add(new Paragraph("Gerando PDF - Java aaaa"));
+        } catch (DocumentException de) {
+            System.err.println(de.getMessage());
+        } catch (IOException ioe) {
+            System.err.println(ioe.getMessage());
+        }
+        documento.close();
+
+        /*
           
           quando clicar no botao de gerar pdf
           
-           */
-          
-          
-          
-          
-       File file = new File("C:\\Users\\willi\\OneDrive\\Documentos\\2018.2\\Processos de Software\\Parte 1\\Trabalho\\Relatorios\\relatorio.pdf");
-       
-       try{
-        Desktop.getDesktop().open(file);
-       } catch(IOException ex){
-           
-       }
-     }
-       
-    public static void main(String args[]){
+         */
+        File file = new File("C:\\Users\\willi\\OneDrive\\Documentos\\2018.2\\Processos de Software\\Parte 1\\Trabalho\\Relatorios\\relatorio.pdf");
+
+        try {
+            Desktop.getDesktop().open(file);
+        } catch (IOException ex) {
+
+        }
+    }
+
+    public static void main(String args[]) {
         Aluno a = new Aluno();
         a.emitirRelatorio();
     }
-    
+
+    @Override
+    public void inserir() throws ClassNotFoundException, SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void alterar() throws ClassNotFoundException, SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void buscar(int codigo) throws ClassNotFoundException, SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void excluir() throws ClassNotFoundException, SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
