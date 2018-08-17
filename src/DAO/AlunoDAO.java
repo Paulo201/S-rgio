@@ -33,10 +33,10 @@ public class AlunoDAO {
             stmt.setInt(1, aluno.getMatricula());
             stmt.setString(2, aluno.getNome());
             stmt.setInt(3, aluno.getCurso().getId());
-            stmt.setBoolean(5, aluno.isSituacao());
+            stmt.setBoolean(4, aluno.isSituacao());
             stmt.setInt(4, aluno.getQuantHoras());
-            stmt.setInt(5, aluno.getPontuacaoPAC());
-            stmt.setString(6, aluno.getAdvertencia());
+            stmt.setInt(6, aluno.getPontuacaoPAC());
+            stmt.setString(7, aluno.getAdvertencia());
             
             stmt.executeUpdate();
             

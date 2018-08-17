@@ -11,8 +11,7 @@ public class Categoria {
     private String descricao;
     private int limiteHoras;
     private Curso curso;
-    private int quantHoras;//a soma das horas de todas as atividades
-
+    
     public int getId() {
         return id;
     }
@@ -53,14 +52,6 @@ public class Categoria {
 
     public void setCurso(Curso curso) {
         this.curso = curso;
-    }
-
-    public int getQuantHoras() {
-        return quantHoras;
-    }
-
-    public void setQuantHoras(int quantHoras) {
-        this.quantHoras += quantHoras;
     }
 
     public void buscar(int aInt) {
