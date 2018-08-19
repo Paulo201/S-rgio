@@ -14,6 +14,8 @@ import java.util.ArrayList;
  */
 public class AlunoDAO {
     
+    //TESTADA!
+    
     private Conexao dao = Conexao.getInstanciaDaConexao();
     private static AlunoDAO instancia;
     
@@ -29,19 +31,19 @@ public class AlunoDAO {
         Connection conexao = dao.getConexao();
         PreparedStatement stmt = null;
         try {
-            stmt = conexao.prepareStatement("INSERT INTO `aluno`(`matricula`, `nome`, `curso`, `situacao`, `quantHoras`, `pontuacaoPAC`, `advertencia`) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            stmt = conexao.prepareStatement("INSERT INTO `aluno`(`matricula`, `nome`, `id_curso`, `situacao`, `quant_horas`, `PAC`, `Advertencias`) VALUES (?, ?, ?, ?, ?, ?, ?)");
             stmt.setInt(1, aluno.getMatricula());
             stmt.setString(2, aluno.getNome());
             stmt.setInt(3, aluno.getCurso().getId());
             stmt.setBoolean(4, aluno.isSituacao());
-            stmt.setInt(4, aluno.getQuantHoras());
+            stmt.setInt(5, aluno.getQuantHoras());
             stmt.setInt(6, aluno.getPontuacaoPAC());
             stmt.setString(7, aluno.getAdvertencia());
             
             stmt.executeUpdate();
             
             //ACHO QUE AQUI TÁ ERRADO, PORQUE A MATRÍCULA NÃO É AUTO INCREMENTO
-            aluno.setMatricula(this.find());
+            //aluno.setMatricula(this.find());
         } finally {
             Conexao.fecharConexao(conexao, stmt);
         }
@@ -51,7 +53,7 @@ public class AlunoDAO {
         Connection conexao = dao.getConexao();
         PreparedStatement stmt = null;
         try {
-            stmt = conexao.prepareStatement("UPDATE `aluno` SET `nome` = ?,`curso` = ?,`situacao` = ?, `quantHoras` = ?, `pontuacaoPAC` = ?, `advertencia` = ?, WHERE `id` = ?");
+            stmt = conexao.prepareStatement("UPDATE `aluno` SET `nome` = ?,`id_curso` = ?,`situacao` = ?, `quant_horas` = ?, `PAC` = ?, `Advertencias` = ? WHERE `matricula` = ?");
             stmt.setString(1, aluno.getNome());
             stmt.setInt(2, aluno.getCurso().getId());
             stmt.setBoolean(3, aluno.isSituacao());
@@ -70,7 +72,7 @@ public class AlunoDAO {
         Connection conexao = dao.getConexao();
         PreparedStatement stmt = null;
         try {
-            stmt = conexao.prepareStatement("DELETE FROM ALUNO WHERE ID = ?");
+            stmt = conexao.prepareStatement("DELETE FROM `ALUNO` WHERE `MATRICULA` = ?");
             stmt.setInt(1, aluno.getMatricula());
             stmt.executeUpdate();
         } finally {
@@ -83,46 +85,25 @@ public class AlunoDAO {
         PreparedStatement stmt = null;
         ResultSet result = null;
         try {
-            stmt = conexao.prepareStatement("SELECT `nome`, `curso`, `situacao`, `quantHoras`,`pontuacaoPAC`, `advertencia`, FROM `aluno` WHERE `id` = ?");
+            stmt = conexao.prepareStatement("SELECT `nome`, `id_curso`, `situacao`, `quant_horas`,`PAC`, `Advertencias` FROM `aluno` WHERE `matricula` = ?");
             stmt.setInt(1, aluno.getMatricula());
             result = stmt.executeQuery();
             
             while (result.next()) {
                 
                 Curso curso = new Curso();
-                curso.buscar(result.getInt("curso"));
+                curso.buscar(result.getInt("id_curso"));
                 aluno.setCurso(curso);
                 
                 
-                aluno.setAdvertencia(result.getString("advertencia"));
-                aluno.setQuantHoras(result.getInt("quantHoras"));
-                aluno.setPontuacaoPAC(result.getInt("pontuacaoPAC"));
+                aluno.setAdvertencia(result.getString("Advertencias"));
+                aluno.setQuantHoras(result.getInt("quant_horas"));
+                aluno.setPontuacaoPAC(result.getInt("PAC"));
                 aluno.setNome(result.getString("nome"));
                 aluno.setSituacao(result.getBoolean("situacao"));
             }
         } finally {
             Conexao.fecharConexao(conexao, stmt, result);
-        }
-    }
-    
-    public ArrayList<Atividade> buscarAtividades(Aluno aluno) throws SQLException, ClassNotFoundException {
-        
-        Connection conexao = dao.getConexao();
-        PreparedStatement stmt = null;
-        ResultSet result = null;
-        ArrayList<Atividade> atividades = new ArrayList<Atividade>();
-        try {
-            stmt = conexao.prepareStatement("SELECT `id`, `aluno`, `atividade`,  FROM `debitar Hora` WHERE `id` = ?");
-            stmt.setInt(1, aluno.getMatricula());
-            result = stmt.executeQuery();
-            
-            while (result.next()) {
-                Atividade atividade = new Atividade();
-                aluno.addAtividade(atividade.buscar(result.getInt("atividade")));
-            }
-        } finally {
-            Conexao.fecharConexao(conexao, stmt, result);
-            return atividades;
         }
     }
     
@@ -134,7 +115,7 @@ public class AlunoDAO {
         
         try {
             //AJEITAR NOME DO BANCO
-            stmt = conexao.prepareStatement("SELECT AUTO_INCREMENT as id FROM information_schema.tables WHERE table_name = 'aluno' AND table_schema = 'bancoBD'");
+            stmt = conexao.prepareStatement("SELECT AUTO_INCREMENT as id FROM information_schema.tables WHERE table_name = 'aluno' AND table_schema = 'bancogerenciamentoatividadecomplementar'");
             result = stmt.executeQuery();
             
             while (result.next()) {
@@ -147,6 +128,26 @@ public class AlunoDAO {
         }
     }
     
+    /*
+    *   TESTE
+    */
     
+  /*  public static void main(String args[]) throws ClassNotFoundException, SQLException{
+    
+      Curso curso = new Curso("CIVIL", 192);
+        
+      curso.inserir();
+        
+        Aluno aluno = new Aluno(390240, "Willi", curso, true);
+        
+        aluno.inserir();
+        
+        aluno.alterar();
+       
+        aluno.buscar(390239);
+   
+        aluno.excluir();
+        
+    }*/
     
 }
