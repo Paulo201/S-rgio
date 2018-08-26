@@ -1,10 +1,13 @@
 package Models;
 
+import DAO.AtividadeDAO;
+import java.sql.SQLException;
+
 /**
  *
  * @author willi
  */
-public class Atividade {
+public class Atividade implements InterfaceManter{
     
     private int id;
     private String nome;
@@ -21,12 +24,11 @@ public class Atividade {
             this.nome = nome;
             this.categoria = categoria;
             this.quantHoras = quantHoras;
-            this.categoria.setQuantHoras(quantHoras);
         }
     }
     
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(int id) {
@@ -34,7 +36,7 @@ public class Atividade {
     }
 
     public String getNome() {
-        return nome;
+        return this.nome;
     }
 
     public void setNome(String nome) {
@@ -42,7 +44,7 @@ public class Atividade {
     }
 
     public Categoria getCategoria() {
-        return categoria;
+        return this.categoria;
     }
 
     public void setCategoria(Categoria categoria) {
@@ -56,21 +58,37 @@ public class Atividade {
     public void setQuantHoras(int quantHoras) {
         this.quantHoras = quantHoras;
     }
-    public void calcularHoras(Aluno aluno){
-        if(aluno != null && this.categoria != null){
-            if(this.categoria.getQuantHoras() < this.categoria.getLimiteHoras()){
-                if(aluno.getQuantHoras() + this.categoria.getQuantHoras() < this.categoria.getCurso().getMaximoHorasComplementares()){
-                    aluno.setQuantHoras(this.categoria.getQuantHoras());
-                }
+
+   @Override
+    public void inserir() throws ClassNotFoundException, SQLException {
+        if(this.categoria != null && this.nome != null && this.quantHoras > 0){
+            
+           if (this.id == 0) {
+                AtividadeDAO.getInstancia().inserir(this);
             } else {
-               if(aluno.getQuantHoras() + this.categoria.getLimiteHoras() < this.categoria.getCurso().getMaximoHorasComplementares()){
-                     aluno.setQuantHoras(this.categoria.getLimiteHoras());
-                }
+                this.alterar();
             }
-        }  
+        }
     }
 
-    public Atividade buscar(int aInt) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    @Override
+    public void alterar() throws ClassNotFoundException, SQLException {
+        if(this.categoria != null && this.nome != null && this.quantHoras > 0){
+            AtividadeDAO.getInstancia().alterar(this);
+        }
     }
+
+    @Override
+    public void buscar(int codigo) throws ClassNotFoundException, SQLException {
+        if(codigo > 0){
+            this.id = codigo;
+            AtividadeDAO.getInstancia().buscar(this);
+        }
+    }
+
+    @Override
+    public void excluir() throws ClassNotFoundException, SQLException {
+        AtividadeDAO.getInstancia().excluir(this);
+    }
+
 }

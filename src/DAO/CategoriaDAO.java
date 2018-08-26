@@ -16,6 +16,8 @@ import java.util.ArrayList;
  * @author willi
  */
 public class CategoriaDAO {
+    
+    //TESTADA!
       
     private Conexao dao = Conexao.getInstanciaDaConexao();
     private static CategoriaDAO instancia;
@@ -32,7 +34,7 @@ public class CategoriaDAO {
         Connection conexao = dao.getConexao();
         PreparedStatement stmt = null;
         try {
-            stmt = conexao.prepareStatement("INSERT INTO `categoria`(`id`, `nome`, `limite`, `curso`, `descricao`) VALUES (?, ?, ?, ?, ?)");
+            stmt = conexao.prepareStatement("INSERT INTO `categoria`(`id`, `nome`, `limite_horas`, `id_curso`, `descricao`) VALUES (?, ?, ?, ?, ?)");
             stmt.setInt(1, categoria.getId());
             stmt.setString(2, categoria.getNome());
             stmt.setInt(3, categoria.getLimiteHoras());
@@ -41,7 +43,7 @@ public class CategoriaDAO {
             
             stmt.executeUpdate();
             
-            //ACHO QUE AQUI TÁ ERRADO, PORQUE A MATRÍCULA NÃO É AUTO INCREMENTO
+            
             categoria.setId(this.find());
         } finally {
             Conexao.fecharConexao(conexao, stmt);
@@ -52,10 +54,10 @@ public class CategoriaDAO {
         Connection conexao = dao.getConexao();
         PreparedStatement stmt = null;
         try {
-            stmt = conexao.prepareStatement("UPDATE `aluno` SET `nome` = ?,`limite` = ?,`curso` = ?, `descricao` = ?, WHERE `id` = ?");
+            stmt = conexao.prepareStatement("UPDATE `categoria` SET `nome` = ?, `limite_horas` = ?, `id_curso` = ?, `descricao` = ? WHERE `id` = ?");
             stmt.setString(1, categoria.getNome());
-            stmt.setInt(3, categoria.getLimiteHoras());
-            stmt.setInt(2, categoria.getCurso().getId());
+            stmt.setInt(2, categoria.getLimiteHoras());
+            stmt.setInt(3, categoria.getCurso().getId());
             stmt.setString(4, categoria.getDescricao());
             stmt.setInt(5, categoria.getId());
             stmt.executeUpdate();
@@ -69,7 +71,7 @@ public class CategoriaDAO {
         Connection conexao = dao.getConexao();
         PreparedStatement stmt = null;
         try {
-            stmt = conexao.prepareStatement("DELETE FROM CATEGORIA WHERE ID = ?");
+            stmt = conexao.prepareStatement("DELETE FROM `CATEGORIA` WHERE `ID` = ?");
             stmt.setInt(1, categoria.getId());
             stmt.executeUpdate();
         } finally {
@@ -82,17 +84,17 @@ public class CategoriaDAO {
         PreparedStatement stmt = null;
         ResultSet result = null;
         try {
-            stmt = conexao.prepareStatement("SELECT `nome`, `limite`, `curso`, `descricao`, FROM `categoria` WHERE `id` = ?");
+            stmt = conexao.prepareStatement("SELECT `nome`, `limite_horas`, `id_curso`, `descricao` FROM `categoria` WHERE `id` = ?");
             stmt.setInt(1, categoria.getId());
             result = stmt.executeQuery();
             
             while (result.next()) {
                 
                 categoria.setNome(result.getString("nome"));
-                categoria.setLimiteHoras(result.getInt("limite"));
+                categoria.setLimiteHoras(result.getInt("limite_horas"));
                 
                 Curso curso = new Curso();
-                curso.buscar(result.getInt("curso"));
+                curso.buscar(result.getInt("id_curso"));
                 categoria.setCurso(curso);
                 
                 categoria.setDescricao(result.getString("descricao"));
@@ -111,7 +113,7 @@ public class CategoriaDAO {
         
         try {
             //AJEITAR NOME DO BANCO
-            stmt = conexao.prepareStatement("SELECT AUTO_INCREMENT as id FROM information_schema.tables WHERE table_name = 'categoria' AND table_schema = 'bancoBD'");
+            stmt = conexao.prepareStatement("SELECT AUTO_INCREMENT as id FROM information_schema.tables WHERE table_name = 'categoria' AND table_schema = 'bancogerenciamentoatividadecomplementar'");
             result = stmt.executeQuery();
             
             while (result.next()) {
@@ -124,6 +126,27 @@ public class CategoriaDAO {
         }
     }
     
+    /*
+    * TESTE
+    */
     
+   /* public static void main(String args[]) throws ClassNotFoundException, SQLException{
+        
+        Curso curso = new Curso("MECANICA", 100);
+        
+        curso.inserir();
+        
+        Categoria categoria = new Categoria("Docencia", 96, curso);
+        
+        categoria.inserir();
+    
+        categoria.alterar();
+        
+        categoria.buscar(3);
+       
+        categoria.excluir();
+    }
+        
+    */
     
 }

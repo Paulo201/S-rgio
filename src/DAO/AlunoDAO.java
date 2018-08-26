@@ -42,8 +42,6 @@ public class AlunoDAO {
             
             stmt.executeUpdate();
             
-            //ACHO QUE AQUI TÁ ERRADO, PORQUE A MATRÍCULA NÃO É AUTO INCREMENTO
-            //aluno.setMatricula(this.find());
         } finally {
             Conexao.fecharConexao(conexao, stmt);
         }
@@ -107,47 +105,181 @@ public class AlunoDAO {
         }
     }
     
-    private int find() throws SQLException, ClassNotFoundException {
+    // MÉTODOS DA TABELA AUXILIAR
+    
+    public void inserirAlunoAtividade(Aluno aluno, Atividade atividade) throws SQLException, ClassNotFoundException {
         Connection conexao = dao.getConexao();
         PreparedStatement stmt = null;
-        ResultSet result = null;
-        int resultado = 0;
-        
         try {
-            //AJEITAR NOME DO BANCO
-            stmt = conexao.prepareStatement("SELECT AUTO_INCREMENT as id FROM information_schema.tables WHERE table_name = 'aluno' AND table_schema = 'bancogerenciamentoatividadecomplementar'");
-            result = stmt.executeQuery();
+            stmt = conexao.prepareStatement("INSERT INTO `aluno_atividade`(`id_aluno`, `id_atividade`) VALUES (?, ?)");
+            stmt.setInt(1, aluno.getMatricula());
+            stmt.setInt(2, atividade.getId());
             
-            while (result.next()) {
-                resultado = result.getInt("id");
-            }
+            stmt.executeUpdate();
+           
+        } finally {
+            Conexao.fecharConexao(conexao, stmt);
+        }
+    }
+    
+    public void alterarAlunoAtividade(Aluno aluno, Atividade atividade) throws SQLException, ClassNotFoundException {
+        Connection conexao = dao.getConexao();
+        PreparedStatement stmt = null;
+        try {
+            stmt = conexao.prepareStatement("UPDATE `aluno_atividade` SET `id_aluno` = ?,`id_atividade` = ? WHERE `id_aluno` = ? and `id_atividade` = ?");
+            
+            stmt.setInt(1, aluno.getMatricula());
+            stmt.setInt(2, atividade.getId());
+            stmt.setInt(3, aluno.getMatricula());
+            stmt.setInt(4, atividade.getId());
+            
+            stmt.executeUpdate();
             
         } finally {
             Conexao.fecharConexao(conexao, stmt);
-            return resultado - 1;
         }
     }
+    
+    public void excluirAlunoAtividade(Aluno aluno, Atividade atividade) throws SQLException, ClassNotFoundException {
+        Connection conexao = dao.getConexao();
+        PreparedStatement stmt = null;
+        try {
+            stmt = conexao.prepareStatement("DELETE FROM `aluno_atividade` WHERE `ID_ALUNO` = ? AND `ID_ATIVIDADE = ?`");
+            stmt.setInt(1, aluno.getMatricula());
+            stmt.setInt(2, atividade.getId());
+            stmt.executeUpdate();
+        } finally {
+            Conexao.fecharConexao(conexao, stmt);
+        }
+    }
+    
+    public int buscarHorasPorCategoria(Aluno aluno, Atividade atividade) throws SQLException, ClassNotFoundException {
+        Connection conexao = dao.getConexao();
+        PreparedStatement stmt = null;
+        ResultSet result = null;
+        int soma = 0;//soma de todas as atividades da mesma categoria da atividade passada
+        try {
+            stmt = conexao.prepareStatement("Select sum(atividade.quant_horas) from `aluno_atividade` Join atividade on atividade.id = aluno_atividade.id_atividade Where `id_aluno` = ? and `id_categoria` = ?");
+            stmt.setInt(1, aluno.getMatricula());
+           // System.out.println(atividade.getCategoria().getId());
+            stmt.setInt(2, atividade.getCategoria().getId());//FAZER UM BUSCAR DA DAO DA CATEGORIA
+            result = stmt.executeQuery();
+            
+            while (result.next()) {
+                
+                soma += result.getInt("sum(atividade.quant_horas)");
+               
+            }
+            return soma;
+        } finally {
+            Conexao.fecharConexao(conexao, stmt, result);
+        }
+    }
+    
+    public ArrayList<Atividade> buscarAtividades(Aluno aluno) throws SQLException, ClassNotFoundException {
+        
+        Connection conexao = dao.getConexao();
+        PreparedStatement stmt = null;
+        ResultSet result = null;
+        ArrayList<Atividade> atividades = new ArrayList<Atividade>();
+        try {
+            stmt = conexao.prepareStatement("SELECT aluno_atividade.id_atividade FROM aluno_atividade WHERE aluno_atividade.id_aluno = ?");
+            stmt.setInt(1, aluno.getMatricula());
+            result = stmt.executeQuery();
+            
+            while (result.next()) {
+                
+                Atividade atividade1 = new Atividade();
+                atividade1.buscar(result.getInt("aluno_atividade.id_atividade"));
+               
+                aluno.addAtividade(atividade1);
+            
+            }
+            
+            return aluno.getAtividades();
+            
+        } finally {
+            Conexao.fecharConexao(conexao, stmt, result);
+            return atividades;
+        }
+    }
+    
+    public void buscarAlunoAtividade(Aluno aluno, Atividade atividade) throws SQLException, ClassNotFoundException {
+        Connection conexao = dao.getConexao();
+        PreparedStatement stmt = null;
+        ResultSet result = null;
+        try {
+            stmt = conexao.prepareStatement("SELECT `id`, `id_aluno`, `id_atividade` FROM `aluno_atividade` WHERE `id_aluno` = ? and `id_atividade` = ?");
+            stmt.setInt(1, aluno.getMatricula());
+            stmt.setInt(2, atividade.getId());
+            result = stmt.executeQuery();
+            
+            while (result.next()) {
+                
+                Aluno aluno1 = new Aluno();
+                aluno1.buscar(result.getInt("id_aluno"));
+                aluno = aluno1;
+                
+                Atividade atividade1 = new Atividade();
+                atividade.buscar(result.getInt("id_atividade"));
+                atividade = atividade1;
+                
+            }
+        } finally {
+            Conexao.fecharConexao(conexao, stmt, result);
+        }
+    }
+    
     
     /*
     *   TESTE
     */
     
-  /*  public static void main(String args[]) throws ClassNotFoundException, SQLException{
+ /*   public static void main(String args[]) throws ClassNotFoundException, SQLException{
     
-      Curso curso = new Curso("CIVIL", 192);
-        
-      curso.inserir();
-        
+        Curso curso = new Curso("CIVIL", 192);
+
+        curso.inserir();
+    
+        System.out.println("curso: "+curso.getNome());
+
         Aluno aluno = new Aluno(390240, "Willi", curso, true);
-        
+
         aluno.inserir();
-        
-        aluno.alterar();
-       
-        aluno.buscar(390239);
-   
-        aluno.excluir();
-        
-    }*/
     
+        System.out.println("aluno: "+aluno.getNome());
+
+        Categoria categoria = new Categoria("Esportes", 24, curso);
+
+        categoria.inserir();
+
+        System.out.println("nome categoria: "+categoria.getNome());
+
+        System.out.println("id categoria: "+categoria.getId());
+
+        Atividade atividade = new Atividade("volei", categoria, 24);
+
+        atividade.inserir();
+
+        System.out.println("nome atividade: "+atividade.getNome());
+
+        System.out.println("id atividade: "+atividade.getId());
+
+        System.out.println("categoria atividade: "+atividade.getCategoria().getId());
+        
+        aluno.inserirAlunoAtividade(atividade);
+        
+        aluno.buscarAlunoAtividade(atividade);
+        
+        System.out.println("Aluno da tabela auxiliar: "+aluno.getNome());
+        
+        aluno.buscarAtividades();
+        
+        int x = aluno.buscarHorasPorCategoria(atividade);
+        
+        System.out.println("Horas por atividade: "+x);
+                
+    }
+    */
+
 }

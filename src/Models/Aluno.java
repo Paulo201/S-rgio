@@ -1,24 +1,21 @@
 package Models;
 
-import static com.itextpdf.text.Annotation.URL;
+import DAO.AlunoDAO;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Font.FontFamily;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.List;
 import com.itextpdf.text.ListItem;
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.RomanList;
-import com.itextpdf.text.pdf.BaseFont;
-import static com.itextpdf.text.pdf.PdfPKCS7.X509Name.C;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import java.awt.Color;
 import java.awt.Desktop;
 import java.io.File;
 import java.sql.SQLException;
@@ -39,6 +36,20 @@ public class Aluno extends Document implements InterfaceManter{
     private String advertencia;
     private ArrayList<Atividade> atividades = new ArrayList<Atividade>();//preencher fazendo uma consulta de todas as atividades que tem do mesmo aluno na tabela Debitar Hora
 
+    
+    public Aluno(){
+        super();
+    }
+    
+    public Aluno(int matricula, String nome, Curso curso, boolean situacao){
+        
+        this.setMatricula(matricula);
+        this.setNome(nome);
+        this.setCurso(curso);
+        this.setSituacao(situacao);
+    
+    }
+    
     public int getMatricula() {
         return matricula;
     }
@@ -106,15 +117,27 @@ public class Aluno extends Document implements InterfaceManter{
             this.atividades.add(atividade);
         }
     }
-
-    public static final String RESULT
-            = "C:\\Users\\higor\\Desktop\\proj_iText\\arqPDFexemplo7.pdf";
+    
+    
+    public void contabilizarAtividade(Atividade atividade) throws SQLException, ClassNotFoundException{
+        if (this != null && atividade != null) {
+            int somaAtividadePorCategoria = this.buscarHorasPorCategoria(atividade);
+            if (somaAtividadePorCategoria < atividade.getCategoria().getLimiteHoras()) {                
+                if (somaAtividadePorCategoria + atividade.getQuantHoras() <= atividade.getCategoria().getLimiteHoras()) {
+                    this.setQuantHoras(this.getQuantHoras());                    
+                } else {
+                    this.setQuantHoras(atividade.getCategoria().getLimiteHoras() - atividade.getQuantHoras());
+                }
+            }            
+        }   
+    
+    }
 
     public static final Font BOLD_UNDERLINED = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
 
     public static final Font NORMAL = new Font(Font.FontFamily.TIMES_ROMAN, 12);
 
-    public void emitirRelatorio() {
+    private void emitirRelatorio(int x) {
 
         Document documento = new Document();
 
@@ -123,21 +146,27 @@ public class Aluno extends Document implements InterfaceManter{
             PdfWriter.getInstance(documento, new FileOutputStream("C:\\Users\\willi\\OneDrive\\Documentos\\2018.2\\Processos de Software\\Parte 1\\Trabalho\\Relatorios\\relatorio.pdf"));
 
             documento.open();
+            
+            Font f = new Font(FontFamily.TIMES_ROMAN, 11, Font.NORMAL);
 
             Image imagemLogoUFC = Image.getInstance("C:/Users/willi/Desktop/a.png");
 
             imagemLogoUFC.setAlignment(Element.ALIGN_CENTER);
-
+            
             documento.add(imagemLogoUFC);
+            
+            Paragraph titulo = new Paragraph("RELATÓRIO - ATIVIDADES COMPLEMENTARES", f);
 
-            Paragraph titulo = new Paragraph();
-
-            titulo.add("RELATÓRIO - ATIVIDADES COMPLEMENTARES");
+           // titulo.add("RELATÓRIO - ATIVIDADES COMPLEMENTARES");
 
             titulo.setAlignment(Element.ALIGN_CENTER);
+            
+            
 
-            titulo.setFont(new Font(Font.FontFamily.TIMES_ROMAN, Font.BOLDITALIC, 40));
+        //    titulo.setFont(f/*new Font(Font.FontFamily.TIMES_ROMAN, Font.BOLDITALIC, 40)*/);
 
+            titulo.setSpacingBefore((float)15.00);
+            
             titulo.setSpacingAfter((float) 20.00);
 
             documento.add(titulo);
@@ -188,7 +217,7 @@ public class Aluno extends Document implements InterfaceManter{
                 p.add("Teste de Titulo 2");
              */
             //TESTANDO LISTA
-            List list = new List(true, 20);
+           /* List list = new List(true, 20);
             list.add(new ListItem("Primeira Linha"));
             list.add(new ListItem("Essa linha tem o intuito de ser um pouco maior que uma linha apenas. Por isso estamos nos alongando neste texto para ver o que acontece, será que uma nova linha é criada ou teremos tudo numa mesma linha?"));
             list.add(new ListItem("Terceira Linha"));
@@ -200,7 +229,7 @@ public class Aluno extends Document implements InterfaceManter{
             List lista = new RomanList();
        
            
-       ListItem item1 = new ListItem("Teste ListItem 1", BOLD_UNDERLINED);
+       ListItem item1 = new ListItem("Teste ListItem 1", f);
        ListItem item2 = new ListItem("Teste ListItem 2", BOLD_UNDERLINED);
        ListItem item3 = new ListItem("Teste ListItem 3");
   
@@ -210,7 +239,58 @@ public class Aluno extends Document implements InterfaceManter{
        lista.add(item2);
               
        documento.add(lista);
+            */
+       PdfPTable table = new PdfPTable(4);
+           // table.getDefaultCell().setBorder(PdfPCell.NO_BORDER); // Aqui eu tiro a borda
+            table.addCell(new Paragraph("Cliente"));
+            table.addCell(new Paragraph("Data Pedido"));
+            table.addCell(new Paragraph("CPF"));
+            table.addCell(new Paragraph("Email"));
             
+            
+            documento.add(table);
+          
+       
+       /*PdfPTable topo = new PdfPTable(2);
+        PdfPCell cellTopo = new PdfPCell();
+        cellTopo.setColspan(2);
+
+        
+       
+       
+        topo.addCell(titulo);
+        documento.add(topo);
+*/
+        //Menu
+        PdfPTable menu = new PdfPTable(7);
+        PdfPCell cellMenu = new PdfPCell();
+        cellMenu.setColspan(3);
+        Font imenu = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
+        menu.addCell(new Paragraph("Atendente", imenu));
+        menu.addCell(new Paragraph("Cliente de Entrada", imenu));
+        menu.addCell(new Paragraph("Data de Entrada", imenu));
+        /*menu.addCell(new Paragraph("Problema", imenu));
+        menu.addCell(new Paragraph("Solução", imenu));
+        menu.addCell(new Paragraph("Cliente de Saída", imenu));
+        menu.addCell(new Paragraph("Data de Saída", imenu));*/
+        documento.add(menu);
+
+        //Conteudo
+        PdfPTable conteudo = new PdfPTable(7);
+        PdfPCell cellConteudo = new PdfPCell();
+        cellConteudo.setColspan(2);
+
+      conteudo.addCell(new Paragraph("Eu sou um conteudo"));
+     conteudo.addCell(new Paragraph("Eu sou um conteudo2"));    
+       
+        PdfPCell celula1 = new PdfPCell(new Paragraph("Eu sou um conteudo"));
+        PdfPCell celula2 = new PdfPCell(new Paragraph("Eu sou um conteudo2"));
+        
+        conteudo.addCell(celula1);
+       conteudo.addCell(celula2);
+        
+        documento.add(conteudo);
+       
             documento.add(new Paragraph("Gerando PDF - Java aaaa"));
         } catch (DocumentException de) {
             System.err.println(de.getMessage());
@@ -233,29 +313,189 @@ public class Aluno extends Document implements InterfaceManter{
         }
     }
 
+    public void emitirRelatorio(){
+         Document documento = new Document();
+
+        try {
+
+            PdfWriter.getInstance(documento, new FileOutputStream("C:\\Users\\willi\\OneDrive\\Documentos\\2018.2\\Processos de Software\\Parte 1\\Trabalho\\Relatorios\\relatorio.pdf"));
+
+            documento.open();
+
+            Font fTitulo = new Font(FontFamily.TIMES_ROMAN, 20, Font.BOLD);
+            
+            Font fCorpo = new Font(FontFamily.TIMES_ROMAN, 11, Font.NORMAL);
+            
+            Font fLista = new Font(FontFamily.TIMES_ROMAN, 11, Font.BOLD);
+                      
+            Image imagemLogoUFC = Image.getInstance("C:/Users/willi/Desktop/a.png");
+
+            imagemLogoUFC.setAlignment(Element.ALIGN_CENTER);
+
+            documento.add(imagemLogoUFC);
+
+            Paragraph titulo = new Paragraph("RELATÓRIO - ATIVIDADES COMPLEMENTARES", fTitulo);
+
+            titulo.setAlignment(Element.ALIGN_CENTER);
+            
+            titulo.setSpacingAfter((float) 20.00);
+
+            documento.add(titulo);
+
+            Paragraph matricula = new Paragraph("Matricula: ", fCorpo);
+
+            matricula.add("" + this.matricula);
+
+            matricula.setAlignment(Element.ALIGN_LEFT);
+
+            matricula.setSpacingAfter((float) 10.00);
+
+            documento.add(matricula);
+
+            Paragraph nome = new Paragraph("Nome: ", fCorpo);
+
+            nome.add("" + this.nome);
+
+            nome.setAlignment(Element.ALIGN_LEFT);
+
+            nome.setSpacingAfter((float) 10.00);
+
+            documento.add(nome);
+            
+            Paragraph curso = new Paragraph("Curso: ", fCorpo);
+            
+            curso.add("" + this.getCurso().getNome());
+            
+            curso.setAlignment(Element.ALIGN_LEFT);
+            
+            curso.setSpacingAfter((float)10.00);
+            
+            documento.add(curso);
+           
+            
+            List listaCategorias = new RomanList();
+            
+            ListItem categoria1 = new ListItem("Atividades de iniciação à docência", fLista);
+            
+            ListItem categoria2 = new ListItem("Atividades de iniciação à pesquisa", fLista);
+            
+            ListItem categoria3 = new ListItem("Atividades de extensão", fLista);
+            
+            ListItem categoria4 = new ListItem("Atividades artístico-culturais e esportivas", fLista);
+            
+            ListItem categoria5 = new ListItem("Atividades de participação e/ou organização de eventos", fLista);
+            
+            ListItem categoria6 = new ListItem("Experiências ligadas à formação profissional e/ou correlatas", fLista);
+            
+            ListItem categoria7 = new ListItem("Produção Técnica e/ou Científica", fLista);
+            
+            ListItem categoria8 = new ListItem("Vivências de gestão", fLista);
+            
+            ListItem categoria9 = new ListItem("Outras atividades, estabelecidas de acordo com o Art. 3º. dessa Resolução", fLista);
+        
+            documento.add(listaCategorias);
+            
+            
+            //AGORA É A TABELA!
+       
+        } catch (DocumentException de) {
+           
+            System.err.println(de.getMessage());
+        
+        } catch (IOException ioe) {
+        
+            System.err.println(ioe.getMessage());
+        
+        }
+        
+        documento.close();
+
+        /*
+          
+          quando clicar no botao de gerar pdf
+          
+         */
+        File file = new File("C:\\Users\\willi\\OneDrive\\Documentos\\2018.2\\Processos de Software\\Parte 1\\Trabalho\\Relatorios\\relatorio.pdf");
+
+        try {
+            Desktop.getDesktop().open(file);
+        } catch (IOException ex) {
+
+        }
+    
+    }
+     
+    
     public static void main(String args[]) {
         Aluno a = new Aluno();
-        a.emitirRelatorio();
+        a.emitirRelatorio(0);
     }
 
     @Override
     public void inserir() throws ClassNotFoundException, SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(this.matricula > 0 && this.nome != null && this.curso != null && this.situacao != false){
+            
+               AlunoDAO.getInstancia().inserir(this);
+           
+        }
     }
 
     @Override
     public void alterar() throws ClassNotFoundException, SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(this.matricula > 0 && this.nome != null && this.curso != null && this.situacao != false){
+            AlunoDAO.getInstancia().alterar(this);
+        }
     }
 
     @Override
     public void buscar(int codigo) throws ClassNotFoundException, SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(codigo > 0){
+            this.matricula = codigo;
+            AlunoDAO.getInstancia().buscar(this);
+        }
     }
 
     @Override
     public void excluir() throws ClassNotFoundException, SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        AlunoDAO.getInstancia().excluir(this);
     }
 
+    public void inserirAlunoAtividade(Atividade atividade) throws SQLException, ClassNotFoundException {
+        if(this != null && atividade != null){
+            AlunoDAO.getInstancia().inserirAlunoAtividade(this, atividade);
+        }
+    }
+    
+    public void alterarAlunoAtividade(Atividade atividade) throws SQLException, ClassNotFoundException{
+        if(this != null && atividade != null){
+            AlunoDAO.getInstancia().alterarAlunoAtividade(this, atividade);
+        }
+    }
+    
+    public void excluirAlunoAtividade(Atividade atividade) throws SQLException, ClassNotFoundException{
+        if(this != null && atividade != null){
+            AlunoDAO.getInstancia().excluirAlunoAtividade(this, atividade);
+        }
+    }
+    
+    public int buscarHorasPorCategoria(Atividade atividade) throws SQLException, ClassNotFoundException{
+        if(this != null && atividade != null){
+            return AlunoDAO.getInstancia().buscarHorasPorCategoria(this, atividade);
+        }
+        return -1;
+    }
+    
+    public ArrayList<Atividade> buscarAtividades() throws SQLException, ClassNotFoundException{
+        if(this != null){
+            AlunoDAO.getInstancia().buscarAtividades(this);
+        }
+        return this.getAtividades();
+    }
+    
+    public void buscarAlunoAtividade(Atividade atividade) throws SQLException, ClassNotFoundException{
+        if(this != null && atividade != null){
+            AlunoDAO.getInstancia().buscarAlunoAtividade(this, atividade);
+        }
+    }
+ 
 }

@@ -14,6 +14,8 @@ import java.sql.SQLException;
  */
 public class CursoDAO {
     
+    //TESTADA!
+    
     private Conexao dao = Conexao.getInstanciaDaConexao();
     private static CursoDAO instancia;
     
@@ -29,7 +31,7 @@ public class CursoDAO {
         Connection conexao = dao.getConexao();
         PreparedStatement stmt = null;
         try {
-            stmt = conexao.prepareStatement("INSERT INTO `curso`(`id`, `nome`, `maximoHorasComplementares`) VALUES (?, ?, ?)");
+            stmt = conexao.prepareStatement("INSERT INTO `curso`(`id`, `nome`, `quant_horas_complementares`) VALUES (?, ?, ?)");
             stmt.setInt(1, curso.getId());
             stmt.setString(2, curso.getNome());
             stmt.setInt(3, curso.getMaximoHorasComplementares());
@@ -37,7 +39,6 @@ public class CursoDAO {
            
             stmt.executeUpdate();
             
-            //ACHO QUE AQUI TÁ ERRADO, PORQUE A MATRÍCULA NÃO É AUTO INCREMENTO
             curso.setId(this.find());
         } finally {
             Conexao.fecharConexao(conexao, stmt);
@@ -48,9 +49,10 @@ public class CursoDAO {
         Connection conexao = dao.getConexao();
         PreparedStatement stmt = null;
         try {
-            stmt = conexao.prepareStatement("UPDATE `curso` SET `nome` = ?,`maximoHorasComplementares` = ?, WHERE `id` = ?");
+            stmt = conexao.prepareStatement("UPDATE `curso` SET `nome` = ?, `quant_horas_complementares` = ? WHERE `id` = ?");
             stmt.setString(1, curso.getNome());
             stmt.setInt(2, curso.getMaximoHorasComplementares());
+            stmt.setInt(3, curso.getId());
            
             stmt.executeUpdate();
             
@@ -63,7 +65,7 @@ public class CursoDAO {
         Connection conexao = dao.getConexao();
         PreparedStatement stmt = null;
         try {
-            stmt = conexao.prepareStatement("DELETE FROM CURSO WHERE ID = ?");
+            stmt = conexao.prepareStatement("DELETE FROM `CURSO` WHERE `ID` = ?");
             stmt.setInt(1, curso.getId());
             stmt.executeUpdate();
         } finally {
@@ -76,14 +78,14 @@ public class CursoDAO {
         PreparedStatement stmt = null;
         ResultSet result = null;
         try {
-            stmt = conexao.prepareStatement("SELECT `nome`, `maximoHorasComplementares`, FROM `curso` WHERE `id` = ?");
+            stmt = conexao.prepareStatement("SELECT `nome`, `quant_horas_complementares` FROM `curso` WHERE `id` = ?");
             stmt.setInt(1, curso.getId());
             result = stmt.executeQuery();
             
             while (result.next()) {
                 
                 curso.setNome(result.getString("nome"));
-                curso.setMaximoHorasComplementares(result.getInt("maximoHorasComplementares"));
+                curso.setMaximoHorasComplementares(result.getInt("quant_horas_complementares"));
                 
         
             }
@@ -102,7 +104,7 @@ public class CursoDAO {
         
         try {
             //AJEITAR NOME DO BANCO
-            stmt = conexao.prepareStatement("SELECT AUTO_INCREMENT as id FROM information_schema.tables WHERE table_name = 'curso' AND table_schema = 'bancoBD'");
+            stmt = conexao.prepareStatement("SELECT AUTO_INCREMENT as id FROM information_schema.tables WHERE table_name = 'curso' AND table_schema = 'bancogerenciamentoatividadecomplementar'");
             result = stmt.executeQuery();
             
             while (result.next()) {
@@ -114,5 +116,21 @@ public class CursoDAO {
             return resultado - 1;
         }
     }
+    /*
+    *   TESTE
+    */
     
+   /* public static void main(String args[]) throws ClassNotFoundException, SQLException{
+    
+        Curso curso = new Curso("ES", 288);
+        
+        curso.inserir();
+        
+        curso.alterar();
+        
+        curso.buscar(1);
+        
+        curso.excluir();
+        
+    }*/
 }

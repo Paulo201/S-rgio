@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class Conexao{
     
     private static Conexao instanciaDaConexao;
-    private final String DATABASE = "bancoBD";
+    private final String DATABASE = "bancogerenciamentoatividadecomplementar";
     private final String HOST = "localhost";
     private final String DRIVE = "com.mysql.cj.jdbc.Driver";
     private final String URL = "jdbc:mysql://" + HOST + "/" + DATABASE + "?useTimezone=true&serverTimezone=UTC";

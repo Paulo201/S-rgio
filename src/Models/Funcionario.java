@@ -1,10 +1,13 @@
 package Models;
 
+import DAO.FuncionarioDAO;
+import java.sql.SQLException;
+
 /**
  *
  * @author willi
  */
-public class Funcionario {
+public class Funcionario implements InterfaceManter{
   
     private int id;
     private String nome;
@@ -12,6 +15,17 @@ public class Funcionario {
     private String login;
     private String senha;
 
+    public Funcionario(){
+        super();
+    }
+    
+    public Funcionario(String nome, String contato, String login, String senha){
+        this.setNome(nome);
+        this.setLogin(login);
+        this.setContato(contato);
+        this.setSenha(senha);
+    }
+    
     public int getId() {
         return id;
     }
@@ -52,6 +66,31 @@ public class Funcionario {
         this.senha = senha;
     }
     
-    
+     @Override
+    public void inserir() throws ClassNotFoundException, SQLException {
+        if(this.nome != null && this.contato != null && this.login != null && this.senha != null){
+            FuncionarioDAO.getInstancia().inserir(this);
+        }
+    }
+
+    @Override
+    public void alterar() throws ClassNotFoundException, SQLException {
+        if(this.nome != null && this.contato != null && this.login != null && this.senha != null){
+            FuncionarioDAO.getInstancia().alterar(this);
+        }
+    }
+
+    @Override
+    public void buscar(int codigo) throws ClassNotFoundException, SQLException {
+        if(codigo > 0){
+            this.id = codigo;
+            FuncionarioDAO.getInstancia().buscar(this);
+        }
+    }
+
+    @Override
+    public void excluir() throws ClassNotFoundException, SQLException {
+        FuncionarioDAO.getInstancia().excluir(this);
+    }
     
 }

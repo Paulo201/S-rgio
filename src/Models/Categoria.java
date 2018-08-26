@@ -1,10 +1,13 @@
 package Models;
 
+import DAO.CategoriaDAO;
+import java.sql.SQLException;
+
 /**
  *
  * @author willi
  */
-public class Categoria {
+public class Categoria implements InterfaceManter{
 
     private int id;
     private String nome;
@@ -12,8 +15,18 @@ public class Categoria {
     private int limiteHoras;
     private Curso curso;
     
+    public Categoria(){
+        super();
+    }
+    
+    public Categoria(String nome, int limiteHoras, Curso curso){
+        this.setNome(nome);
+        this.setLimiteHoras(limiteHoras);
+        this.setCurso(curso);
+    }
+    
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(int id) {
@@ -53,11 +66,38 @@ public class Categoria {
     public void setCurso(Curso curso) {
         this.curso = curso;
     }
-
-    public void buscar(int aInt) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  
+    @Override
+    public void inserir() throws ClassNotFoundException, SQLException {
+        if(this.limiteHoras > 0 && this.nome != null && this.curso != null){
+            
+            if (this.id == 0) {
+                CategoriaDAO.getInstancia().inserir(this);
+            } else {
+                this.alterar();
+            }
+        }
     }
-    
-    
+
+    @Override
+    public void alterar() throws ClassNotFoundException, SQLException {
+        if(this.limiteHoras > 0 && this.nome != null && this.curso != null){
+            CategoriaDAO.getInstancia().alterar(this);
+        }
+    }
+
+    @Override
+    public void buscar(int codigo) throws ClassNotFoundException, SQLException {
+        if(codigo > 0){
+            this.id = codigo;
+            CategoriaDAO.getInstancia().buscar(this);
+        }
+    }
+
+    @Override
+    public void excluir() throws ClassNotFoundException, SQLException {
+        CategoriaDAO.getInstancia().excluir(this);
+    }
+
     
 }

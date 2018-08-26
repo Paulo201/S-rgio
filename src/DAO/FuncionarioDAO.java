@@ -16,6 +16,8 @@ import java.util.ArrayList;
  * @author willi
  */
 public class FuncionarioDAO {
+    
+    //TESTADA!
    
     private Conexao dao = Conexao.getInstanciaDaConexao();
     private static FuncionarioDAO instancia;
@@ -52,7 +54,7 @@ public class FuncionarioDAO {
         Connection conexao = dao.getConexao();
         PreparedStatement stmt = null;
         try {
-            stmt = conexao.prepareStatement("UPDATE `funcionario` SET `nome` = ?,`contato` = ?,`login` = ?, `senha` = ?, WHERE `id` = ?");
+            stmt = conexao.prepareStatement("UPDATE `funcionario` SET `nome` = ?,`contato` = ?,`login` = ?, `senha` = ? WHERE `id` = ?");
             stmt.setString(1, funcionario.getNome());
             stmt.setString(2, funcionario.getContato());
             stmt.setString(3, funcionario.getLogin());
@@ -70,7 +72,7 @@ public class FuncionarioDAO {
         Connection conexao = dao.getConexao();
         PreparedStatement stmt = null;
         try {
-            stmt = conexao.prepareStatement("DELETE FROM FUNCIONARIO WHERE ID = ?");
+            stmt = conexao.prepareStatement("DELETE FROM `FUNCIONARIO` WHERE `ID` = ?");
             stmt.setInt(1, funcionario.getId());
             stmt.executeUpdate();
         } finally {
@@ -83,7 +85,7 @@ public class FuncionarioDAO {
         PreparedStatement stmt = null;
         ResultSet result = null;
         try {
-            stmt = conexao.prepareStatement("SELECT `nome`, `contato`, `login`, `senha`, FROM `funcionario` WHERE `id` = ?");
+            stmt = conexao.prepareStatement("SELECT `nome`, `contato`, `login`, `senha` FROM `funcionario` WHERE `id` = ?");
             stmt.setInt(1, funcionario.getId());
             result = stmt.executeQuery();
             
@@ -110,7 +112,7 @@ public class FuncionarioDAO {
         
         try {
             //AJEITAR NOME DO BANCO
-            stmt = conexao.prepareStatement("SELECT AUTO_INCREMENT as id FROM information_schema.tables WHERE table_name = 'funcionario' AND table_schema = 'bancoBD'");
+            stmt = conexao.prepareStatement("SELECT AUTO_INCREMENT as id FROM information_schema.tables WHERE table_name = 'funcionario' AND table_schema = 'bancogerenciamentoatividadecomplementar'");
             result = stmt.executeQuery();
             
             while (result.next()) {
@@ -123,5 +125,24 @@ public class FuncionarioDAO {
         }
     }
     
+    /*
+    * TESTE 
+    */
+    
+    
+   /* public static void main(String args[]) throws ClassNotFoundException, SQLException{
+    
+        Funcionario funcionario = new Funcionario("euDeNovo", "3522-4902", "123", "456");
+    
+        funcionario.inserir();
+        
+        funcionario.alterar();
+
+        funcionario.buscar(1);
+      
+        funcionario.excluir();
+        
+    }
+    */
     
 }

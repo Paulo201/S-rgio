@@ -15,6 +15,9 @@ import java.sql.SQLException;
  * @author willi
  */
 public class AtividadeDAO {
+    
+    //TESTADO!
+    
     private Conexao dao = Conexao.getInstanciaDaConexao();
     private static AtividadeDAO instancia;
     
@@ -30,7 +33,7 @@ public class AtividadeDAO {
         Connection conexao = dao.getConexao();
         PreparedStatement stmt = null;
         try {
-            stmt = conexao.prepareStatement("INSERT INTO `aluno`(`id`, `categoria`, `quantHoras`, `nome`) VALUES (?, ?, ?, ?)");
+            stmt = conexao.prepareStatement("INSERT INTO `atividade`(`id`, `id_categoria`, `quant_horas`, `nome`) VALUES (?, ?, ?, ?)");
             stmt.setInt(1, atividade.getId());
             stmt.setInt(2, atividade.getCategoria().getId());
             stmt.setInt(3, atividade.getQuantHoras());
@@ -48,7 +51,7 @@ public class AtividadeDAO {
         Connection conexao = dao.getConexao();
         PreparedStatement stmt = null;
         try {
-            stmt = conexao.prepareStatement("UPDATE `atividade` SET `categoria` = ?,`quantHoras` = ?,`nome` = ?, WHERE `id` = ?");
+            stmt = conexao.prepareStatement("UPDATE `atividade` SET `id_categoria` = ?,`quant_horas` = ?,`nome` = ? WHERE `id` = ?");
             stmt.setInt(1, atividade.getCategoria().getId());
             stmt.setInt(2, atividade.getQuantHoras());
             stmt.setString(3, atividade.getNome());
@@ -64,7 +67,7 @@ public class AtividadeDAO {
         Connection conexao = dao.getConexao();
         PreparedStatement stmt = null;
         try {
-            stmt = conexao.prepareStatement("DELETE FROM ATIVIDADE WHERE ID = ?");
+            stmt = conexao.prepareStatement("DELETE FROM `ATIVIDADE` WHERE `atividade`.`id` = ?");
             stmt.setInt(1, atividade.getId());
             stmt.executeUpdate();
         } finally {
@@ -77,17 +80,17 @@ public class AtividadeDAO {
         PreparedStatement stmt = null;
         ResultSet result = null;
         try {
-            stmt = conexao.prepareStatement("SELECT `categoria`, `quantHoras`, `nome`, FROM `atividade` WHERE `id` = ?");
+            stmt = conexao.prepareStatement("SELECT `id_categoria`, `quant_horas`, `nome` FROM `atividade` WHERE `id` = ?");
             stmt.setInt(1, atividade.getId());
             result = stmt.executeQuery();
             
             while (result.next()) {
                 
                 Categoria categoria = new Categoria();
-                categoria.buscar(result.getInt("categoria"));
+                categoria.buscar(result.getInt("id_categoria"));
                 
                 atividade.setCategoria(categoria);
-                atividade.setQuantHoras(result.getInt("quantHoras"));
+                atividade.setQuantHoras(result.getInt("quant_horas"));
                 atividade.setNome(result.getString("nome"));
                 
             }
@@ -103,8 +106,8 @@ public class AtividadeDAO {
         int resultado = 0;
         
         try {
-            //AJEITAR NOME DO BANCO
-            stmt = conexao.prepareStatement("SELECT AUTO_INCREMENT as id FROM information_schema.tables WHERE table_name = 'atividade' AND table_schema = 'bancoBD'");
+            
+            stmt = conexao.prepareStatement("SELECT AUTO_INCREMENT as id FROM information_schema.tables WHERE table_name = 'atividade' AND table_schema = 'bancogerenciamentoatividadecomplementar'");
             result = stmt.executeQuery();
             
             while (result.next()) {
@@ -116,5 +119,32 @@ public class AtividadeDAO {
             return resultado - 1;
         }
     }
+    
+    /*
+    * TESTE
+    */
+    
+/*  public static void main(String args[]) throws ClassNotFoundException, SQLException{
+        
+        Curso curso = new Curso("MECANICA", 100);
+        
+        curso.inserir();
+        
+        Categoria categoria = new Categoria("Entretenimento", 42, curso);
+        
+        categoria.inserir();
+        
+        Atividade atividade = new Atividade("cinema", categoria, 24);
+        
+        atividade.inserir();
+    
+        atividade.alterar();
+        
+        atividade.buscar(5);
+        
+        atividade.excluir();
+        
+    }
+  */     
     
 }
