@@ -148,6 +148,8 @@ public class Aluno extends Document implements InterfaceManter{
             documento.open();
             
             Font f = new Font(FontFamily.TIMES_ROMAN, 11, Font.NORMAL);
+            
+             Font g = new Font(FontFamily.TIMES_ROMAN, 20, Font.NORMAL);
 
             Image imagemLogoUFC = Image.getInstance("C:/Users/willi/Desktop/a.png");
 
@@ -240,14 +242,31 @@ public class Aluno extends Document implements InterfaceManter{
               
        documento.add(lista);
             */
-       PdfPTable table = new PdfPTable(4);
+      /* PdfPTable table = new PdfPTable(4);
+       PdfPCell celula1 = new PdfPCell();
+            table.getDefaultCell().setPadding((float)7.00);
+       //     table.getDefaultCell().setSpaceCharRatio((float) 50.00);
+            table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
            // table.getDefaultCell().setBorder(PdfPCell.NO_BORDER); // Aqui eu tiro a borda
-            table.addCell(new Paragraph("Cliente"));
-            table.addCell(new Paragraph("Data Pedido"));
-            table.addCell(new Paragraph("CPF"));
-            table.addCell(new Paragraph("Email"));
+            table.addCell(new Paragraph("Atividade"));
+            table.addCell(new Paragraph("Documento Comprobatório"));
+            table.addCell(new Paragraph("Limite Da Categoria"));
+            table.addCell(new Paragraph("Total Aproveitado"));
+        */ PdfPTable table = new PdfPTable(3);
+    table.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
+    PdfPCell cell = new PdfPCell(new Paragraph("header with colspan 3"));
+    cell.setColspan(3);
+    table.addCell(cell);
+    table.addCell("1.1");
+    table.addCell("2.1");
+    table.addCell("3.1");
+    table.addCell("1.2");
+    table.addCell("2.2");
+    table.addCell("3.2");
+    documento.add(table);  
             
-            
+                
             documento.add(table);
           
        
@@ -373,6 +392,8 @@ public class Aluno extends Document implements InterfaceManter{
             documento.add(curso);
            
             
+            Paragraph categoria = new Paragraph("Categoria: ", fLista);
+            
             List listaCategorias = new RomanList();
             
             ListItem categoria1 = new ListItem("Atividades de iniciação à docência", fLista);
@@ -397,6 +418,10 @@ public class Aluno extends Document implements InterfaceManter{
             
             
             //AGORA É A TABELA!
+            
+            PdfPTable tabelAtividades = new PdfPTable(4);
+            
+            
        
         } catch (DocumentException de) {
            
