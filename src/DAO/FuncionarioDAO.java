@@ -102,7 +102,55 @@ public class FuncionarioDAO {
         }
     }
     
+    public ArrayList<Funcionario> buscaTodos() throws SQLException, ClassNotFoundException {
+        
+        Connection conexao = dao.getConexao();
+        PreparedStatement stmt = null;
+        ResultSet result = null;
+        ArrayList<Funcionario> funcionarios = new ArrayList<>();
+        try {
+            stmt = conexao.prepareStatement("SELECT * FROM FUNCIONARIO ORDER BY ID");
+            result = stmt.executeQuery();
+            
+            while (result.next()) {
+                Funcionario funcionario = new Funcionario();
+                funcionario.setId(result.getInt("id"));
+                funcionario.setContato(result.getString("contato"));
+                funcionario.setLogin(result.getString("login"));
+                funcionario.setSenha(result.getString("senha"));
+                funcionario.setNome(result.getString("nome"));
+                funcionarios.add(funcionario);
+            }
+        } finally {
+            Conexao.fecharConexao(conexao, stmt, result);
+            return funcionarios;
+        }
+    }
    
+    public void validaFuncionario(Funcionario funcionario) throws SQLException, ClassNotFoundException {
+        Connection conexao = dao.getConexao();
+        PreparedStatement stmt = null;
+        ResultSet result = null;
+        try {
+            stmt = conexao.prepareStatement("SELECT `id`, `nome`, `contato`, `login`, `senha` FROM `funcionario` WHERE"
+                    + " `login` = ? AND `senha` = ? ");
+            stmt.setString(1, funcionario.getLogin());
+            stmt.setString(2, funcionario.getSenha());
+            result = stmt.executeQuery();
+
+            while (result.next()) {
+                funcionario.setId(result.getInt("id"));
+                funcionario.setContato(result.getString("contato"));
+                funcionario.setLogin(result.getString("login"));
+                funcionario.setNome(result.getString("nome"));
+                funcionario.setSenha(result.getString("senha"));
+            }
+        } finally {
+            Conexao.fecharConexao(conexao, stmt, result);
+        }
+    }
+
+    
     
     private int find() throws SQLException, ClassNotFoundException {
         Connection conexao = dao.getConexao();

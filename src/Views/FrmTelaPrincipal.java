@@ -1,17 +1,47 @@
 package Views;
 
+import Models.Configuracao;
+import java.awt.Dimension;
+import javax.swing.JInternalFrame;
+
 /**
  *
  * @author willi
  */
 public class FrmTelaPrincipal extends javax.swing.JFrame {
     
-    
+    private static Configuracao model;
     
     public FrmTelaPrincipal() {
         initComponents();
+        this.setExtendedState(FrmTelaPrincipal.MAXIMIZED_BOTH);
+        
     }
 
+     public FrmTelaPrincipal(Configuracao model) {
+        this();
+        this.model = model;
+        this.iniciaFormulario();
+    }
+     
+    public boolean verificaLogin() {
+        if (this.model.getFuncionario() == null) {
+            return false;
+        } else {
+            return true;
+        }
+    } 
+     
+    
+     private void colocarFormularioCentro(JInternalFrame frame) {
+        Dimension desktopSize = this.getSize();
+        Dimension jInternalFrameSize = frame.getSize();
+        frame.setLocation((desktopSize.width - jInternalFrameSize.width) / 2,
+                (desktopSize.height - jInternalFrameSize.height) / 2);
+    }
+     
+     
+     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -34,15 +64,16 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
         jdpPrincipal = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuCadastrar = new javax.swing.JMenu();
-        itemCadastrarUsuario = new javax.swing.JMenuItem();
+        itemCadastrarFuncionario = new javax.swing.JMenuItem();
         itemCadastrarAluno = new javax.swing.JMenuItem();
         itemCadastrarCategoria = new javax.swing.JMenuItem();
         itemCadastrarAtividade = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem15 = new javax.swing.JMenuItem();
-        jMenuItem16 = new javax.swing.JMenuItem();
-        jMenuItem19 = new javax.swing.JMenuItem();
+        itemPesquisarUsuario = new javax.swing.JMenuItem();
+        itemPesquisarAluno = new javax.swing.JMenuItem();
+        itemPesquisarCategoria = new javax.swing.JMenuItem();
+        itemPesquisarAtividade = new javax.swing.JMenuItem();
+        menuContabilizarAtividade = new javax.swing.JMenu();
         menuRelatorio = new javax.swing.JMenu();
         menuSobre = new javax.swing.JMenu();
 
@@ -96,14 +127,14 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
         menuCadastrar.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\add.png")); // NOI18N
         menuCadastrar.setText("Cadastrar");
 
-        itemCadastrarUsuario.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\user.png")); // NOI18N
-        itemCadastrarUsuario.setText("Usuário");
-        itemCadastrarUsuario.addActionListener(new java.awt.event.ActionListener() {
+        itemCadastrarFuncionario.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\user.png")); // NOI18N
+        itemCadastrarFuncionario.setText("Usuário");
+        itemCadastrarFuncionario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemCadastrarUsuarioActionPerformed(evt);
+                itemCadastrarFuncionarioActionPerformed(evt);
             }
         });
-        menuCadastrar.add(itemCadastrarUsuario);
+        menuCadastrar.add(itemCadastrarFuncionario);
 
         itemCadastrarAluno.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\group.png")); // NOI18N
         itemCadastrarAluno.setText("Aluno");
@@ -125,6 +156,11 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
 
         itemCadastrarAtividade.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\page.png")); // NOI18N
         itemCadastrarAtividade.setText("Atividade");
+        itemCadastrarAtividade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemCadastrarAtividadeActionPerformed(evt);
+            }
+        });
         menuCadastrar.add(itemCadastrarAtividade);
 
         jMenuBar1.add(menuCadastrar);
@@ -132,40 +168,69 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
         jMenu2.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\zoom.png")); // NOI18N
         jMenu2.setText("Pesquisar");
 
-        jMenuItem9.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\user.png")); // NOI18N
-        jMenuItem9.setText("Usuário");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+        itemPesquisarUsuario.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\user.png")); // NOI18N
+        itemPesquisarUsuario.setText("Usuário");
+        itemPesquisarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
+                itemPesquisarUsuarioActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem9);
+        jMenu2.add(itemPesquisarUsuario);
 
-        jMenuItem15.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\group.png")); // NOI18N
-        jMenuItem15.setText("Aluno");
-        jMenu2.add(jMenuItem15);
-
-        jMenuItem16.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\folder_page.png")); // NOI18N
-        jMenuItem16.setText("Categoria");
-        jMenu2.add(jMenuItem16);
-
-        jMenuItem19.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\page.png")); // NOI18N
-        jMenuItem19.setText("Atividade");
-        jMenuItem19.addActionListener(new java.awt.event.ActionListener() {
+        itemPesquisarAluno.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\group.png")); // NOI18N
+        itemPesquisarAluno.setText("Aluno");
+        itemPesquisarAluno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem19ActionPerformed(evt);
+                itemPesquisarAlunoActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem19);
+        jMenu2.add(itemPesquisarAluno);
+
+        itemPesquisarCategoria.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\folder_page.png")); // NOI18N
+        itemPesquisarCategoria.setText("Categoria");
+        itemPesquisarCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemPesquisarCategoriaActionPerformed(evt);
+            }
+        });
+        jMenu2.add(itemPesquisarCategoria);
+
+        itemPesquisarAtividade.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\page.png")); // NOI18N
+        itemPesquisarAtividade.setText("Atividade");
+        itemPesquisarAtividade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemPesquisarAtividadeActionPerformed(evt);
+            }
+        });
+        jMenu2.add(itemPesquisarAtividade);
 
         jMenuBar1.add(jMenu2);
 
+        menuContabilizarAtividade.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\calc (2).png")); // NOI18N
+        menuContabilizarAtividade.setText("Contabilizar Atividade");
+        menuContabilizarAtividade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuContabilizarAtividadeActionPerformed(evt);
+            }
+        });
+        jMenuBar1.add(menuContabilizarAtividade);
+
         menuRelatorio.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\page_white_acrobat.png")); // NOI18N
         menuRelatorio.setText("Relatorio");
+        menuRelatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuRelatorioActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(menuRelatorio);
 
         menuSobre.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\information.png")); // NOI18N
         menuSobre.setText("Sobre");
+        menuSobre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuSobreActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(menuSobre);
 
         setJMenuBar(jMenuBar1);
@@ -173,9 +238,20 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
         setBounds(0, 0, 683, 484);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void itemCadastrarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCadastrarUsuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_itemCadastrarUsuarioActionPerformed
+    private void itemCadastrarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCadastrarFuncionarioActionPerformed
+       this.jdpPrincipal.removeAll();
+        if (this.verificaLogin()) {
+            FrmFuncionarioCadastro frmFuncionarioCadastro = new FrmFuncionarioCadastro(this.model, this);
+            this.jdpPrincipal.add(frmFuncionarioCadastro);
+            this.colocarFormularioCentro(frmFuncionarioCadastro);
+            frmFuncionarioCadastro.setVisible(true);
+        } else {
+            FrmLogin frmLogin = new FrmLogin(this.model);
+            this.jdpPrincipal.add(frmLogin);
+            this.colocarFormularioCentro(frmLogin);
+            frmLogin.setVisible(true);
+        }
+    }//GEN-LAST:event_itemCadastrarFuncionarioActionPerformed
 
     private void itemCadastrarAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCadastrarAlunoActionPerformed
         // TODO add your handling code here:
@@ -185,14 +261,46 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_itemCadastrarCategoriaActionPerformed
 
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+    private void itemPesquisarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPesquisarUsuarioActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
+    }//GEN-LAST:event_itemPesquisarUsuarioActionPerformed
 
-    private void jMenuItem19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem19ActionPerformed
+    private void itemPesquisarAtividadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPesquisarAtividadeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem19ActionPerformed
-  public static void main(String args[]) {
+    }//GEN-LAST:event_itemPesquisarAtividadeActionPerformed
+
+    private void itemCadastrarAtividadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCadastrarAtividadeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_itemCadastrarAtividadeActionPerformed
+
+    private void itemPesquisarAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPesquisarAlunoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_itemPesquisarAlunoActionPerformed
+
+    private void itemPesquisarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPesquisarCategoriaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_itemPesquisarCategoriaActionPerformed
+
+    private void menuContabilizarAtividadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuContabilizarAtividadeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuContabilizarAtividadeActionPerformed
+
+    private void menuRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRelatorioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuRelatorioActionPerformed
+
+    private void menuSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSobreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuSobreActionPerformed
+ 
+    public void iniciaFormulario() {
+        /*java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new FrmTelaPrincipal().setVisible(true);
+            }
+        });*/
+    }
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -219,7 +327,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmTelaPrincipal().setVisible(true);
+                new FrmTelaPrincipal(new Configuracao()).setVisible(true);
             }
         });
     }
@@ -228,7 +336,11 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem itemCadastrarAluno;
     private javax.swing.JMenuItem itemCadastrarAtividade;
     private javax.swing.JMenuItem itemCadastrarCategoria;
-    private javax.swing.JMenuItem itemCadastrarUsuario;
+    private javax.swing.JMenuItem itemCadastrarFuncionario;
+    private javax.swing.JMenuItem itemPesquisarAluno;
+    private javax.swing.JMenuItem itemPesquisarAtividade;
+    private javax.swing.JMenuItem itemPesquisarCategoria;
+    private javax.swing.JMenuItem itemPesquisarUsuario;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -237,11 +349,8 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem15;
-    private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem18;
-    private javax.swing.JMenuItem jMenuItem19;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -249,9 +358,9 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JDesktopPane jdpPrincipal;
     private javax.swing.JMenu menuCadastrar;
+    private javax.swing.JMenu menuContabilizarAtividade;
     private javax.swing.JMenu menuRelatorio;
     private javax.swing.JMenu menuSobre;
     // End of variables declaration//GEN-END:variables
