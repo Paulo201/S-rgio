@@ -80,9 +80,6 @@ public class FrmFuncionarioCadastro extends javax.swing.JInternalFrame {
         this.login.setText("");
         this.senha.setText("");
         this.confirmarSenha.setText("");
-        
-        this.btnSalvar.setText("Salvar");
-        this.btnCancelar.setEnabled(false);
     }
     
     

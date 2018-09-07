@@ -81,6 +81,12 @@ public class Curso implements InterfaceManter {
         }
     }
 
+    public void buscarPorNome(String nome)throws ClassNotFoundException, SQLException{
+        if(nome != null){
+            CursoDAO.getInstancia().buscarPorNome(this);
+        }
+    }
+    
     @Override
     public void excluir() throws ClassNotFoundException, SQLException {
         CursoDAO.getInstancia().excluir(this);

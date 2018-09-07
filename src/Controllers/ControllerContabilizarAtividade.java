@@ -128,7 +128,7 @@ public class ControllerContabilizarAtividade implements InterfaceObserver{
 
             this.model.setAlunoAtividade(new ArrayList<Atividade>());
         } catch (Exception ex) {
-            this.view.mostraMensagem("Não foi possível atualizar dados. Mensagem retornada: " + ex.getMessage());
+            this.view.mostraMensagem("Não foi possível atualizar as atividades dos alunos. Mensagem retornada: " + ex.getMessage());
         }
     
     }

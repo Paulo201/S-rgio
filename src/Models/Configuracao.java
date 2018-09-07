@@ -137,6 +137,23 @@ public class Configuracao implements InterfaceObservable {
         return atividade;
     }
     
+    public void salvarAluno(int matricula, String nome, String nomeCurso, int limiteHoras, boolean situacao, String advertencia) throws ClassNotFoundException, SQLException{
+    
+        if(matricula > 0 && nome != null && nomeCurso != null && limiteHoras > 0){
+            Aluno aluno = new Aluno();
+            aluno.setMatricula(matricula);
+            aluno.setNome(nome);
+            Curso curso = new Curso();
+            curso.buscarPorNome(nomeCurso);
+            aluno.setCurso(curso);
+            aluno.setSituacao(situacao);
+            aluno.setAdvertencia(advertencia);
+            aluno.inserir();
+        }
+        
+    }
+    
+    
     
     public void validaFuncionario(String usuario, String senha) throws SQLException, ClassNotFoundException {
         if (this.funcionario == null) {

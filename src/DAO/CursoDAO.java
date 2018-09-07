@@ -94,6 +94,29 @@ public class CursoDAO {
         }
     }
     
+    public void buscarPorNome(Curso curso) throws SQLException, ClassNotFoundException {
+        Connection conexao = dao.getConexao();
+        PreparedStatement stmt = null;
+        ResultSet result = null;
+        try {
+            stmt = conexao.prepareStatement("SELECT `id`,`nome`,`quant_horas_complementares` FROM `curso` WHERE `nome` = ?");
+            stmt.setString(1, curso.getNome());
+            result = stmt.executeQuery();
+            
+            while (result.next()) {
+                
+                curso.setId(result.getInt("id"));
+                curso.setNome(result.getString("nome"));
+                curso.setMaximoHorasComplementares(result.getInt("quant_horas_complementares"));
+                
+        
+            }
+        } finally {
+            Conexao.fecharConexao(conexao, stmt, result);
+        }
+    }
+   
+    
    
     
     private int find() throws SQLException, ClassNotFoundException {
