@@ -108,7 +108,6 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
         jMenuItem18.setText("jMenuItem18");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(null);
 
         jdpPrincipal.setPreferredSize(new java.awt.Dimension(680, 445));
 
@@ -116,15 +115,12 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
         jdpPrincipal.setLayout(jdpPrincipalLayout);
         jdpPrincipalLayout.setHorizontalGroup(
             jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 710, Short.MAX_VALUE)
+            .addGap(0, 704, Short.MAX_VALUE)
         );
         jdpPrincipalLayout.setVerticalGroup(
             jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 490, Short.MAX_VALUE)
+            .addGap(0, 491, Short.MAX_VALUE)
         );
-
-        getContentPane().add(jdpPrincipal);
-        jdpPrincipal.setBounds(0, 0, 710, 490);
 
         menuCadastrar.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\add.png")); // NOI18N
         menuCadastrar.setText("Cadastrar");
@@ -236,6 +232,17 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(menuSobre);
 
         setJMenuBar(jMenuBar1);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jdpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 704, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jdpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
+        );
 
         setBounds(0, 0, 720, 551);
     }// </editor-fold>//GEN-END:initComponents

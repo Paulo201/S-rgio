@@ -1,5 +1,6 @@
 package Models;
 
+import DAO.AlunoDAO;
 import DAO.FuncionarioDAO;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,7 +12,8 @@ import java.util.ArrayList;
 public class Configuracao implements InterfaceObservable {
 
     private ArrayList<InterfaceObserver> observers;
-    private ArrayList<Funcionario> funcionarios = new ArrayList<Funcionario>();
+    private ArrayList<Funcionario> funcionarios;
+    private ArrayList<Atividade> alunoAtividade;
     private Funcionario funcionario;
 
     public Configuracao() {
@@ -87,6 +89,53 @@ public class Configuracao implements InterfaceObservable {
         }
     }
 
+    public Aluno buscaAluno(int matricula) throws ClassNotFoundException, SQLException{
+        Aluno aluno = new Aluno();
+        aluno.buscar(matricula);
+        return aluno;
+    
+    }
+    
+    public Atividade buscaAtividade(int id) throws ClassNotFoundException, SQLException{
+        Atividade atividade = new Atividade();
+        atividade.buscar(id);
+        return atividade;
+    }
+    
+    
+    public void excluirAlunoAtividade(int matricula, int id_atividade) throws SQLException, ClassNotFoundException{
+        Aluno aluno = new Aluno();
+        aluno.buscar(matricula);
+        Atividade atividade = new Atividade();
+        atividade.buscar(id_atividade);
+        if(atividade != null && aluno != null){
+            aluno.excluirAlunoAtividade(atividade);
+        }
+    }
+    
+    public void salvarAlunoAtividades(int matricula, int id_atividade) throws SQLException, ClassNotFoundException{
+        Aluno aluno = new Aluno();
+        aluno.buscar(matricula);
+        Atividade atividade = new Atividade();
+        atividade.buscar(id_atividade);
+        if(atividade != null && aluno != null){
+            aluno.inserirAlunoAtividade(atividade);
+        }
+    }
+    
+    public void buscarAlunoAtividades(int matricula) throws ClassNotFoundException, SQLException{
+        if(matricula > 0){
+            Aluno aluno = new Aluno();
+            aluno.buscar(matricula);
+            this.alunoAtividade = AlunoDAO.getInstancia().buscarAtividades(aluno);
+        }
+    }
+    
+    public Atividade retornaAtividade(int id) throws ClassNotFoundException, SQLException{
+        Atividade atividade = new Atividade();
+        atividade.buscar(id);
+        return atividade;
+    }
     
     
     public void validaFuncionario(String usuario, String senha) throws SQLException, ClassNotFoundException {
@@ -120,6 +169,14 @@ public class Configuracao implements InterfaceObservable {
 
     public void setFuncionarios(ArrayList<Funcionario> funcionarios) {
         this.funcionarios = funcionarios;
+    }
+
+    public ArrayList<Atividade> getAlunoAtividade() {
+        return alunoAtividade;
+    }
+
+    public void setAlunoAtividade(ArrayList<Atividade> alunoAtividade) {
+        this.alunoAtividade = alunoAtividade;
     }
 
     

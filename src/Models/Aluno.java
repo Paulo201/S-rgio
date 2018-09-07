@@ -112,8 +112,16 @@ public class Aluno extends Document implements InterfaceManter{
         return atividades;
     }
 
-    public void addAtividade(Atividade atividade) {
+    public void addAtividade(Atividade atividade) throws SQLException, ClassNotFoundException {
         if (atividade != null) {
+            int somaAtividadePorCategoria = this.buscarHorasPorCategoria(atividade);
+            if(somaAtividadePorCategoria == 0 || somaAtividadePorCategoria + atividade.getQuantHoras() <= atividade.getCategoria().getLimiteHoras()){
+                atividade.setTotalAproveitado(atividade.getQuantHoras());
+            }else{
+                if (atividade.getCategoria().getLimiteHoras() - somaAtividadePorCategoria >= 0){
+                atividade.setTotalAproveitado(atividade.getCategoria().getLimiteHoras() - somaAtividadePorCategoria);
+                }
+            }
             this.atividades.add(atividade);
         }
     }
@@ -128,6 +136,7 @@ public class Aluno extends Document implements InterfaceManter{
                 } else {
                     this.setQuantHoras(atividade.getCategoria().getLimiteHoras() - atividade.getQuantHoras());
                 }
+                AlunoDAO.getInstancia().alterar(this);
             }            
         }   
     

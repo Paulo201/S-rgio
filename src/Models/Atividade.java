@@ -13,6 +13,7 @@ public class Atividade implements InterfaceManter{
     private String nome;
     private Categoria categoria;
     private int quantHoras;
+    private int totalAproveitado;
     
     
     public Atividade(){
@@ -59,6 +60,14 @@ public class Atividade implements InterfaceManter{
         this.quantHoras = quantHoras;
     }
 
+    public int getTotalAproveitado() {
+        return totalAproveitado;
+    }
+
+    public void setTotalAproveitado(int totalAproveitado) {
+        this.totalAproveitado = totalAproveitado;
+    }
+    
    @Override
     public void inserir() throws ClassNotFoundException, SQLException {
         if(this.categoria != null && this.nome != null && this.quantHoras > 0){
