@@ -105,6 +105,37 @@ public class AlunoDAO {
         }
     }
     
+    public ArrayList<Aluno> buscaTodos() throws SQLException, ClassNotFoundException {
+        
+        Connection conexao = dao.getConexao();
+        PreparedStatement stmt = null;
+        ResultSet result = null;
+        ArrayList<Aluno> alunos = new ArrayList<>();
+        try {
+            stmt = conexao.prepareStatement("SELECT * FROM ALUNO ORDER BY MATRICULA");
+            result = stmt.executeQuery();
+            
+            while (result.next()) {
+                Aluno aluno = new Aluno();
+                aluno.setMatricula(result.getInt("matricula"));
+                aluno.setNome(result.getString("nome"));
+                
+                Curso curso = new Curso();
+                curso.buscar(result.getInt("id_curso"));
+                
+                aluno.setCurso(curso);
+                aluno.setSituacao(result.getBoolean("situacao"));
+                aluno.setQuantHoras(result.getInt("quant_horas"));
+                aluno.setPontuacaoPAC(result.getInt("PAC"));
+                aluno.setAdvertencia(result.getString("Advertencias"));
+                alunos.add(aluno);
+            }
+        } finally {
+            Conexao.fecharConexao(conexao, stmt, result);
+            return alunos;
+        }
+    }
+    
     // MÉTODOS DA TABELA AUXILIAR
     
     public void inserirAlunoAtividade(Aluno aluno, Atividade atividade) throws SQLException, ClassNotFoundException {

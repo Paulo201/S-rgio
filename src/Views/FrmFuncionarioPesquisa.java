@@ -95,8 +95,7 @@ public class FrmFuncionarioPesquisa extends javax.swing.JInternalFrame {
             this.nome.setText(funcionario.getNome());
             this.senha.setText(funcionario.getSenha());
 
-            this.btnSalvar.setText("Alterar");
-            this.btnExcluir.setEnabled(true);
+            
         }
     }
     
@@ -109,8 +108,11 @@ public class FrmFuncionarioPesquisa extends javax.swing.JInternalFrame {
         this.pesquisaFuncionario.setText("");
         this.senha.setText("");
 
-        this.btnSalvar.setText("Salvar");
-        this.btnExcluir.setEnabled(false);
+       
+    }
+    
+     public void fechaTela() {
+        this.dispose();
     }
 
     public FrmTelaPrincipal getPrincipal() {
@@ -208,7 +210,7 @@ public class FrmFuncionarioPesquisa extends javax.swing.JInternalFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false
@@ -233,12 +235,17 @@ public class FrmFuncionarioPesquisa extends javax.swing.JInternalFrame {
 
         txtLogin.setText("Login:");
 
+        login.setEnabled(false);
+
         txtSenha.setText("Senha:");
 
         txtNovaSenha.setText("Nova Senha:");
 
+        senha.setEnabled(false);
+
         btnSalvar.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\accept.png")); // NOI18N
         btnSalvar.setText("Salvar");
+        btnSalvar.setEnabled(false);
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarActionPerformed(evt);
@@ -249,6 +256,7 @@ public class FrmFuncionarioPesquisa extends javax.swing.JInternalFrame {
 
         btnCancelar.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\back.png")); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.setEnabled(false);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -266,6 +274,9 @@ public class FrmFuncionarioPesquisa extends javax.swing.JInternalFrame {
 
         txtNome.setText("Nome:");
 
+        nome.setEnabled(false);
+
+        novaSenha.setEnabled(false);
         novaSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 novaSenhaActionPerformed(evt);
@@ -274,6 +285,9 @@ public class FrmFuncionarioPesquisa extends javax.swing.JInternalFrame {
 
         txtContato.setText("Contato:");
 
+        contato.setEnabled(false);
+
+        id.setEnabled(false);
         id.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 idActionPerformed(evt);
@@ -306,27 +320,23 @@ public class FrmFuncionarioPesquisa extends javax.swing.JInternalFrame {
                             .addGap(179, 179, 179)
                             .addComponent(txtContato))
                         .addGroup(layout.createSequentialGroup()
-                            .addGap(10, 10, 10)
-                            .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(40, 40, 40)
-                            .addComponent(contato, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(10, 10, 10)
-                            .addComponent(txtSenha)
-                            .addGap(184, 184, 184)
-                            .addComponent(txtNovaSenha))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(10, 10, 10)
-                            .addComponent(senha, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(50, 50, 50)
-                            .addComponent(novaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
                             .addGap(26, 26, 26)
                             .addComponent(btnExcluir)
                             .addGap(31, 31, 31)
                             .addComponent(btnCancelar)
                             .addGap(29, 29, 29)
-                            .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(10, 10, 10)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(senha, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtSenha))
+                            .addGap(40, 40, 40)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtNovaSenha)
+                                .addComponent(novaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(contato, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -371,7 +381,7 @@ public class FrmFuncionarioPesquisa extends javax.swing.JInternalFrame {
                     .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(contato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtSenha)
                     .addComponent(txtNovaSenha))
                 .addGap(6, 6, 6)
@@ -382,7 +392,8 @@ public class FrmFuncionarioPesquisa extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnExcluir)
-                    .addComponent(btnSalvar)))
+                    .addComponent(btnSalvar))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
@@ -393,23 +404,29 @@ public class FrmFuncionarioPesquisa extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_pesquisaFuncionarioActionPerformed
 
     private void BtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnOkActionPerformed
-        // TODO add your handling code here:
+        this.controller.evento(evt);
+        this.id.setEnabled(true);
+        this.nome.setEnabled(true);
+        this.login.setEnabled(true);
+        this.contato.setEnabled(true);
+        this.senha.setEnabled(true);
+        this.novaSenha.setEnabled(true);
     }//GEN-LAST:event_BtnOkActionPerformed
 
     private void tableFuncionarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableFuncionarioMouseClicked
-//        this.controller.evento(evt);
+        this.controller.evento(evt);
     }//GEN-LAST:event_tableFuncionarioMouseClicked
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-     //   this.controller.evento(evt);
+        this.controller.evento(evt);
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-     //   this.controller.evento(evt);
+        this.controller.evento(evt);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-     //   this.controller.evento(evt);
+       this.controller.evento(evt);
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void novaSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novaSenhaActionPerformed

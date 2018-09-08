@@ -14,6 +14,7 @@ public class Configuracao implements InterfaceObservable {
     private ArrayList<InterfaceObserver> observers;
     private ArrayList<Funcionario> funcionarios;
     private ArrayList<Atividade> alunoAtividade;
+    private ArrayList<Aluno> alunos;
     private Funcionario funcionario;
 
     public Configuracao() {
@@ -88,11 +89,32 @@ public class Configuracao implements InterfaceObservable {
             this.funcionarios.add(funcionario);
         }
     }
+    
+    public void buscarAluno(int matricula) throws ClassNotFoundException, SQLException{
+        Aluno aluno = new Aluno();
+        aluno.buscar(matricula);
+         if (aluno.getNome() != null) {
+            if (this.alunos == null) {
+                this.alunos = new ArrayList<Aluno>();
+            }
+
+            this.alunos.add(aluno);
+        }
+        
+    }
 
     public Aluno buscaAluno(int matricula) throws ClassNotFoundException, SQLException{
         Aluno aluno = new Aluno();
         aluno.buscar(matricula);
+         
         return aluno;
+    }
+    
+    public Funcionario buscarFuncionario(int codigo)throws ClassNotFoundException, SQLException{
+        Funcionario funcionario = new Funcionario();
+        funcionario.buscar(codigo);
+        
+        return funcionario;
     
     }
     
@@ -137,9 +159,9 @@ public class Configuracao implements InterfaceObservable {
         return atividade;
     }
     
-    public void salvarAluno(int matricula, String nome, String nomeCurso, int limiteHoras, boolean situacao, String advertencia) throws ClassNotFoundException, SQLException{
+    public void salvarAluno(int matricula, String nome, String nomeCurso, int quantHoras, boolean situacao, String advertencia) throws ClassNotFoundException, SQLException{
     
-        if(matricula > 0 && nome != null && nomeCurso != null && limiteHoras > 0){
+        if(matricula > 0 && nome != null && nomeCurso != null && quantHoras > 0){
             Aluno aluno = new Aluno();
             aluno.setMatricula(matricula);
             aluno.setNome(nome);
@@ -151,6 +173,36 @@ public class Configuracao implements InterfaceObservable {
             aluno.inserir();
         }
         
+    }
+    
+    public void alterarAluno(int matricula, String nome, String nomeCurso, int quantHoras, boolean situacao, String advertencia)throws ClassNotFoundException, SQLException{
+        Aluno aluno = new Aluno();
+        aluno.buscar(matricula);
+        
+        aluno.setMatricula(matricula);
+        aluno.setNome(nome);
+        
+        Curso curso = new Curso();
+        curso.buscarPorNome(nomeCurso);
+        
+        aluno.setCurso(curso);
+        aluno.setQuantHoras(quantHoras);
+        aluno.setSituacao(situacao);
+        aluno.setAdvertencia(advertencia);
+        
+        
+    }
+    
+    public void excluirAluno(int matricula)throws ClassNotFoundException, SQLException{
+        Aluno aluno = new Aluno();
+        aluno.buscar(matricula);
+        
+        aluno.excluir();
+    }
+    
+    public void buscarAlunos()throws ClassNotFoundException, SQLException{
+        
+        this.alunos = AlunoDAO.getInstancia().buscaTodos();
     }
     
     
@@ -194,6 +246,14 @@ public class Configuracao implements InterfaceObservable {
 
     public void setAlunoAtividade(ArrayList<Atividade> alunoAtividade) {
         this.alunoAtividade = alunoAtividade;
+    }
+
+    public ArrayList<Aluno> getAlunos() {
+        return alunos;
+    }
+
+    public void setAlunos(ArrayList<Aluno> alunos) {
+        this.alunos = alunos;
     }
 
     
