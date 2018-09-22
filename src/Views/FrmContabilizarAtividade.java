@@ -20,7 +20,7 @@ public class FrmContabilizarAtividade extends javax.swing.JInternalFrame {
     public FrmContabilizarAtividade() {
         initComponents();
     }
-    public FrmContabilizarAtividade(FrmTelaPrincipal principal) {
+    public FrmContabilizarAtividade(FrmTelaPrincipal principal,Configuracao model) {
         this();
         this.model = model;
         this.controller = new ControllerContabilizarAtividade(this, model);
