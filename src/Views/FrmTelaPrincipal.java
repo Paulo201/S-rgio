@@ -230,6 +230,11 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
 
         menuRelatorio.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\page_white_acrobat.png")); // NOI18N
         menuRelatorio.setText("Relatorio");
+        menuRelatorio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuRelatorioMouseClicked(evt);
+            }
+        });
         menuRelatorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuRelatorioActionPerformed(evt);
@@ -345,7 +350,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_menuContabilizarAtividadeActionPerformed
 
     private void menuRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRelatorioActionPerformed
-        
+              
     }//GEN-LAST:event_menuRelatorioActionPerformed
 
     private void menuSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSobreActionPerformed
@@ -367,6 +372,24 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_menuContabilizarAtividadeMouseClicked
+
+    private void menuRelatorioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuRelatorioMouseClicked
+        
+        this.jdpPrincipal.removeAll();
+        if (this.verificaLogin()) {
+            FrmRelatorio frmRelatorio = new FrmRelatorio(this.model);
+            this.jdpPrincipal.add(frmRelatorio);
+            this.colocarFormularioCentro(frmRelatorio);
+            frmRelatorio.setVisible(true);
+        } else {
+            FrmLogin frmLogin = new FrmLogin(this.model);
+            this.jdpPrincipal.add(frmLogin);
+            this.colocarFormularioCentro(frmLogin);
+            frmLogin.setVisible(true);
+            
+        }
+          
+    }//GEN-LAST:event_menuRelatorioMouseClicked
  
     public void iniciaFormulario() {
         /*java.awt.EventQueue.invokeLater(new Runnable() {

@@ -145,247 +145,7 @@ public class Aluno extends Document implements InterfaceManter{
     public static final Font BOLD_UNDERLINED = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
 
     public static final Font NORMAL = new Font(Font.FontFamily.TIMES_ROMAN, 12);
-
-    private void emitirRelatorio(int x) {
-/*
-        Document documento = new Document();
-
-        try {
-
-            PdfWriter.getInstance(documento, new FileOutputStream("C:\\Users\\willi\\OneDrive\\Documentos\\2018.2\\Processos de Software\\Parte 1\\Trabalho\\Relatorios\\relatorio.pdf"));
-
-            documento.open();
-            
-            Font f = new Font(FontFamily.TIMES_ROMAN, 11, Font.NORMAL);
-            
-             Font g = new Font(FontFamily.TIMES_ROMAN, 20, Font.NORMAL);
-
-            Image imagemLogoUFC = Image.getInstance("C:/Users/willi/Desktop/a.png");
-
-            imagemLogoUFC.setAlignment(Element.ALIGN_CENTER);
-            
-            documento.add(imagemLogoUFC);
-            
-            Paragraph titulo = new Paragraph("RELATÓRIO - ATIVIDADES COMPLEMENTARES", f);
-
-           // titulo.add("RELATÓRIO - ATIVIDADES COMPLEMENTARES");
-
-            titulo.setAlignment(Element.ALIGN_CENTER);
-            
-            /*
-
-        //    titulo.setFont(f/*new Font(Font.FontFamily.TIMES_ROMAN, Font.BOLDITALIC, 40));
-
-        /*    titulo.setSpacingBefore((float)15.00);
-            
-            titulo.setSpacingAfter((float) 20.00);
-
-            documento.add(titulo);
-
-            Paragraph matricula = new Paragraph();
-
-            matricula.add("Matricula: ");
-
-            matricula.add("" + this.matricula);
-
-            matricula.setAlignment(Element.ALIGN_LEFT);
-
-            matricula.setSpacingAfter((float) 10.00);
-
-            documento.add(matricula);
-
-            Paragraph nome = new Paragraph();
-
-            nome.add("Nome: ");
-
-            nome.add("" + this.nome);
-
-            nome.setAlignment(Element.ALIGN_LEFT);
-
-            nome.setSpacingAfter((float) 10.00);
-
-            documento.add(nome);
-
-            //AGORA È A TABELA
-            /*Paragraph pImagem = new Paragraph();
-                pImagem.add(imagem);
-                pImagem.setAlignment(Element.ALIGN_CENTER);
-                documento.add(pImagem);
-                Paragraph p = new Paragraph();
-                
-             */
- /*
-                Phrase a = new Phrase("Titulo: ");
-                a.setFont(new Font(Font.FontFamily.TIMES_ROMAN, Font.BOLDITALIC, 40));
-                documento.add(a);
-                p.add(a);
-                p.add("Teste de Titulo");
-                p.setAlignment(Element.ALIGN_CENTER);
-                p.setIndentationLeft(18);
-                p.setFirstLineIndent(-18);
-                p.add(" ");
-                p.add(new Phrase("Titulo 2: ", BOLD_UNDERLINED));
-                p.add("Teste de Titulo 2");
-             */
-            //TESTANDO LISTA
-           /* List list = new List(true, 20);
-            list.add(new ListItem("Primeira Linha"));
-            list.add(new ListItem("Essa linha tem o intuito de ser um pouco maior que uma linha apenas. Por isso estamos nos alongando neste texto para ver o que acontece, será que uma nova linha é criada ou teremos tudo numa mesma linha?"));
-            list.add(new ListItem("Terceira Linha"));
-            documento.add(list);
-
-            
-            //
-            
-            List lista = new RomanList();
-       
-           
-       ListItem item1 = new ListItem("Teste ListItem 1", f);
-       ListItem item2 = new ListItem("Teste ListItem 2", BOLD_UNDERLINED);
-       ListItem item3 = new ListItem("Teste ListItem 3");
-  
-       lista.add(item3);
-              
-       lista.add(item1);
-       lista.add(item2);
-              
-       documento.add(lista);
-            */
-      /* PdfPTable table = new PdfPTable(4);
-       PdfPCell celula1 = new PdfPCell();
-            table.getDefaultCell().setPadding((float)7.00);
-       //     table.getDefaultCell().setSpaceCharRatio((float) 50.00);
-            table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
-            table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
-           // table.getDefaultCell().setBorder(PdfPCell.NO_BORDER); // Aqui eu tiro a borda
-            table.addCell(new Paragraph("Atividade"));
-            table.addCell(new Paragraph("Documento Comprobatório"));
-            table.addCell(new Paragraph("Limite Da Categoria"));
-            table.addCell(new Paragraph("Total Aproveitado"));
-         PdfPTable table = new PdfPTable(3);
- //   table.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
-    
-    PdfPCell cell1 = new PdfPCell(new Paragraph("Atividade"));
-    PdfPCell cell2 = new PdfPCell(new Paragraph("Categoria"));
-    PdfPCell cell3 = new PdfPCell(new Paragraph("Limite"));
-    PdfPCell cell4 = new PdfPCell(new Paragraph("Total Aproveitado"));
-    cell1.setColspan(1);
-    float[] widths = {0.1f, 0.1f, 0.05f, 0.75f};
-			widths[0] = 10f;
-			widths[1] = 10f;
-			widths[2] = 10f;
-			widths[3] = 10f;
-			table = new PdfPTable(4);
-			table.setWidths(widths);
-    cell2.setColspan(1);
-    cell3.setColspan(1);
-    cell4.setColspan(1);
-    cell1.setRowspan(2);
-    cell2.setRowspan(2);
-    cell3.setRowspan(2);
-    cell4.setRowspan(2);
-    table.addCell(cell1);
-    table.addCell(cell2);
-    table.addCell(cell3);
-    table.addCell(cell4);
-    table.addCell("vôlei");
-    table.addCell("Esportes");
-    table.addCell("46");
-    table.addCell("10");
-    table.addCell("monitoria");
-    table.addCell("docência");
-    table.addCell("96");
-    table.addCell("96");
-    table.setWidthPercentage(100);
-    documento.add(table);  
-    
-    PdfPTable total = new PdfPTable(1);
-    
    
-    
-    PdfPCell cellTotal = new PdfPCell(new Paragraph("Total Acumulado"));
-    
-    total.addCell(cellTotal);
-  
-    total.setSpacingBefore(10);
-    
-    total.setHorizontalAlignment(Element.ALIGN_RIGHT);
-   
-    cellTotal.setColspan(1);
-    
-    total.addCell("100");
-    
-    total.setWidthPercentage(25);
-    
-    documento.add(total);
-                
-        //    documento.add(table);
-          
-       
-       /*PdfPTable topo = new PdfPTable(2);
-        PdfPCell cellTopo = new PdfPCell();
-        cellTopo.setColspan(2);
-
-        
-       
-       
-        topo.addCell(titulo);
-        documento.add(topo);
-*/
-        //Menu
-    /*    PdfPTable menu = new PdfPTable(7);
-        PdfPCell cellMenu = new PdfPCell();
-        cellMenu.setColspan(3);
-        Font imenu = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
-        menu.addCell(new Paragraph("Atendente", imenu));
-        menu.addCell(new Paragraph("Cliente de Entrada", imenu));
-        menu.addCell(new Paragraph("Data de Entrada", imenu));
-        /*menu.addCell(new Paragraph("Problema", imenu));
-        menu.addCell(new Paragraph("Solução", imenu));
-        menu.addCell(new Paragraph("Cliente de Saída", imenu));
-        menu.addCell(new Paragraph("Data de Saída", imenu));*/
-      /*  documento.add(menu);
-
-        //Conteudo
-        PdfPTable conteudo = new PdfPTable(7);
-        PdfPCell cellConteudo = new PdfPCell();
-        cellConteudo.setColspan(2);
-
-      conteudo.addCell(new Paragraph("Eu sou um conteudo"));
-     conteudo.addCell(new Paragraph("Eu sou um conteudo2"));    
-       
-        PdfPCell celula1 = new PdfPCell(new Paragraph("Eu sou um conteudo"));
-        PdfPCell celula2 = new PdfPCell(new Paragraph("Eu sou um conteudo2"));
-        
-        conteudo.addCell(celula1);
-       conteudo.addCell(celula2);
-        
-        documento.add(conteudo);
-       
-            documento.add(new Paragraph("Gerando PDF - Java aaaa"));
-        } catch (DocumentException de) {
-            System.err.println(de.getMessage());
-        } catch (IOException ioe) {
-            System.err.println(ioe.getMessage());
-        }
-        documento.close();
-
-        /*
-          
-          quando clicar no botao de gerar pdf
-          
-         
-        File file = new File("C:\\Users\\willi\\OneDrive\\Documentos\\2018.2\\Processos de Software\\Parte 1\\Trabalho\\Relatorios\\relatorio.pdf");
-
-        try {
-            Desktop.getDesktop().open(file);
-        } catch (IOException ex) {
-
-        
-    }
-    */
- }
-    
     public void emitirRelatorio(){
          Document documento = new Document();
 
@@ -395,7 +155,7 @@ public class Aluno extends Document implements InterfaceManter{
 
             documento.open();
 
-            Font fTitulo = new Font(FontFamily.TIMES_ROMAN, 20, Font.BOLD);
+            Font fTitulo = new Font(FontFamily.TIMES_ROMAN, 18, Font.BOLD);
             
             Font fCorpo = new Font(FontFamily.TIMES_ROMAN, 11, Font.NORMAL);
             
@@ -446,29 +206,50 @@ public class Aluno extends Document implements InterfaceManter{
             documento.add(curso);
            
             
-            Paragraph categoria = new Paragraph("Categoria: ", fLista);
+            Paragraph categoria = new Paragraph("Categorias: ", fCorpo);
+            
+            documento.add(categoria);
             
             List listaCategorias = new RomanList();
             
             ListItem categoria1 = new ListItem("Atividades de iniciação à docência", fLista);
             
+            listaCategorias.add(categoria1);
+            
             ListItem categoria2 = new ListItem("Atividades de iniciação à pesquisa", fLista);
+            
+            listaCategorias.add(categoria2);
             
             ListItem categoria3 = new ListItem("Atividades de extensão", fLista);
             
+            listaCategorias.add(categoria3);
+            
             ListItem categoria4 = new ListItem("Atividades artístico-culturais e esportivas", fLista);
+            
+            listaCategorias.add(categoria4);
             
             ListItem categoria5 = new ListItem("Atividades de participação e/ou organização de eventos", fLista);
             
+            listaCategorias.add(categoria5);
+            
             ListItem categoria6 = new ListItem("Experiências ligadas à formação profissional e/ou correlatas", fLista);
+            
+            listaCategorias.add(categoria6);
             
             ListItem categoria7 = new ListItem("Produção Técnica e/ou Científica", fLista);
             
+            listaCategorias.add(categoria7);
+            
             ListItem categoria8 = new ListItem("Vivências de gestão", fLista);
+            
+            listaCategorias.add(categoria8);
             
             ListItem categoria9 = new ListItem("Outras atividades, estabelecidas de acordo com o Art. 3º. dessa Resolução", fLista);
         
+            listaCategorias.add(categoria9);
+                      
             documento.add(listaCategorias);
+            
             
             
             //AGORA É A TABELA!
@@ -497,6 +278,7 @@ public class Aluno extends Document implements InterfaceManter{
             tableAtividades.addCell(cell2);
             tableAtividades.addCell(cell3);
             tableAtividades.addCell(cell4);
+            tableAtividades.setSpacingBefore(20);
             tableAtividades.setWidthPercentage(100);
             
             for(Atividade atividade: this.atividades){
@@ -525,7 +307,7 @@ public class Aluno extends Document implements InterfaceManter{
             
             cellTotal.setColspan(1);
 
-            total.addCell("100");
+            total.addCell(this.quantHoras+"");
             
             documento.add(total);
             
@@ -557,12 +339,6 @@ public class Aluno extends Document implements InterfaceManter{
     
     }
      
-    
-    public static void main(String args[]) {
-        Aluno a = new Aluno();
-        a.emitirRelatorio();
-    }
-
     @Override
     public void inserir() throws ClassNotFoundException, SQLException {
         if(this.matricula > 0 && this.nome != null && this.curso != null && this.situacao != false){
