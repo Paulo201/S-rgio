@@ -100,6 +100,12 @@ public class FrmAlunoPesquisa extends javax.swing.JInternalFrame {
             this.nomeCurso.setText(aluno.getCurso().getNome());
             this.quantHoras.setText(""+aluno.getQuantHoras());
             this.advertencia.setText(aluno.getAdvertencia());
+            this.matricula.setEnabled(true);
+            this.nome.setEnabled(true);
+            this.nomeCurso.setEnabled(true);
+            this.situacao.setEnabled(true);
+            this.quantHoras.setEnabled(true);
+            this.advertencia.setEnabled(true);
         }
     }
 
@@ -190,7 +196,7 @@ public class FrmAlunoPesquisa extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         pesquisaAluno = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnOk = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAlunos = new javax.swing.JTable();
         jSeparator1 = new javax.swing.JSeparator();
@@ -220,7 +226,12 @@ public class FrmAlunoPesquisa extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Pesquisar:");
 
-        jButton1.setText("OK");
+        btnOk.setText("OK");
+        btnOk.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOkActionPerformed(evt);
+            }
+        });
 
         tblAlunos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -230,16 +241,28 @@ public class FrmAlunoPesquisa extends javax.swing.JInternalFrame {
                 "Matrícula", "Nome", "Curso", "Advertências", "Horas Acumuladas"
             }
         ));
+        tblAlunos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAlunosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblAlunos);
 
         jLabel3.setText("Matricula:");
 
+        matricula.setEnabled(false);
+
         jLabel4.setText("Nome:");
+
+        nome.setEnabled(false);
 
         jLabel5.setText("Curso:");
 
+        nomeCurso.setEnabled(false);
+
         jLabel6.setText("Situação:");
 
+        situacao.setEnabled(false);
         situacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 situacaoActionPerformed(evt);
@@ -259,13 +282,21 @@ public class FrmAlunoPesquisa extends javax.swing.JInternalFrame {
 
         advertencia.setColumns(20);
         advertencia.setRows(5);
+        advertencia.setEnabled(false);
         jScrollPane2.setViewportView(advertencia);
 
         btnSalvar.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\accept.png")); // NOI18N
         btnSalvar.setText("Salvar");
+        btnSalvar.setEnabled(false);
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\back.png")); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.setEnabled(false);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -274,6 +305,7 @@ public class FrmAlunoPesquisa extends javax.swing.JInternalFrame {
 
         btnExcluir.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\cancel.png")); // NOI18N
         btnExcluir.setText("Excluir");
+        btnExcluir.setEnabled(false);
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExcluirActionPerformed(evt);
@@ -297,7 +329,7 @@ public class FrmAlunoPesquisa extends javax.swing.JInternalFrame {
                                 .addGap(4, 4, 4)
                                 .addComponent(pesquisaAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton1))
+                                .addComponent(btnOk))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 514, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -359,7 +391,7 @@ public class FrmAlunoPesquisa extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addComponent(pesquisaAluno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jButton1))
+                    .addComponent(btnOk))
                 .addGap(11, 11, 11)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -406,20 +438,35 @@ public class FrmAlunoPesquisa extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_quantHorasActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        this.controller.evento(evt);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        // TODO add your handling code here:
+        this.controller.evento(evt);
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
+        this.controller.evento(evt);
+    }//GEN-LAST:event_btnOkActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        this.controller.evento(evt);
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void tblAlunosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAlunosMouseClicked
+        this.controller.evento(evt);
+        this.btnSalvar.setEnabled(true);
+        this.btnExcluir.setEnabled(true);
+        this.btnCancelar.setEnabled(true);
+    }//GEN-LAST:event_tblAlunosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea advertencia;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnOk;
     private javax.swing.JButton btnSalvar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -5,8 +5,10 @@ import Models.Atividade;
 import Models.Categoria;
 import Views.FrmContabilizarAtividade;
 import Models.Configuracao;
+import Models.Aluno;
 import Models.InterfaceObserver;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JButton;
@@ -41,8 +43,10 @@ public class ControllerContabilizarAtividade implements InterfaceObserver{
             try{
            
                 this.model.salvarAlunoAtividades(Integer.parseInt(this.view.getMatricula()), Integer.parseInt(this.view.getPesquisaAtividade()));
-            
+                
                 this.view.limpaCampos();
+                
+                this.view.mostraMensagem("A atividade foi contabilizada com sucesso!");
             
             } catch (SQLException | ClassNotFoundException ex) {
                     this.view.mostraMensagem("Não foi possível contabilizar a atividade do aluno. Mensagem retornada: " + ex.getMessage());
@@ -107,6 +111,23 @@ public class ControllerContabilizarAtividade implements InterfaceObserver{
         this.model.avisarObservers();
     }  
 
+    public void evento(MouseEvent evt) {
+      int linha = this.view.getTblAtividadesDoAluno().getSelectedRow();
+                        
+        if (linha >= 0) {
+            try {
+                Atividade atividade = new Atividade();
+                atividade.buscar(Integer.parseInt(this.view.getTblAtividadesDoAluno().getValueAt(linha, 0).toString()));
+                this.view.preencheCamposAtividade(atividade);
+
+            } catch (ClassNotFoundException | SQLException ex) {
+                this.view.mostraMensagem("Não foi possível selecionar funcionario. Mensagem retornada: " + ex.getMessage());
+                this.view.limpaCampos();
+                }
+            } 
+     
+     }
+    
     public void evento(InternalFrameEvent evt) {
         this.model.excluir(this);//deixando de ser um observer
     }

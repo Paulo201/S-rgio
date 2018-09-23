@@ -94,7 +94,9 @@ public class FrmFuncionarioPesquisa extends javax.swing.JInternalFrame {
             this.login.setText(funcionario.getLogin());
             this.nome.setText(funcionario.getNome());
             this.senha.setText(funcionario.getSenha());
-
+            this.btnSalvar.setEnabled(true);
+            this.btnExcluir.setEnabled(true);
+            this.btnCancelar.setEnabled(true);
             
         }
     }
@@ -166,7 +168,6 @@ public class FrmFuncionarioPesquisa extends javax.swing.JInternalFrame {
         login = new javax.swing.JTextField();
         txtSenha = new javax.swing.JLabel();
         txtNovaSenha = new javax.swing.JLabel();
-        senha = new javax.swing.JTextField();
         btnSalvar = new javax.swing.JButton();
         labelId = new javax.swing.JLabel();
         btnCancelar = new javax.swing.JButton();
@@ -177,6 +178,7 @@ public class FrmFuncionarioPesquisa extends javax.swing.JInternalFrame {
         txtContato = new javax.swing.JLabel();
         contato = new javax.swing.JTextField();
         id = new javax.swing.JTextField();
+        senha = new javax.swing.JPasswordField();
 
         setClosable(true);
         setIconifiable(true);
@@ -240,8 +242,6 @@ public class FrmFuncionarioPesquisa extends javax.swing.JInternalFrame {
         txtSenha.setText("Senha:");
 
         txtNovaSenha.setText("Nova Senha:");
-
-        senha.setEnabled(false);
 
         btnSalvar.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\accept.png")); // NOI18N
         btnSalvar.setText("Salvar");
@@ -327,11 +327,12 @@ public class FrmFuncionarioPesquisa extends javax.swing.JInternalFrame {
                             .addGap(29, 29, 29)
                             .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(layout.createSequentialGroup()
-                            .addGap(10, 10, 10)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(senha, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtSenha))
+                            .addContainerGap()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(login, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtSenha))
+                                .addComponent(senha, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(40, 40, 40)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(txtNovaSenha)
@@ -385,15 +386,15 @@ public class FrmFuncionarioPesquisa extends javax.swing.JInternalFrame {
                     .addComponent(txtSenha)
                     .addComponent(txtNovaSenha))
                 .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(senha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(novaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(novaSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(senha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCancelar)
                     .addComponent(btnExcluir)
                     .addComponent(btnSalvar))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pack();
@@ -451,7 +452,7 @@ public class FrmFuncionarioPesquisa extends javax.swing.JInternalFrame {
     private javax.swing.JTextField nome;
     private javax.swing.JPasswordField novaSenha;
     private javax.swing.JTextField pesquisaFuncionario;
-    private javax.swing.JTextField senha;
+    private javax.swing.JPasswordField senha;
     private javax.swing.JTable tableFuncionario;
     private javax.swing.JLabel titulo;
     private javax.swing.JLabel txtContato;

@@ -147,7 +147,7 @@ public class Aluno extends Document implements InterfaceManter{
     public static final Font NORMAL = new Font(Font.FontFamily.TIMES_ROMAN, 12);
 
     private void emitirRelatorio(int x) {
-
+/*
         Document documento = new Document();
 
         try {
@@ -172,11 +172,11 @@ public class Aluno extends Document implements InterfaceManter{
 
             titulo.setAlignment(Element.ALIGN_CENTER);
             
-            
+            /*
 
-        //    titulo.setFont(f/*new Font(Font.FontFamily.TIMES_ROMAN, Font.BOLDITALIC, 40)*/);
+        //    titulo.setFont(f/*new Font(Font.FontFamily.TIMES_ROMAN, Font.BOLDITALIC, 40));
 
-            titulo.setSpacingBefore((float)15.00);
+        /*    titulo.setSpacingBefore((float)15.00);
             
             titulo.setSpacingAfter((float) 20.00);
 
@@ -262,21 +262,64 @@ public class Aluno extends Document implements InterfaceManter{
             table.addCell(new Paragraph("Documento Comprobatório"));
             table.addCell(new Paragraph("Limite Da Categoria"));
             table.addCell(new Paragraph("Total Aproveitado"));
-        */ PdfPTable table = new PdfPTable(3);
-    table.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
-    PdfPCell cell = new PdfPCell(new Paragraph("header with colspan 3"));
-    cell.setColspan(3);
-    table.addCell(cell);
-    table.addCell("1.1");
-    table.addCell("2.1");
-    table.addCell("3.1");
-    table.addCell("1.2");
-    table.addCell("2.2");
-    table.addCell("3.2");
+         PdfPTable table = new PdfPTable(3);
+ //   table.getDefaultCell().setBorder(PdfPCell.NO_BORDER);
+    
+    PdfPCell cell1 = new PdfPCell(new Paragraph("Atividade"));
+    PdfPCell cell2 = new PdfPCell(new Paragraph("Categoria"));
+    PdfPCell cell3 = new PdfPCell(new Paragraph("Limite"));
+    PdfPCell cell4 = new PdfPCell(new Paragraph("Total Aproveitado"));
+    cell1.setColspan(1);
+    float[] widths = {0.1f, 0.1f, 0.05f, 0.75f};
+			widths[0] = 10f;
+			widths[1] = 10f;
+			widths[2] = 10f;
+			widths[3] = 10f;
+			table = new PdfPTable(4);
+			table.setWidths(widths);
+    cell2.setColspan(1);
+    cell3.setColspan(1);
+    cell4.setColspan(1);
+    cell1.setRowspan(2);
+    cell2.setRowspan(2);
+    cell3.setRowspan(2);
+    cell4.setRowspan(2);
+    table.addCell(cell1);
+    table.addCell(cell2);
+    table.addCell(cell3);
+    table.addCell(cell4);
+    table.addCell("vôlei");
+    table.addCell("Esportes");
+    table.addCell("46");
+    table.addCell("10");
+    table.addCell("monitoria");
+    table.addCell("docência");
+    table.addCell("96");
+    table.addCell("96");
+    table.setWidthPercentage(100);
     documento.add(table);  
-            
+    
+    PdfPTable total = new PdfPTable(1);
+    
+   
+    
+    PdfPCell cellTotal = new PdfPCell(new Paragraph("Total Acumulado"));
+    
+    total.addCell(cellTotal);
+  
+    total.setSpacingBefore(10);
+    
+    total.setHorizontalAlignment(Element.ALIGN_RIGHT);
+   
+    cellTotal.setColspan(1);
+    
+    total.addCell("100");
+    
+    total.setWidthPercentage(25);
+    
+    documento.add(total);
                 
-            documento.add(table);
+        //    documento.add(table);
           
        
        /*PdfPTable topo = new PdfPTable(2);
@@ -290,7 +333,7 @@ public class Aluno extends Document implements InterfaceManter{
         documento.add(topo);
 */
         //Menu
-        PdfPTable menu = new PdfPTable(7);
+    /*    PdfPTable menu = new PdfPTable(7);
         PdfPCell cellMenu = new PdfPCell();
         cellMenu.setColspan(3);
         Font imenu = new Font(Font.FontFamily.HELVETICA, 12, Font.BOLD);
@@ -301,7 +344,7 @@ public class Aluno extends Document implements InterfaceManter{
         menu.addCell(new Paragraph("Solução", imenu));
         menu.addCell(new Paragraph("Cliente de Saída", imenu));
         menu.addCell(new Paragraph("Data de Saída", imenu));*/
-        documento.add(menu);
+      /*  documento.add(menu);
 
         //Conteudo
         PdfPTable conteudo = new PdfPTable(7);
@@ -331,16 +374,18 @@ public class Aluno extends Document implements InterfaceManter{
           
           quando clicar no botao de gerar pdf
           
-         */
+         
         File file = new File("C:\\Users\\willi\\OneDrive\\Documentos\\2018.2\\Processos de Software\\Parte 1\\Trabalho\\Relatorios\\relatorio.pdf");
 
         try {
             Desktop.getDesktop().open(file);
         } catch (IOException ex) {
 
-        }
+        
     }
-
+    */
+ }
+    
     public void emitirRelatorio(){
          Document documento = new Document();
 
@@ -428,8 +473,61 @@ public class Aluno extends Document implements InterfaceManter{
             
             //AGORA É A TABELA!
             
-            PdfPTable tabelAtividades = new PdfPTable(4);
+            PdfPTable tableAtividades;
+            PdfPCell cell1 = new PdfPCell(new Paragraph("Atividade"));
+            PdfPCell cell2 = new PdfPCell(new Paragraph("Categoria"));
+            PdfPCell cell3 = new PdfPCell(new Paragraph("Limite"));
+            PdfPCell cell4 = new PdfPCell(new Paragraph("Total Aproveitado"));
+            cell1.setColspan(1);
+            float[] widths = {0.1f, 0.1f, 0.05f, 0.75f};
+                                widths[0] = 10f;
+                                widths[1] = 10f;
+                                widths[2] = 10f;
+                                widths[3] = 10f;
+                                tableAtividades = new PdfPTable(4);
+                                tableAtividades.setWidths(widths);
+            cell2.setColspan(1);
+            cell3.setColspan(1);
+            cell4.setColspan(1);
+            cell1.setRowspan(2);
+            cell2.setRowspan(2);
+            cell3.setRowspan(2);
+            cell4.setRowspan(2);
+            tableAtividades.addCell(cell1);
+            tableAtividades.addCell(cell2);
+            tableAtividades.addCell(cell3);
+            tableAtividades.addCell(cell4);
+            tableAtividades.setWidthPercentage(100);
             
+            for(Atividade atividade: this.atividades){
+                
+                tableAtividades.addCell(atividade.getNome());
+                tableAtividades.addCell(atividade.getCategoria().getNome());
+                tableAtividades.addCell(atividade.getCategoria().getLimiteHoras()+"");
+                tableAtividades.addCell(atividade.getTotalAproveitado()+"");
+                
+            }
+            
+            
+            documento.add(tableAtividades);   
+            
+            PdfPTable total = new PdfPTable(1);
+            
+            total.setSpacingBefore(10);
+
+            total.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            
+            total.setWidthPercentage(25);
+            
+            PdfPCell cellTotal = new PdfPCell(new Paragraph("Total Acumulado"));
+    
+            total.addCell(cellTotal);
+            
+            cellTotal.setColspan(1);
+
+            total.addCell("100");
+            
+            documento.add(total);
             
        
         } catch (DocumentException de) {
@@ -462,7 +560,7 @@ public class Aluno extends Document implements InterfaceManter{
     
     public static void main(String args[]) {
         Aluno a = new Aluno();
-        a.emitirRelatorio(0);
+        a.emitirRelatorio();
     }
 
     @Override

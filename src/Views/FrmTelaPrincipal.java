@@ -1,7 +1,11 @@
 package Views;
 
 import Models.Configuracao;
+import Models.Funcionario;
 import java.awt.Dimension;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JInternalFrame;
 
 /**
@@ -18,10 +22,16 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
         
     }
 
-     public FrmTelaPrincipal(Configuracao model) {
+     public FrmTelaPrincipal(Configuracao model) throws ClassNotFoundException, SQLException {
         this();
         this.model = model;
         this.iniciaFormulario();
+        Funcionario funcionario = new Funcionario();
+        funcionario.setNome("admin");
+        funcionario.setLogin("admin");
+        funcionario.setSenha("123");
+        funcionario.inserir();
+        this.model.setFuncionario(funcionario);
     }
      
     public boolean verificaLogin() {
@@ -206,6 +216,11 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
 
         menuContabilizarAtividade.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\calc (2).png")); // NOI18N
         menuContabilizarAtividade.setText("Contabilizar Atividade");
+        menuContabilizarAtividade.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuContabilizarAtividadeMouseClicked(evt);
+            }
+        });
         menuContabilizarAtividade.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuContabilizarAtividadeActionPerformed(evt);
@@ -306,19 +321,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_itemCadastrarAtividadeActionPerformed
 
     private void itemPesquisarAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPesquisarAlunoActionPerformed
-        this.jdpPrincipal.removeAll();
-        if (this.verificaLogin()) {
-            FrmAlunoPesquisa frmAlunoPesquisa = new FrmAlunoPesquisa(this.model);
-            this.jdpPrincipal.add(frmAlunoPesquisa);
-            this.colocarFormularioCentro(frmAlunoPesquisa);
-            frmAlunoPesquisa.setVisible(true);
-        } else {
-            FrmLogin frmLogin = new FrmLogin(this.model);
-            this.jdpPrincipal.add(frmLogin);
-            this.colocarFormularioCentro(frmLogin);
-            frmLogin.setVisible(true);
-            
-        }
+        
     }//GEN-LAST:event_itemPesquisarAlunoActionPerformed
 
     private void itemPesquisarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPesquisarCategoriaActionPerformed
@@ -326,10 +329,6 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_itemPesquisarCategoriaActionPerformed
 
     private void menuContabilizarAtividadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuContabilizarAtividadeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_menuContabilizarAtividadeActionPerformed
-
-    private void menuRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRelatorioActionPerformed
         this.jdpPrincipal.removeAll();
         if (this.verificaLogin()) {
             FrmContabilizarAtividade frmContabilizarAtividade = new FrmContabilizarAtividade(this,this.model);
@@ -343,11 +342,31 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
             frmLogin.setVisible(true);
             
         }
+    }//GEN-LAST:event_menuContabilizarAtividadeActionPerformed
+
+    private void menuRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuRelatorioActionPerformed
+        
     }//GEN-LAST:event_menuRelatorioActionPerformed
 
     private void menuSobreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSobreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_menuSobreActionPerformed
+
+    private void menuContabilizarAtividadeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuContabilizarAtividadeMouseClicked
+        this.jdpPrincipal.removeAll();
+        if (this.verificaLogin()) {
+            FrmContabilizarAtividade frmContabilizarAtividade = new FrmContabilizarAtividade(this,this.model);
+            this.jdpPrincipal.add(frmContabilizarAtividade);
+            this.colocarFormularioCentro(frmContabilizarAtividade);
+            frmContabilizarAtividade.setVisible(true);
+        } else {
+            FrmLogin frmLogin = new FrmLogin(this.model);
+            this.jdpPrincipal.add(frmLogin);
+            this.colocarFormularioCentro(frmLogin);
+            frmLogin.setVisible(true);
+            
+        }
+    }//GEN-LAST:event_menuContabilizarAtividadeMouseClicked
  
     public void iniciaFormulario() {
         /*java.awt.EventQueue.invokeLater(new Runnable() {
@@ -381,9 +400,18 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmTelaPrincipal(new Configuracao()).setVisible(true);
+                try {
+                    new FrmTelaPrincipal(new Configuracao()).setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(FrmTelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(FrmTelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
             }
         });
     }

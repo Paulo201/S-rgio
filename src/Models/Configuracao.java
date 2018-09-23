@@ -166,6 +166,7 @@ public class Configuracao implements InterfaceObservable {
             aluno.setMatricula(matricula);
             aluno.setNome(nome);
             Curso curso = new Curso();
+            curso.setNome(nomeCurso);
             curso.buscarPorNome(nomeCurso);
             aluno.setCurso(curso);
             aluno.setSituacao(situacao);
@@ -241,7 +242,7 @@ public class Configuracao implements InterfaceObservable {
     }
 
     public ArrayList<Atividade> getAlunoAtividade() {
-        return alunoAtividade;
+        return this.alunoAtividade;
     }
 
     public void setAlunoAtividade(ArrayList<Atividade> alunoAtividade) {
@@ -249,7 +250,7 @@ public class Configuracao implements InterfaceObservable {
     }
 
     public ArrayList<Aluno> getAlunos() {
-        return alunos;
+        return this.alunos;
     }
 
     public void setAlunos(ArrayList<Aluno> alunos) {

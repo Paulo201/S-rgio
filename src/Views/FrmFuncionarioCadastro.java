@@ -53,19 +53,19 @@ public class FrmFuncionarioCadastro extends javax.swing.JInternalFrame {
             return false;
         }
         
-        if (this.senha.getText().trim().equals("")) {
+        if (this.senha.getPassword().equals("")) {
             this.mostraMensagem("Informe a senha do usuário.");
             this.senha.requestFocus();
             return false;
         }
         
-        if (this.confirmarSenha.getText().trim().equals("")) {
+        if (this.confirmarSenha.getPassword().equals("")) {
             this.mostraMensagem("Informe a senha do usuário de novo, para confirmar.");
             this.confirmarSenha.requestFocus();
             return false;
         }
         
-        if (this.confirmarSenha.getText().trim().equals(this.senha.getText().trim())) {
+        if (this.confirmarSenha.getPassword().equals(this.senha.getPassword())) {
             this.mostraMensagem("Informe a senha igual a anterior, para confirmar.");
             this.confirmarSenha.requestFocus();
             return false;

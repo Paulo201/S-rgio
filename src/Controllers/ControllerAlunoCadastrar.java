@@ -38,7 +38,7 @@ public class ControllerAlunoCadastrar implements InterfaceObserver{
         if (((JButton) evt.getSource()).getText().equals("Cancelar")) {
             this.view.limpaCampos();
             this.view.fechaTela();
-            this.view.getPrincipal().setVisible(true);//volta para a tela inicial
+           // this.view.getPrincipal().setVisible(true);//volta para a tela inicial
         }
   
     }

@@ -195,6 +195,7 @@
             <Property name="text" type="java.lang.String" value="Contabilizar Atividade"/>
           </Properties>
           <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuContabilizarAtividadeMouseClicked"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuContabilizarAtividadeActionPerformed"/>
           </Events>
         </Menu>

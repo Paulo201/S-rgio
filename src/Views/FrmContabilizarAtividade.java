@@ -3,6 +3,9 @@ import Controllers.ControllerContabilizarAtividade;
 import Models.Aluno;
 import Models.Atividade;
 import Models.Configuracao;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -42,7 +45,9 @@ public class FrmContabilizarAtividade extends javax.swing.JInternalFrame {
         this.nomeAtividade.setText("");
         this.quantHoraAtividade.setText("");
         this.categoria.setText("");
-        
+        this.btnNovaAtividade.setEnabled(true);
+        this.btnContabilizar.setEnabled(false);
+        this.btnExcluir.setEnabled(false);
     }
     
     public void limpaTableAtividadesDoAluno() {
@@ -77,11 +82,18 @@ public class FrmContabilizarAtividade extends javax.swing.JInternalFrame {
        this.nomeAtividade.setText(String.valueOf(atividade.getNome()));
        this.quantHoraAtividade.setText(String.valueOf(atividade.getQuantHoras()));
        this.categoria.setText(String.valueOf(atividade.getCategoria().getNome()));
+       this.btnContabilizar.setEnabled(true);
+       this.btnExcluir.setEnabled(true);
+       this.btnCancelar.setEnabled(true);
+       this.btnNovaAtividade.setEnabled(false);
     }
     
     public void preencheCamposAluno(Aluno aluno){
         this.matricula.setText(String.valueOf(aluno.getMatricula()));
         this.nomeAluno.setText(String.valueOf(aluno.getNome()));
+        this.pesquisarAtividade.setEnabled(true);
+        this.btnOkAtividade.setEnabled(true);
+        this.btnNovaAtividade.setEnabled(true);
     }
     
 
@@ -206,6 +218,11 @@ public class FrmContabilizarAtividade extends javax.swing.JInternalFrame {
                 "Atividade", "Quant. Horas", "Categoria", "Limite Categoria", "Total Aproveitado"
             }
         ));
+        tblAtividadesDoAluno.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAtividadesDoAlunoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblAtividadesDoAluno);
 
         jLabel2.setText("Total:");
@@ -420,7 +437,13 @@ public class FrmContabilizarAtividade extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_pesquisarAtividadeActionPerformed
 
     private void btnContabilizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContabilizarActionPerformed
-        // TODO add your handling code here:
+        try {
+            this.controller.evento(evt);
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmContabilizarAtividade.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(FrmContabilizarAtividade.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnContabilizarActionPerformed
 
     private void btnOkAtividadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkAtividadeActionPerformed
@@ -430,6 +453,10 @@ public class FrmContabilizarAtividade extends javax.swing.JInternalFrame {
         this.btnCancelar.setEnabled(true);
         this.btnExcluir.setEnabled(true);
     }//GEN-LAST:event_btnOkAtividadeActionPerformed
+
+    private void tblAtividadesDoAlunoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAtividadesDoAlunoMouseClicked
+        this.controller.evento(evt);
+    }//GEN-LAST:event_tblAtividadesDoAlunoMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

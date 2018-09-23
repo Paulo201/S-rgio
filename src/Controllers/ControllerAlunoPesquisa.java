@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JButton;
+import javax.swing.event.InternalFrameEvent;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -108,9 +109,12 @@ public class ControllerAlunoPesquisa implements InterfaceObserver{
                 }
             }
         }
-  
+       // this.model.avisarObservers();
     }
     
+    public void evento(InternalFrameEvent evt) {
+        this.model.excluir(this);//deixando de ser um observer
+    }
     
     @Override
     public void alterar() {
