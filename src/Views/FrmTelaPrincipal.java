@@ -26,12 +26,12 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
         this();
         this.model = model;
         this.iniciaFormulario();
-        Funcionario funcionario = new Funcionario();
+        /*Funcionario funcionario = new Funcionario();
         funcionario.setNome("admin");
         funcionario.setLogin("admin");
         funcionario.setSenha("123");
         funcionario.inserir();
-        this.model.setFuncionario(funcionario);
+        this.model.setFuncionario(funcionario);*/
     }
      
     public boolean verificaLogin() {
