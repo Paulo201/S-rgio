@@ -2,6 +2,10 @@ package Views;
 
 import Models.Configuracao;
 import Models.Funcionario;
+import java.awt.Color;
+import java.awt.Image;
+import java.awt.Graphics;
+import javax.swing.ImageIcon;
 import java.awt.Dimension;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -19,7 +23,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
     public FrmTelaPrincipal() {
         initComponents();
         this.setExtendedState(FrmTelaPrincipal.MAXIMIZED_BOTH);
-        
+        this.jdpPrincipal.setBackground(Color.white);
     }
 
      public FrmTelaPrincipal(Configuracao model) throws ClassNotFoundException, SQLException {
@@ -71,7 +75,14 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
         jMenuItem14 = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
         jMenuItem18 = new javax.swing.JMenuItem();
-        jdpPrincipal = new javax.swing.JDesktopPane();
+        ImageIcon icon = new ImageIcon(getClass().getResource("/Imagem/logo.png"));
+        final Image image = icon.getImage();
+        jdpPrincipal = new javax.swing.JDesktopPane(){
+            public void paintComponent(Graphics g){
+                g.drawImage(image,0,0,getWidth(),getHeight(),this);
+            }
+
+        };
         jMenuBar1 = new javax.swing.JMenuBar();
         menuCadastrar = new javax.swing.JMenu();
         itemCadastrarFuncionario = new javax.swing.JMenuItem();
@@ -125,7 +136,7 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
         jdpPrincipal.setLayout(jdpPrincipalLayout);
         jdpPrincipalLayout.setHorizontalGroup(
             jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 704, Short.MAX_VALUE)
+            .addGap(0, 703, Short.MAX_VALUE)
         );
         jdpPrincipalLayout.setVerticalGroup(
             jdpPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,14 +268,14 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jdpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 704, Short.MAX_VALUE)
+            .addComponent(jdpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 703, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jdpPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
         );
 
-        setBounds(0, 0, 720, 551);
+        setBounds(0, 0, 719, 551);
     }// </editor-fold>//GEN-END:initComponents
 
     private void itemCadastrarFuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCadastrarFuncionarioActionPerformed
@@ -326,7 +337,19 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_itemCadastrarAtividadeActionPerformed
 
     private void itemPesquisarAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPesquisarAlunoActionPerformed
-        
+        this.jdpPrincipal.removeAll();
+        if (this.verificaLogin()) {
+            FrmAlunoPesquisa frmAlunoPesquisa = new FrmAlunoPesquisa(this.model);
+            this.jdpPrincipal.add(frmAlunoPesquisa);
+            this.colocarFormularioCentro(frmAlunoPesquisa);
+            frmAlunoPesquisa.setVisible(true);
+        } else {
+            FrmLogin frmLogin = new FrmLogin(this.model);
+            this.jdpPrincipal.add(frmLogin);
+            this.colocarFormularioCentro(frmLogin);
+            frmLogin.setVisible(true);
+            
+        }
     }//GEN-LAST:event_itemPesquisarAlunoActionPerformed
 
     private void itemPesquisarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPesquisarCategoriaActionPerformed

@@ -26,26 +26,6 @@ public class testeContabilizarAtividade {
     public testeContabilizarAtividade() {
     }
     
-    /*@BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
-
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    //*/
     @Test
     public void testeHorasAproveitadas() throws SQLException, ClassNotFoundException {
         Aluno aluno = new Aluno();
@@ -75,5 +55,61 @@ public class testeContabilizarAtividade {
         
         assertEquals(resultCorreto, retorno);
         
+        aluno.excluir();
+        curso.excluir();
+        categoria.excluir();
+        atividade.excluir();
     }
+
+    @Test
+    public void testeContabilizarHoras() throws ClassNotFoundException, SQLException{
+        
+        Aluno aluno = new Aluno();
+        Curso curso = new Curso();
+        Categoria categoria = new Categoria();
+        Atividade atividade = new Atividade();
+        
+        aluno.setMatricula(303030);
+        categoria.setCurso(curso);
+        aluno.setCurso(curso);
+        curso.setMaximoHorasComplementares(288);
+        aluno.setQuantHoras(100);
+        categoria.setLimiteHoras(96);
+        atividade.setQuantHoras(100);
+        atividade.setCategoria(categoria);
+        aluno.contabilizarAtividade(atividade);
+        
+        int resultCorreto = 196;
+        int retorno = aluno.getQuantHoras();
+        
+        assertEquals(resultCorreto, retorno);
+        
+    }
+ 
+    @Test
+    public void testeExcederLimite() throws SQLException, ClassNotFoundException{
+        
+        Aluno aluno = new Aluno();
+        Curso curso = new Curso();
+        Categoria categoria = new Categoria();
+        Atividade atividade = new Atividade();
+        
+        aluno.setMatricula(303030);
+        categoria.setCurso(curso);
+        aluno.setCurso(curso);
+        curso.setMaximoHorasComplementares(288);
+        aluno.setQuantHoras(288);
+        categoria.setLimiteHoras(96);
+        atividade.setQuantHoras(100);
+        atividade.setCategoria(categoria);
+       
+        int resultCorreto = 288;
+        int retorno = aluno.getQuantHoras();
+        
+        
+        assertEquals(resultCorreto, retorno);
+   
+    }
+    
+    
 }

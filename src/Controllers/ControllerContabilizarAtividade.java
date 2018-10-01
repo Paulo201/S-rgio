@@ -24,6 +24,7 @@ public class ControllerContabilizarAtividade implements InterfaceObserver{
     public ControllerContabilizarAtividade(FrmContabilizarAtividade view,Configuracao model){
         this.view = view;
         this.model = model;
+         this.model.incluir(this);//pedindo pra ser um observer
     }
     
     public void eventoBotao(ActionEvent evt) throws SQLException, ClassNotFoundException {
@@ -70,7 +71,7 @@ public class ControllerContabilizarAtividade implements InterfaceObserver{
                 }
         
         }
-        
+        this.model.avisarObservers();
     }
      
     public void eventoBotaoOkAluno(ActionEvent evt){
@@ -85,7 +86,7 @@ public class ControllerContabilizarAtividade implements InterfaceObserver{
                     this.view.limpaCampos();
                 }   
         }  
-        
+        this.model.avisarObservers();
     }
     
     public void eventoBotaoOkAtividade(ActionEvent evt){
@@ -100,7 +101,7 @@ public class ControllerContabilizarAtividade implements InterfaceObserver{
                     this.view.limpaCampos();
                 }   
         }  
-        
+        this.model.avisarObservers();
     }
     
     public void evento(ActionEvent evt) throws SQLException, ClassNotFoundException {
@@ -121,7 +122,7 @@ public class ControllerContabilizarAtividade implements InterfaceObserver{
                 this.view.preencheCamposAtividade(atividade);
 
             } catch (ClassNotFoundException | SQLException ex) {
-                this.view.mostraMensagem("Não foi possível selecionar funcionario. Mensagem retornada: " + ex.getMessage());
+                this.view.mostraMensagem("Não foi possível selecionar atividade. Mensagem retornada: " + ex.getMessage());
                 this.view.limpaCampos();
                 }
             } 

@@ -141,6 +141,9 @@ public class Configuracao implements InterfaceObservable {
         Atividade atividade = new Atividade();
         atividade.buscar(id_atividade);
         if(atividade != null && aluno != null){
+            aluno.addAtividade(atividade);
+            aluno.contabilizarAtividade(atividade);
+            aluno.alterar();
             aluno.inserirAlunoAtividade(atividade);
         }
     }

@@ -24,6 +24,8 @@ public class FrmLogin extends javax.swing.JInternalFrame {
         this();
         this.model = model;
         this.controller = new ControllerLogin(this, model);
+        this.model.incluir(controller);
+        
     }
     
     public void mensagem(String mensagem) {

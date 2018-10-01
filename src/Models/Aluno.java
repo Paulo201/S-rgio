@@ -129,7 +129,7 @@ public class Aluno extends Document implements InterfaceManter{
             }
                 
             this.atividades.add(atividade);
-        }
+           }
     }
     
     
@@ -140,13 +140,15 @@ public class Aluno extends Document implements InterfaceManter{
                 if (somaAtividadePorCategoria + atividade.getQuantHoras() <= atividade.getCategoria().getLimiteHoras()) {
                     this.setQuantHoras(this.getQuantHoras());                    
                 } else {
-                    this.setQuantHoras(atividade.getCategoria().getLimiteHoras() - atividade.getQuantHoras());
+                    this.setQuantHoras(atividade.getCategoria().getLimiteHoras());
                 }
                 AlunoDAO.getInstancia().alterar(this);
             }            
         }   
     
     }
+    
+   
 
     public static final Font BOLD_UNDERLINED = new Font(Font.FontFamily.TIMES_ROMAN, 12, Font.BOLD);
 
