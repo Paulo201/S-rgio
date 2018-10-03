@@ -58,17 +58,14 @@ public class Curso implements InterfaceManter {
     public void inserir() throws ClassNotFoundException, SQLException {
         if (this.maximoHorasComplementares > 0 && this.nome != null) {
            
-            if (this.id == 0) {
-                 CursoDAO.getInstancia().inserir(this);
-            } else {
-                this.alterar();
-            }
+                CursoDAO.getInstancia().inserir(this);
+            
         }
     }
 
     @Override
     public void alterar() throws ClassNotFoundException, SQLException {
-        if (this.maximoHorasComplementares > 0 && this.nome != null) {
+        if (this.maximoHorasComplementares > 0) {
             CursoDAO.getInstancia().alterar(this);
         }
     }
@@ -83,6 +80,7 @@ public class Curso implements InterfaceManter {
 
     public void buscarPorNome(String nome)throws ClassNotFoundException, SQLException{
         if(nome != null){
+            this.nome = nome;
             CursoDAO.getInstancia().buscarPorNome(this);
         }
     }

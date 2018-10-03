@@ -43,7 +43,6 @@ public class FuncionarioDAO {
            
             stmt.executeUpdate();
             
-            //ACHO QUE AQUI TÁ ERRADO, PORQUE A MATRÍCULA NÃO É AUTO INCREMENTO
             funcionario.setId(this.find());
         } finally {
             Conexao.fecharConexao(conexao, stmt);
@@ -92,9 +91,9 @@ public class FuncionarioDAO {
             while (result.next()) {
                 
                 funcionario.setNome(result.getString("nome"));
-                funcionario.setNome(result.getString("contato"));
-                funcionario.setNome(result.getString("login"));
-                funcionario.setNome(result.getString("senha"));
+                funcionario.setContato(result.getString("contato"));
+                funcionario.setLogin(result.getString("login"));
+                funcionario.setSenha(result.getString("senha"));
         
             }
         } finally {
