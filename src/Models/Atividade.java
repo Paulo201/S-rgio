@@ -36,11 +36,11 @@ public class Atividade implements InterfaceManter{
         this.id = id;
     }
 
-    public String getNome() {
+    public String getNomeAtividade() {
         return this.nome;
     }
 
-    public void setNome(String nome) {
+    public void setNomeAtividade(String nome) {
         this.nome = nome;
     }
 
@@ -100,4 +100,10 @@ public class Atividade implements InterfaceManter{
         AtividadeDAO.getInstancia().excluir(this);
     }
 
+    public void buscarPorNome(String nome) throws ClassNotFoundException, SQLException  {
+        if(nome != null){
+            this.nome = nome;
+            AtividadeDAO.getInstancia().buscarPorNome(this);
+        }
+    }
 }

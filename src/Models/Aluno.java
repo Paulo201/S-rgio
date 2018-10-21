@@ -291,8 +291,8 @@ public class Aluno extends Document implements InterfaceManter{
             
             for(Atividade atividade: this.atividades){
                 
-                tableAtividades.addCell(atividade.getNome());
-                tableAtividades.addCell(atividade.getCategoria().getNome());
+                tableAtividades.addCell(atividade.getNomeAtividade());
+                tableAtividades.addCell(atividade.getCategoria().getNomeCategoria());
                 tableAtividades.addCell(atividade.getCategoria().getLimiteHoras()+"");
                 tableAtividades.addCell(atividade.getTotalAproveitado()+"");
                 

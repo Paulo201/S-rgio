@@ -6,6 +6,7 @@ import java.sql.SQLException;
 /**
  *
  * @author willi
+ * @modificado Beatriz Oliveira
  */
 public class Categoria implements InterfaceManter{
 
@@ -20,7 +21,7 @@ public class Categoria implements InterfaceManter{
     }
     
     public Categoria(String nome, int limiteHoras, Curso curso){
-        this.setNome(nome);
+        this.setNomeCategoria(nome);
         this.setLimiteHoras(limiteHoras);
         this.setCurso(curso);
     }
@@ -35,11 +36,11 @@ public class Categoria implements InterfaceManter{
         }
     }
 
-    public String getNome() {
+    public String getNomeCategoria() {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public void setNomeCategoria(String nome) {
         this.nome = nome;
     }
 
@@ -70,7 +71,6 @@ public class Categoria implements InterfaceManter{
     @Override
     public void inserir() throws ClassNotFoundException, SQLException {
         if(this.limiteHoras > 0 && this.nome != null && this.curso != null){
-            
             if (this.id == 0) {
                 CategoriaDAO.getInstancia().inserir(this);
             } else {
@@ -91,6 +91,13 @@ public class Categoria implements InterfaceManter{
         if(codigo > 0){
             this.id = codigo;
             CategoriaDAO.getInstancia().buscar(this);
+        }
+    }
+    
+    public void buscarPorNome(String nome)throws ClassNotFoundException, SQLException{
+        if(nome != null){
+            this.nome = nome;
+            CategoriaDAO.getInstancia().buscarPorNome(this);
         }
     }
 

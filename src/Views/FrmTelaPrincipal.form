@@ -81,17 +81,11 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="menuCadastrar">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\willi\Desktop\Icones\add.png"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="Cadastrar"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="itemCadastrarFuncionario">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\willi\Desktop\Icones\user.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Usu&#xe1;rio"/>
               </Properties>
               <Events>
@@ -100,9 +94,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="itemCadastrarAluno">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\willi\Desktop\Icones\group.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Aluno"/>
               </Properties>
               <Events>
@@ -111,9 +102,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="itemCadastrarCategoria">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\willi\Desktop\Icones\folder_page.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Categoria"/>
               </Properties>
               <Events>
@@ -122,9 +110,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="itemCadastrarAtividade">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\willi\Desktop\Icones\page.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Atividade"/>
               </Properties>
               <Events>
@@ -135,17 +120,11 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu2">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\willi\Desktop\Icones\zoom.png"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="Pesquisar"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="itemPesquisarUsuario">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\willi\Desktop\Icones\user.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Usu&#xe1;rio"/>
               </Properties>
               <Events>
@@ -154,9 +133,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="itemPesquisarAluno">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\willi\Desktop\Icones\group.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Aluno"/>
               </Properties>
               <Events>
@@ -165,9 +141,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="itemPesquisarCategoria">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\willi\Desktop\Icones\folder_page.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Categoria"/>
               </Properties>
               <Events>
@@ -176,9 +149,6 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="itemPesquisarAtividade">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\willi\Desktop\Icones\page.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Atividade"/>
               </Properties>
               <Events>
@@ -189,9 +159,6 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuContabilizarAtividade">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\willi\Desktop\Icones\calc (2).png"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="Contabilizar Atividade"/>
           </Properties>
           <Events>
@@ -201,9 +168,6 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuRelatorio">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\willi\Desktop\Icones\page_white_acrobat.png"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="Relatorio"/>
           </Properties>
           <Events>
@@ -213,9 +177,6 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuSobre">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\willi\Desktop\Icones\information.png"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="Sobre"/>
           </Properties>
           <Events>

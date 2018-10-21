@@ -36,7 +36,7 @@ public class CategoriaDAO {
         try {
             stmt = conexao.prepareStatement("INSERT INTO `categoria`(`id`, `nome`, `limite_horas`, `id_curso`, `descricao`) VALUES (?, ?, ?, ?, ?)");
             stmt.setInt(1, categoria.getId());
-            stmt.setString(2, categoria.getNome());
+            stmt.setString(2, categoria.getNomeCategoria());
             stmt.setInt(3, categoria.getLimiteHoras());
             stmt.setInt(4, categoria.getCurso().getId());
             stmt.setString(5, categoria.getDescricao());
@@ -55,7 +55,7 @@ public class CategoriaDAO {
         PreparedStatement stmt = null;
         try {
             stmt = conexao.prepareStatement("UPDATE `categoria` SET `nome` = ?, `limite_horas` = ?, `id_curso` = ?, `descricao` = ? WHERE `id` = ?");
-            stmt.setString(1, categoria.getNome());
+            stmt.setString(1, categoria.getNomeCategoria());
             stmt.setInt(2, categoria.getLimiteHoras());
             stmt.setInt(3, categoria.getCurso().getId());
             stmt.setString(4, categoria.getDescricao());
@@ -90,7 +90,7 @@ public class CategoriaDAO {
             
             while (result.next()) {
                 
-                categoria.setNome(result.getString("nome"));
+                categoria.setNomeCategoria(result.getString("nome"));
                 categoria.setLimiteHoras(result.getInt("limite_horas"));
                 
                 Curso curso = new Curso();
@@ -99,6 +99,32 @@ public class CategoriaDAO {
                 
                 categoria.setDescricao(result.getString("descricao"));
                 
+            }
+        } finally {
+            Conexao.fecharConexao(conexao, stmt, result);
+        }
+    }
+    
+    public void buscarPorNome(Categoria categoria) throws SQLException, ClassNotFoundException {
+        Connection conexao = dao.getConexao();
+        PreparedStatement stmt = null;
+        ResultSet result = null;
+        try {
+            stmt = conexao.prepareStatement("SELECT `id`,`nome`,`limite_horas`,`descricao`,`id_curso` FROM `categoria` WHERE `nome` = ?");
+            stmt.setString(1, categoria.getNomeCategoria());
+            result = stmt.executeQuery();
+            
+            while (result.next()) {
+                
+                categoria.setId(result.getInt("id"));
+                categoria.setNomeCategoria(result.getString("nome"));
+                categoria.setLimiteHoras(result.getInt("limite_horas"));
+                Curso curso = new Curso();
+                curso.buscar(result.getInt("id_curso"));
+                categoria.setCurso(curso);
+                categoria.setDescricao(result.getString("descricao"));
+                
+        
             }
         } finally {
             Conexao.fecharConexao(conexao, stmt, result);

@@ -79,9 +79,9 @@ public class FrmContabilizarAtividade extends javax.swing.JInternalFrame {
     
     
     public void preencheCamposAtividade(Atividade atividade) {
-       this.nomeAtividade.setText(String.valueOf(atividade.getNome()));
+       this.nomeAtividade.setText(String.valueOf(atividade.getNomeAtividade()));
        this.quantHoraAtividade.setText(String.valueOf(atividade.getQuantHoras()));
-       this.categoria.setText(String.valueOf(atividade.getCategoria().getNome()));
+       this.categoria.setText(String.valueOf(atividade.getCategoria().getNomeCategoria()));
        this.btnContabilizar.setEnabled(true);
        this.btnExcluir.setEnabled(true);
        this.btnCancelar.setEnabled(true);

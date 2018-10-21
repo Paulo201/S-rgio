@@ -310,7 +310,18 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_itemCadastrarAlunoActionPerformed
 
     private void itemCadastrarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCadastrarCategoriaActionPerformed
-        // TODO add your handling code here:
+        this.jdpPrincipal.removeAll();
+        if (this.verificaLogin()) {
+            FrmCategoriaCadastro frmCategoriaCadastro = new FrmCategoriaCadastro(this.model, this);
+            this.jdpPrincipal.add(frmCategoriaCadastro);
+            this.colocarFormularioCentro(frmCategoriaCadastro);
+            frmCategoriaCadastro.setVisible(true);
+        } else {
+            FrmLogin frmLogin = new FrmLogin(this.model);
+            this.jdpPrincipal.add(frmLogin);
+            this.colocarFormularioCentro(frmLogin);
+            frmLogin.setVisible(true);
+        }                    
     }//GEN-LAST:event_itemCadastrarCategoriaActionPerformed
 
     private void itemPesquisarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPesquisarUsuarioActionPerformed
@@ -329,11 +340,34 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_itemPesquisarUsuarioActionPerformed
 
     private void itemPesquisarAtividadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPesquisarAtividadeActionPerformed
-        // TODO add your handling code here:
+             this.jdpPrincipal.removeAll();
+        if (this.verificaLogin()) {
+            FrmAtividadePesquisa frmAtividadePesquisa = new FrmAtividadePesquisa(this.model);
+            this.jdpPrincipal.add(frmAtividadePesquisa);
+            this.colocarFormularioCentro(frmAtividadePesquisa);
+            frmAtividadePesquisa.setVisible(true);
+        } else {
+            FrmLogin frmLogin = new FrmLogin(this.model);
+            this.jdpPrincipal.add(frmLogin);
+            this.colocarFormularioCentro(frmLogin);
+            frmLogin.setVisible(true);
+            
+        }
     }//GEN-LAST:event_itemPesquisarAtividadeActionPerformed
 
     private void itemCadastrarAtividadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCadastrarAtividadeActionPerformed
-        // TODO add your handling code here:
+        this.jdpPrincipal.removeAll();
+        if (this.verificaLogin()) {
+            FrmAtividadeCadastro frmAtividadeCadastro = new FrmAtividadeCadastro(this.model, this);
+            this.jdpPrincipal.add(frmAtividadeCadastro);
+            this.colocarFormularioCentro(frmAtividadeCadastro);
+            frmAtividadeCadastro.setVisible(true);
+        } else {
+            FrmLogin frmLogin = new FrmLogin(this.model);
+            this.jdpPrincipal.add(frmLogin);
+            this.colocarFormularioCentro(frmLogin);
+            frmLogin.setVisible(true);
+        }             
     }//GEN-LAST:event_itemCadastrarAtividadeActionPerformed
 
     private void itemPesquisarAlunoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemPesquisarAlunoActionPerformed
