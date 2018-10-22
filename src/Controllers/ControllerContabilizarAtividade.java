@@ -137,12 +137,13 @@ public class ControllerContabilizarAtividade implements InterfaceObserver {
             if (atividades != null) {
                 this.view.limpaTableAtividadesDoAluno();
                 int totalHoras = 0;
+                Aluno aluno = new Aluno();
+                aluno.buscar(Integer.parseInt(this.view.getPesquisaAluno()));
+                
                 for (Atividade atividadees : atividades) {
-
                     Categoria categoria = new Categoria();
                     categoria.buscar(atividadees.getCategoria().getId());
-                    Aluno aluno = new Aluno();
-                    aluno.buscar(Integer.parseInt(this.view.getPesquisaAluno()));
+                    
                     totalHoras += aluno.buscarHorasAproveitadas(atividadees);
                     String[] novaLinha = {atividadees.getNomeAtividade(), String.valueOf(atividadees.getQuantHoras()), categoria.getNomeCategoria(), String.valueOf(categoria.getLimiteHoras()), String.valueOf(aluno.buscarHorasAproveitadas(atividadees))};
                     ((DefaultTableModel) this.view.getTblAtividadesDoAluno().getModel()).addRow(novaLinha);
