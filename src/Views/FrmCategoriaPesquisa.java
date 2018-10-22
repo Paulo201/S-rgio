@@ -165,7 +165,11 @@ public class FrmCategoriaPesquisa extends javax.swing.JInternalFrame {
         descricao = new javax.swing.JTextArea();
         jLabel8 = new javax.swing.JLabel();
 
+        setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setIconifiable(true);
+        setMaximizable(true);
+        setTitle("Categoria");
 
         btnCancelar.setText("Cancelar");
         btnCancelar.setEnabled(false);
