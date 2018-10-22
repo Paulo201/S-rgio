@@ -401,6 +401,8 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
         if (this.verificaLogin()) {
             this.jdpPrincipal.add(frmCategoriaPesquisa);
             this.colocarFormularioCentro(frmCategoriaPesquisa);
+            
+            
             frmCategoriaPesquisa.setVisible(true);
         } else {
             FrmLogin frmLogin = new FrmLogin(this.model);
