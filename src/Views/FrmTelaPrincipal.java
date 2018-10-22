@@ -404,6 +404,8 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
             
             
             frmCategoriaPesquisa.setVisible(true);
+            
+            
         } else {
             FrmLogin frmLogin = new FrmLogin(this.model);
             frmLogin.setTelaAAcessar(frmCategoriaPesquisa);
