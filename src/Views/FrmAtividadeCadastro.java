@@ -30,6 +30,7 @@ public class FrmAtividadeCadastro extends javax.swing.JInternalFrame {
         this.model = model;
         this.controller = new ControllerAtividadeCadastrar(this, model);
     }
+
     
     
     public void fechaTela() {
