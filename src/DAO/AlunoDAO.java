@@ -138,13 +138,14 @@ public class AlunoDAO {
     
     // MÉTODOS DA TABELA AUXILIAR
     
-    public void inserirAlunoAtividade(Aluno aluno, Atividade atividade) throws SQLException, ClassNotFoundException {
+    public void inserirAlunoAtividade(Aluno aluno, Atividade atividade, int horas_Aproveitadas) throws SQLException, ClassNotFoundException {
         Connection conexao = dao.getConexao();
         PreparedStatement stmt = null;
         try {
-            stmt = conexao.prepareStatement("INSERT INTO `aluno_atividade`(`id_aluno`, `id_atividade`) VALUES (?, ?)");
+            stmt = conexao.prepareStatement("INSERT INTO `aluno_atividade`(`id_aluno`, `id_atividade`, `horas_Aproveitadas`) VALUES (?, ?, ?)");
             stmt.setInt(1, aluno.getMatricula());
             stmt.setInt(2, atividade.getId());
+            stmt.setInt(3, horas_Aproveitadas);
             
             stmt.executeUpdate();
            
@@ -153,16 +154,17 @@ public class AlunoDAO {
         }
     }
     
-    public void alterarAlunoAtividade(Aluno aluno, Atividade atividade) throws SQLException, ClassNotFoundException {
+    public void alterarAlunoAtividade(Aluno aluno, Atividade atividade, int horas_Aproveitadas) throws SQLException, ClassNotFoundException {
         Connection conexao = dao.getConexao();
         PreparedStatement stmt = null;
         try {
-            stmt = conexao.prepareStatement("UPDATE `aluno_atividade` SET `id_aluno` = ?,`id_atividade` = ? WHERE `id_aluno` = ? and `id_atividade` = ?");
+            stmt = conexao.prepareStatement("UPDATE `aluno_atividade` SET `id_aluno` = ?,`id_atividade` = ?, `horas_Aproveitadas` = ? WHERE `id_aluno` = ? and `id_atividade` = ?");
             
             stmt.setInt(1, aluno.getMatricula());
             stmt.setInt(2, atividade.getId());
-            stmt.setInt(3, aluno.getMatricula());
-            stmt.setInt(4, atividade.getId());
+            stmt.setInt(3, horas_Aproveitadas);
+            stmt.setInt(4, aluno.getMatricula());
+            stmt.setInt(5, atividade.getId());
             
             stmt.executeUpdate();
             
@@ -240,7 +242,7 @@ public class AlunoDAO {
         PreparedStatement stmt = null;
         ResultSet result = null;
         try {
-            stmt = conexao.prepareStatement("SELECT `id`, `id_aluno`, `id_atividade` FROM `aluno_atividade` WHERE `id_aluno` = ? and `id_atividade` = ?");
+            stmt = conexao.prepareStatement("SELECT `id`, `id_aluno`, `id_atividade`, `horas_Aproveitadas` FROM `aluno_atividade` WHERE `id_aluno` = ? and `id_atividade` = ?");
             stmt.setInt(1, aluno.getMatricula());
             stmt.setInt(2, atividade.getId());
             result = stmt.executeQuery();
@@ -256,6 +258,23 @@ public class AlunoDAO {
                 atividade = atividade1;
                 
             }
+        } finally {
+            Conexao.fecharConexao(conexao, stmt, result);
+        }
+    }
+    
+    
+    public int buscarHorasAproveitadas(Aluno aluno, Atividade atividade) throws SQLException, ClassNotFoundException {
+        Connection conexao = dao.getConexao();
+        PreparedStatement stmt = null;
+        ResultSet result = null;
+        try {
+            stmt = conexao.prepareStatement("SELECT `id`, `id_aluno`, `id_atividade`, `horas_Aproveitadas` FROM `aluno_atividade` WHERE `id_aluno` = ? and `id_atividade` = ?");
+            stmt.setInt(1, aluno.getMatricula());
+            stmt.setInt(2, atividade.getId());
+            result = stmt.executeQuery();
+            
+            return result.getInt("horas_Aproveitadas");
         } finally {
             Conexao.fecharConexao(conexao, stmt, result);
         }

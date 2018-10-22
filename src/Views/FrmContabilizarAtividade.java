@@ -253,6 +253,11 @@ public class FrmContabilizarAtividade extends javax.swing.JInternalFrame {
 
         btnNovaAtividade.setText("Novo");
         btnNovaAtividade.setEnabled(false);
+        btnNovaAtividade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovaAtividadeActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Nome:");
 
@@ -269,12 +274,22 @@ public class FrmContabilizarAtividade extends javax.swing.JInternalFrame {
         btnExcluir.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\cancel.png")); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.setEnabled(false);
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\back.png")); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.setEnabled(false);
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
-        btnContabilizar.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\accept.png")); // NOI18N
+        btnContabilizar.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\calc (2).png")); // NOI18N
         btnContabilizar.setText("Contabilizar");
         btnContabilizar.setEnabled(false);
         btnContabilizar.addActionListener(new java.awt.event.ActionListener() {
@@ -457,6 +472,36 @@ public class FrmContabilizarAtividade extends javax.swing.JInternalFrame {
     private void tblAtividadesDoAlunoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAtividadesDoAlunoMouseClicked
         this.controller.evento(evt);
     }//GEN-LAST:event_tblAtividadesDoAlunoMouseClicked
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        try {
+            this.controller.eventoBotao(evt);
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmContabilizarAtividade.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(FrmContabilizarAtividade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+       try {
+            this.controller.eventoBotao(evt);
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmContabilizarAtividade.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(FrmContabilizarAtividade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnNovaAtividadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovaAtividadeActionPerformed
+         try {
+            this.controller.eventoBotao(evt);
+        } catch (SQLException ex) {
+            Logger.getLogger(FrmContabilizarAtividade.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(FrmContabilizarAtividade.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnNovaAtividadeActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

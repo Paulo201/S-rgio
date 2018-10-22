@@ -112,24 +112,28 @@ public class Aluno extends Document implements InterfaceManter{
         return atividades;
     }
 
-    public void addAtividade(Atividade atividade) throws SQLException, ClassNotFoundException {
+    public int addAtividade(Atividade atividade) throws SQLException, ClassNotFoundException {
+        
+        /*Retorna o total aproveitado dessa atividade*/
+        
         if (atividade != null) {
             int somaAtividadePorCategoria = this.buscarHorasPorCategoria(atividade);
             if(atividade.getQuantHoras() > atividade.getCategoria().getLimiteHoras()){
-                atividade.setTotalAproveitado(atividade.getCategoria().getLimiteHoras());
+                return atividade.getCategoria().getLimiteHoras();
             }
             else{
                 if(somaAtividadePorCategoria == 0 || somaAtividadePorCategoria + atividade.getQuantHoras() <= atividade.getCategoria().getLimiteHoras()){
-                atividade.setTotalAproveitado(atividade.getQuantHoras());
+                    return atividade.getQuantHoras();
                 }
                 if (atividade.getCategoria().getLimiteHoras() - somaAtividadePorCategoria >= 0){
-                atividade.setTotalAproveitado(atividade.getCategoria().getLimiteHoras() - somaAtividadePorCategoria);
+                    return (atividade.getCategoria().getLimiteHoras() - somaAtividadePorCategoria);
                 }
             
             }
                 
             this.atividades.add(atividade);
            }
+        return -1;
     }
     
     
@@ -154,7 +158,7 @@ public class Aluno extends Document implements InterfaceManter{
 
     public static final Font NORMAL = new Font(Font.FontFamily.TIMES_ROMAN, 12);
    
-    public void emitirRelatorio(){
+    public void emitirRelatorio() throws SQLException, ClassNotFoundException{
          Document documento = new Document();
 
         try {
@@ -294,7 +298,10 @@ public class Aluno extends Document implements InterfaceManter{
                 tableAtividades.addCell(atividade.getNomeAtividade());
                 tableAtividades.addCell(atividade.getCategoria().getNomeCategoria());
                 tableAtividades.addCell(atividade.getCategoria().getLimiteHoras()+"");
-                tableAtividades.addCell(atividade.getTotalAproveitado()+"");
+                int horasAproveitadas = this.buscarHorasAproveitadas(atividade);
+                if (horasAproveitadas >= 0){//retorna -1 quando ou o aluno é null, ou a atividade passada é null
+                    tableAtividades.addCell(horasAproveitadas+"");
+                }
                 
             }
             
@@ -376,15 +383,15 @@ public class Aluno extends Document implements InterfaceManter{
         AlunoDAO.getInstancia().excluir(this);
     }
 
-    public void inserirAlunoAtividade(Atividade atividade) throws SQLException, ClassNotFoundException {
+    public void inserirAlunoAtividade(Atividade atividade,  int horas_Aproveitadas) throws SQLException, ClassNotFoundException {
         if(this != null && atividade != null){
-            AlunoDAO.getInstancia().inserirAlunoAtividade(this, atividade);
+            AlunoDAO.getInstancia().inserirAlunoAtividade(this, atividade, horas_Aproveitadas);
         }
     }
     
-    public void alterarAlunoAtividade(Atividade atividade) throws SQLException, ClassNotFoundException{
+    public void alterarAlunoAtividade(Atividade atividade, int horas_Aproveitadas) throws SQLException, ClassNotFoundException{
         if(this != null && atividade != null){
-            AlunoDAO.getInstancia().alterarAlunoAtividade(this, atividade);
+            AlunoDAO.getInstancia().alterarAlunoAtividade(this, atividade, horas_Aproveitadas);
         }
     }
     
@@ -414,4 +421,11 @@ public class Aluno extends Document implements InterfaceManter{
         }
     }
  
+    public int buscarHorasAproveitadas(Atividade atividade) throws SQLException, ClassNotFoundException {
+        if(this != null && atividade != null){
+            return AlunoDAO.getInstancia().buscarHorasAproveitadas(this, atividade);
+        }
+        return -1;
+    }
+    
 }

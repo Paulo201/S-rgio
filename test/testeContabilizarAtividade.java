@@ -50,7 +50,7 @@ public class testeContabilizarAtividade {
         int resultCorreto = 96;
         aluno.addAtividade(atividade);
         aluno.contabilizarAtividade(atividade);
-        int retorno = atividade.getTotalAproveitado();
+        int retorno = aluno.buscarHorasAproveitadas(atividade);
         
         
         assertEquals(resultCorreto, retorno);

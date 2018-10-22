@@ -7,6 +7,7 @@ import Views.FrmContabilizarAtividade;
 import Models.Configuracao;
 import Models.Aluno;
 import Models.InterfaceObserver;
+import Views.FrmAtividadeCadastro;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
@@ -29,14 +30,11 @@ public class ControllerContabilizarAtividade implements InterfaceObserver {
     public void eventoBotao(ActionEvent evt) throws SQLException, ClassNotFoundException {
 
         if (((JButton) evt.getSource()).getText().equals("Novo")) {
-            //try {
             this.view.fechaTela();
-            //para abrir a tela de cadastro de atividade
-            // FrmAtividadeCadastro novaView = new FrmAtividadeCadastro(new ControllerAtivdade(), this.model);
-            /*   } catch (SQLException | ClassNotFoundException ex) {
-                    this.view.mostraMensagem("Não foi possível abrir a tela para cadastrar Atividade. Mensagem retornada: " + ex.getMessage());
-                    this.view.limpaCampos();
-            }*/
+            FrmAtividadeCadastro novaView = new FrmAtividadeCadastro(this.model);
+            novaView.setVisible(true);
+            this.view.getPrincipal().getJdpPrincipal().add(novaView);
+            this.view.getPrincipal().colocarFormularioCentro(novaView);
         }
 
         if (((JButton) evt.getSource()).getText().equals("Contabilizar")) {
@@ -138,13 +136,18 @@ public class ControllerContabilizarAtividade implements InterfaceObserver {
             ArrayList<Atividade> atividades = this.model.getAlunoAtividade();
             if (atividades != null) {
                 this.view.limpaTableAtividadesDoAluno();
+                int totalHoras = 0;
                 for (Atividade atividadees : atividades) {
 
                     Categoria categoria = new Categoria();
                     categoria.buscar(atividadees.getCategoria().getId());
-                    String[] novaLinha = {atividadees.getNomeAtividade(), String.valueOf(atividadees.getQuantHoras()), categoria.getNomeCategoria(), String.valueOf(categoria.getLimiteHoras()), String.valueOf(atividadees.getTotalAproveitado())};
+                    Aluno aluno = new Aluno();
+                    aluno.buscar(Integer.parseInt(this.view.getPesquisaAluno()));
+                    totalHoras += aluno.buscarHorasAproveitadas(atividadees);
+                    String[] novaLinha = {atividadees.getNomeAtividade(), String.valueOf(atividadees.getQuantHoras()), categoria.getNomeCategoria(), String.valueOf(categoria.getLimiteHoras()), String.valueOf(aluno.buscarHorasAproveitadas(atividadees))};
                     ((DefaultTableModel) this.view.getTblAtividadesDoAluno().getModel()).addRow(novaLinha);
                 }
+                this.view.setTotalHoras(totalHoras+"");
             }
 
             this.model.setAlunoAtividade(new ArrayList<Atividade>());
