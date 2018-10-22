@@ -67,7 +67,8 @@ public class ControllerCategoriaPesquisa implements InterfaceObserver {
 
         if (((JButton) evt.getSource()).getText().equals("OK")) {
             if(this.view.validaPesquisa()){
-                if (this.view.getPesquisaCategoria().equals("todos")) {
+                if (this.view.getPesquisaCategoria().equals("todos") || this.view.getPesquisaCategoria().equals("Todos")
+                        || this.view.getPesquisaCategoria().equals("TODOS")) {
                     try {
                         this.model.buscaCategoria();
                     } catch (SQLException | ClassNotFoundException ex) {

@@ -336,19 +336,35 @@ public class Configuracao implements InterfaceObservable {
     
     public void alterarCategoria(int id, String nomeCurso, String categoria, int limiteHoras, String descricao) 
             throws ClassNotFoundException, SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Categoria categorias = new Categoria();
+        categorias.buscar(id);
+
+        categorias.setNomeCategoria(categoria);
+        Curso curso = new Curso ();
+        curso.buscarPorNome(nomeCurso);
+        categorias.setCurso(curso);
+        categorias.setLimiteHoras(limiteHoras);
+        categorias.setDescricao(descricao);
+        categorias.alterar();
     }
 
-    public void excluirCategoria(int codigo) throws ClassNotFoundException, SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void excluirCategoria(int id) throws ClassNotFoundException, SQLException {
+        Categoria categoria = new Categoria();
+        categoria.buscar(id);
+
+        categoria.excluir();
     }
 
     public void buscaCategoria() throws ClassNotFoundException, SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         this.categorias = CategoriaDAO.getInstancia().buscaTodos(); 
     }
 
-    public void buscarCategoriaPorNome(String pesquisaCategoria) throws ClassNotFoundException, SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void buscarCategoriaPorNome(String nome) throws ClassNotFoundException, SQLException {
+        Categoria categoria = new Categoria ();
+        categoria.buscarPorNome(nome);
+        if(categoria.getId() > 0){
+            this.categorias.add(categoria);
+        }
     }
     
     public ArrayList<Categoria> getCategorias() {

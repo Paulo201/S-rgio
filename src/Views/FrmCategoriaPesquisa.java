@@ -394,12 +394,12 @@ public class FrmCategoriaPesquisa extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void BtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnOkActionPerformed
-
         this.controller.evento(evt);
-        this.id.setEnabled(true);
+        this.id.setEnabled(false);
         this.nomeCategoria.setEnabled(true);
         this.nomeCurso.setEnabled(true);
         this.limiteHoras.setEnabled(true);
+        this.descricao.setEnabled(true);
     }//GEN-LAST:event_BtnOkActionPerformed
 
     private void idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idActionPerformed

@@ -27,15 +27,15 @@ public class ControllerAtividadePesquisa implements InterfaceObserver {
 
     private Configuracao model;
     private FrmAtividadePesquisa view;
-    
-    public ControllerAtividadePesquisa(FrmAtividadePesquisa view, Configuracao model){
+
+    public ControllerAtividadePesquisa(FrmAtividadePesquisa view, Configuracao model) {
         this.view = view;
         this.model = model;
         this.model.incluir(this);//pedindo pra ser um observer
     }
-    
+
     public void eventoBotao(ActionEvent evt) {
-       if (((JButton) evt.getSource()).getText().equals("Salvar")) {
+        if (((JButton) evt.getSource()).getText().equals("Salvar")) {
             if (this.view.validaCampos()) {
                 try {
                     this.model.alterarAtividade(Integer.parseInt(this.view.getId()), this.view.getNomeAtividade(), this.view.getCategoria(), Integer.parseInt(this.view.getQuantHoras()));
@@ -48,7 +48,7 @@ public class ControllerAtividadePesquisa implements InterfaceObserver {
             }
         }
 
-       if (((JButton) evt.getSource()).getText().equals("Excluir")) {
+        if (((JButton) evt.getSource()).getText().equals("Excluir")) {
             if (!this.view.getId().equals("")) {
                 try {
                     this.model.excluirAtividade(Integer.parseInt(this.view.getId()));
@@ -67,11 +67,11 @@ public class ControllerAtividadePesquisa implements InterfaceObserver {
         }
 
         if (((JButton) evt.getSource()).getText().equals("OK")) {
-            if(this.view.validaPesquisa()){
-                if (this.view.getPesquisaAtividade().equals("todos")) {
+            if (this.view.validaPesquisa()) {
+                if (this.view.getPesquisaAtividade().equals("todos") || this.view.getPesquisaAtividade().equals("Todos")
+                        || this.view.getPesquisaAtividade().equals("TODOS")) {
                     try {
                         this.model.buscaAtividade();
-
 
                     } catch (SQLException | ClassNotFoundException ex) {
                         this.view.mostraMensagem("Não foi possível buscar todas as atividades. Mensagem retornada: " + ex.getMessage());
@@ -87,21 +87,20 @@ public class ControllerAtividadePesquisa implements InterfaceObserver {
                 }
             }
         }
-  
-            
+
     }
-    
-     public void evento(ActionEvent evt) {
+
+    public void evento(ActionEvent evt) {
         if ((evt.getSource() instanceof JButton)) {
             this.eventoBotao(evt);
         }
 
         this.model.avisarObservers();
-    }  
+    }
 
-     public void evento(MouseEvent evt) {
-      int linha = this.view.getTableAtividade().getSelectedRow();
-                        
+    public void evento(MouseEvent evt) {
+        int linha = this.view.getTableAtividade().getSelectedRow();
+
         if (linha >= 0) {
             try {
                 Atividade atividade = new Atividade();
@@ -111,11 +110,11 @@ public class ControllerAtividadePesquisa implements InterfaceObserver {
             } catch (ClassNotFoundException | SQLException ex) {
                 this.view.mostraMensagem("Não foi possível selecionar atividade. Mensagem retornada: " + ex.getMessage());
                 this.view.limpaCampos();
-                }
-            } 
-     
-     }
-    
+            }
+        }
+
+    }
+
     public void evento(InternalFrameEvent evt) {
         this.model.excluir(this);//deixando de ser um observer
     }
@@ -126,17 +125,14 @@ public class ControllerAtividadePesquisa implements InterfaceObserver {
         this.view.limpaTableAtividade();
         if (atividades != null) {
             for (Atividade atividade : atividades) {
-                String[] novaLinha = {String.valueOf(atividade.getId()), atividade.getNomeAtividade(), 
+                String[] novaLinha = {String.valueOf(atividade.getId()), atividade.getNomeAtividade(),
                     String.valueOf(atividade.getCategoria().getNomeCategoria()), String.valueOf(atividade.getQuantHoras())};
                 ((DefaultTableModel) this.view.getTableAtividade().getModel()).addRow(novaLinha);
             }
         }
 
         this.model.setAtividade(new ArrayList<>());
-    
+
     }
 
-    
-    
 }
-
