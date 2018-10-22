@@ -378,9 +378,8 @@ public class FrmAtividadePesquisa extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void BtnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnOkActionPerformed
-
         this.controller.evento(evt);
-        this.id.setEnabled(true);
+        this.id.setEnabled(false);
         this.nomeAtividade.setEnabled(true);
         this.categoria.setEnabled(true);
         this.quantHoras.setEnabled(true);

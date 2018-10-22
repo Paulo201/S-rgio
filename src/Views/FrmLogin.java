@@ -3,6 +3,8 @@ package Views;
 import Controllers.ControllerLogin;
 import Models.Configuracao;
 import java.awt.Color;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
 import javax.swing.border.LineBorder;
 
@@ -11,11 +13,28 @@ import javax.swing.border.LineBorder;
  * @author willi
  */
 public class FrmLogin extends javax.swing.JInternalFrame {
-    
+
     private Configuracao model;
     private ControllerLogin controller;
-    
-    
+    private JInternalFrame telaAAcessar;
+    private FrmTelaPrincipal telaPrincipal;
+
+    public void setTelaAAcessar(JInternalFrame tela) {
+        this.telaAAcessar = tela;
+    }
+
+    public void setTelaPrincipal(FrmTelaPrincipal tela) {
+        this.telaPrincipal = tela;
+    }
+
+    public JInternalFrame getTelaAAcessar() {
+        return this.telaAAcessar;
+    }
+
+    public FrmTelaPrincipal getTelaPrincipal() {
+        return this.telaPrincipal;
+    }
+
     public FrmLogin() {
         initComponents();
     }
@@ -25,9 +44,9 @@ public class FrmLogin extends javax.swing.JInternalFrame {
         this.model = model;
         this.controller = new ControllerLogin(this, model);
         this.model.incluir(controller);
-        
+
     }
-    
+
     public void mensagem(String mensagem) {
         if (mensagem != null) {
             JOptionPane.showMessageDialog(this, mensagem);
@@ -61,8 +80,7 @@ public class FrmLogin extends javax.swing.JInternalFrame {
     public void fechaTela() {
         this.dispose();
     }
-    
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

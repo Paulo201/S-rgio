@@ -11,17 +11,17 @@ import javax.swing.JButton;
  *
  * @author willi
  */
-public class ControllerLogin implements InterfaceObserver{
+public class ControllerLogin implements InterfaceObserver {
 
     private Configuracao model;
     private FrmLogin view;
-    
+
     public ControllerLogin(FrmLogin view, Configuracao model) {
         this.model = model;
         this.view = view;
     }
-    
-     public void evento(ActionEvent evt) {
+
+    public void evento(ActionEvent evt) {
         if ((evt.getSource() instanceof JButton)) {
             this.eventoBotao(evt);
         }
@@ -37,7 +37,16 @@ public class ControllerLogin implements InterfaceObserver{
                     if (this.model.getFuncionario() != null) {
                         if (this.model.getFuncionario().getId() == 0) {
                             this.view.mensagem("Usuário ou senha não encontrados.");
+                            return; // caso o usuario ou senha não forem encontrados não faça mais nada apenas saia do metodo
                         }
+                        if (this.view.getTelaAAcessar() != null) {
+                            this.view.getTelaPrincipal().getJdpPrincipal().add(this.view.getTelaAAcessar());
+                            this.view.getTelaPrincipal().colocarFormularioCentro(this.view.getTelaAAcessar());
+                            this.view.getTelaAAcessar().setVisible(true);
+                        }
+                        
+                        this.view.setTelaAAcessar(null);
+                        this.view.setTelaPrincipal(null);
                     }
                 } catch (SQLException | ClassNotFoundException ex) {
                     this.view.mensagem("Não foi possível realizar a validação de usuário. Mensagem retornada: " + ex.getMessage());
@@ -59,5 +68,5 @@ public class ControllerLogin implements InterfaceObserver{
             }
         }
     }
-    
+
 }

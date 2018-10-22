@@ -174,5 +174,32 @@ public class CategoriaDAO {
     }
         
     */
+
+    public ArrayList<Categoria> buscaTodos() throws SQLException, ClassNotFoundException {
+        
+        Connection conexao = dao.getConexao();
+        PreparedStatement stmt = null;
+        ResultSet result = null;
+        ArrayList<Categoria> categorias = new ArrayList<>();
+        try {
+            stmt = conexao.prepareStatement("SELECT * FROM CATEGORIA ORDER BY ID");
+            result = stmt.executeQuery();
+            
+            while (result.next()) {
+                Categoria categoria = new Categoria();
+                categoria.setId(result.getInt("id"));
+                Curso curso = new Curso();
+                curso.buscar(result.getInt("id_curso"));
+                categoria.setCurso(curso);
+                categoria.setLimiteHoras(result.getInt("limite_horas"));
+                categoria.setNomeCategoria(result.getString("nome"));
+                 categoria.setDescricao(result.getString("descricao"));
+                categorias.add(categoria);
+            }
+        } finally {
+            Conexao.fecharConexao(conexao, stmt, result);
+            return categorias;
+        }
+    }
     
 }
