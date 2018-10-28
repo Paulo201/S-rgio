@@ -362,11 +362,11 @@ public class FrmTelaPrincipal extends javax.swing.JFrame {
     private void itemCadastrarAtividadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemCadastrarAtividadeActionPerformed
         this.jdpPrincipal.removeAll();
         if (this.verificaLogin()) {
-            FrmAtividadeCadastro frmAtividadeCadastro = new FrmAtividadeCadastro(this.model);
+     /*       FrmAtividadeCadastro frmAtividadeCadastro = new FrmAtividadeCadastro(this.model);
             this.jdpPrincipal.add(frmAtividadeCadastro);
             this.colocarFormularioCentro(frmAtividadeCadastro);
             frmAtividadeCadastro.setVisible(true);
-        } else {
+       */ } else {
             FrmLogin frmLogin = new FrmLogin(this.model);
             this.jdpPrincipal.add(frmLogin);
             this.colocarFormularioCentro(frmLogin);
