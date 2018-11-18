@@ -18,7 +18,7 @@ public class Configuracao implements InterfaceObservable {
     private ArrayList<Funcionario> funcionarios;
     private ArrayList<Atividade> atividades = new ArrayList<>();
     private ArrayList<Categoria> categorias = new ArrayList<>();
-    private ArrayList<Atividade> alunoAtividade;
+    private ArrayList<Atividade> alunoAtividade = new ArrayList();
     private ArrayList<Aluno> alunos;
     private Funcionario funcionario;
     private Atividade atividade;
@@ -123,6 +123,14 @@ public class Configuracao implements InterfaceObservable {
         return funcionario;
 
     }
+    
+    public Funcionario buscarNomeFuncionario(String nome) throws ClassNotFoundException, SQLException {
+        Funcionario funcionario = new Funcionario();
+        funcionario.buscarPorNome(nome);
+
+        return funcionario;
+
+    }
 
     public Atividade buscaAtividade(int codigo) throws ClassNotFoundException, SQLException {
         Atividade atividade = new Atividade();
@@ -130,6 +138,12 @@ public class Configuracao implements InterfaceObservable {
         return atividade;
     }
 
+    public Atividade buscaNomeAtividade(String nome) throws ClassNotFoundException, SQLException {
+        Atividade atividade = new Atividade();
+        atividade.buscarPorNome(nome);
+        return atividade;
+    }
+    
     public void excluirAlunoAtividade(int matricula, int id_atividade) throws SQLException, ClassNotFoundException {
         Aluno aluno = new Aluno();
         aluno.buscar(matricula);
@@ -168,6 +182,18 @@ public class Configuracao implements InterfaceObservable {
         atividade.buscar(id);
         return atividade;
     }
+    
+    
+    public ArrayList<Atividade> buscarAtividadesDoAluno(int matricula) throws ClassNotFoundException, SQLException{
+    
+        Aluno aluno = new Aluno();
+        
+        aluno.buscar(matricula);
+        
+        return aluno.buscarAtividades();
+        
+    }
+    
 
     public void salvarAluno(int matricula, String nome, String nomeCurso, int quantHoras, boolean situacao, String advertencia) throws ClassNotFoundException, SQLException {
 
@@ -311,6 +337,17 @@ public class Configuracao implements InterfaceObservable {
         }
     }
 
+    public void buscarFuncionarioPorNome(String nome)throws ClassNotFoundException, SQLException {
+        Funcionario funcionario = new Funcionario();
+        funcionario.buscarPorNome(nome);
+        
+        
+        if(funcionario.getId() > 0){
+            
+            this.funcionarios.add(funcionario);
+        }
+    }
+    
     public ArrayList<Atividade> getAtividades() {
         return this.atividades;
     }
@@ -365,6 +402,29 @@ public class Configuracao implements InterfaceObservable {
         if(categoria.getId() > 0){
             this.categorias.add(categoria);
         }
+    }
+    
+    public ArrayList<Curso> buscarTodosCursos() throws SQLException, ClassNotFoundException{
+        
+        Curso curso = new Curso();
+        
+        return curso.buscarTodosCursos();
+        
+    }
+    
+    public ArrayList<Atividade> burcarTodasAtividades() throws SQLException, ClassNotFoundException{
+        Atividade atividade = new Atividade();
+        
+        return atividade.buscarTodos();
+    }
+    
+    public void salvarCurso(String nome, int horas) throws ClassNotFoundException, SQLException{
+        Curso curso = new Curso();
+        curso.setNome(nome);
+        curso.setMaximoHorasComplementares(horas);
+        
+        curso.inserir();
+        
     }
     
     public ArrayList<Categoria> getCategorias() {

@@ -148,7 +148,8 @@ public class AlunoDAO {
             stmt.setInt(3, horas_Aproveitadas);
             
             stmt.executeUpdate();
-           
+            aluno.addAtividade(atividade);
+           atividade.setId(this.find());
         } finally {
             Conexao.fecharConexao(conexao, stmt);
         }
@@ -192,7 +193,7 @@ public class AlunoDAO {
         ResultSet result = null;
         int soma = 0;//soma de todas as atividades da mesma categoria da atividade passada
         try {
-            stmt = conexao.prepareStatement("Select sum(atividade.quant_horas) from `aluno_atividade` Join atividade on atividade.id = aluno_atividade.id_atividade Where `id_aluno` = ? and `id_categoria` = ?");
+            stmt = conexao.prepareStatement("Select sum(aluno_atividade.horas_Aproveitadas) from `aluno_atividade` Join atividade on atividade.id = aluno_atividade.id_atividade Where `id_aluno` = ? and `id_categoria` = ?");
             stmt.setInt(1, aluno.getMatricula());
            // System.out.println(atividade.getCategoria().getId());
             stmt.setInt(2, atividade.getCategoria().getId());//FAZER UM BUSCAR DA DAO DA CATEGORIA
@@ -200,7 +201,7 @@ public class AlunoDAO {
             
             while (result.next()) {
                 
-                soma += result.getInt("sum(atividade.quant_horas)");
+                soma += result.getInt("sum(aluno_atividade.horas_Aproveitadas)");
                
             }
             return soma;
@@ -216,25 +217,27 @@ public class AlunoDAO {
         ResultSet result = null;
         ArrayList<Atividade> atividades = new ArrayList<Atividade>();
         try {
-            stmt = conexao.prepareStatement("SELECT aluno_atividade.id_atividade FROM aluno_atividade WHERE aluno_atividade.id_aluno = ?");
+            stmt = conexao.prepareStatement("SELECT `id_atividade`,`horas_Aproveitadas` FROM aluno_atividade WHERE id_aluno = ?");
             stmt.setInt(1, aluno.getMatricula());
             result = stmt.executeQuery();
-            
+            aluno.setAtividades(new ArrayList<Atividade>());
             while (result.next()) {
                 
                 Atividade atividade1 = new Atividade();
                 atividade1.buscar(result.getInt("aluno_atividade.id_atividade"));
                
-                aluno.addAtividade(atividade1);
-            
+                atividade1.setTotalAproveitado(result.getInt("aluno_atividade.horas_Aproveitadas"));//aluno.addAtividade(atividade1));
+                atividades.add(atividade1);
+                
             }
             
-            return aluno.getAtividades();
+            aluno.setAtividades(atividades);
             
         } finally {
             Conexao.fecharConexao(conexao, stmt, result);
-            return atividades;
         }
+        return atividades;
+
     }
     
     public void buscarAlunoAtividade(Aluno aluno, Atividade atividade) throws SQLException, ClassNotFoundException {
@@ -264,6 +267,8 @@ public class AlunoDAO {
     }
     
     
+    
+    
     public int buscarHorasAproveitadas(Aluno aluno, Atividade atividade) throws SQLException, ClassNotFoundException {
         Connection conexao = dao.getConexao();
         PreparedStatement stmt = null;
@@ -273,13 +278,40 @@ public class AlunoDAO {
             stmt.setInt(1, aluno.getMatricula());
             stmt.setInt(2, atividade.getId());
             result = stmt.executeQuery();
+            int horas = 0;
             
-            return result.getInt("horas_Aproveitadas");
+            while (result.next()) {
+                horas = result.getInt("horas_Aproveitadas");
+            }
+            
+            return horas;
         } finally {
             Conexao.fecharConexao(conexao, stmt, result);
         }
     }
     
+    
+    private int find() throws SQLException, ClassNotFoundException {
+        Connection conexao = dao.getConexao();
+        PreparedStatement stmt = null;
+        ResultSet result = null;
+        int resultado = 0;
+        
+        try {
+            
+            stmt = conexao.prepareStatement("SELECT AUTO_INCREMENT as id FROM information_schema.tables WHERE table_name = 'aluno_atividade' AND table_schema = 'bancogerenciamentoatividadecomplementar'");
+            result = stmt.executeQuery();
+            
+            while (result.next()) {
+                resultado = result.getInt("id");
+            }
+            
+        } finally {
+            Conexao.fecharConexao(conexao, stmt);
+            return resultado - 1;
+        }
+    
+    }
     
     /*
     *   TESTE
@@ -331,5 +363,53 @@ public class AlunoDAO {
                 
     }
     */
+    
+   /* public static void main(String args[]) throws SQLException, ClassNotFoundException{
+    
+        Aluno aluno = new Aluno();
+        
+        aluno.setMatricula(390239);
+        
+        ArrayList<Atividade> atividades = aluno.buscarAtividades();
+        
+        ArrayList<Atividade> atividadesdoget= aluno.getAtividades();
 
+        System.out.println("O array tem tamanho: "+atividades.size());
+        
+        System.out.println("O array do get tem tamanho: "+atividadesdoget.size());
+        
+        for(int i = 0; i < atividades.size(); i++){
+        
+            System.out.println("a atividade não tem nome!");
+            
+            System.out.println(atividades.get(i).getNomeAtividade());
+            
+        }
+        
+        for(int i = 0; i < atividadesdoget.size(); i++){
+        
+            System.out.println("atividades do get");
+            
+            System.out.println(atividadesdoget.get(i).getNomeAtividade());
+            
+        }
+        
+        
+        if(atividades == null){
+            System.out.println("Atividades é null");
+        } else{
+            System.out.println("Atividades não é null");
+        }
+        
+    }*/
+    
+  /*  public static void main(String args[])throws SQLException, ClassNotFoundException{
+    
+    
+        Aluno aluno = new Aluno();
+        aluno.buscar(390239);
+        aluno.mostrarAtividades();
+        
+    }
+*/
 }

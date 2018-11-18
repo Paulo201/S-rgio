@@ -2,6 +2,7 @@ package Models;
 
 import DAO.AtividadeDAO;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,7 +14,7 @@ public class Atividade implements InterfaceManter{
     private String nome;
     private Categoria categoria;
     private int quantHoras;
-    
+    private int totalAproveitado;
     
     public Atividade(){
         super();
@@ -26,6 +27,16 @@ public class Atividade implements InterfaceManter{
             this.quantHoras = quantHoras;
         }
     }
+
+    public int getTotalAproveitado() {
+        return this.totalAproveitado;
+    }
+
+    public void setTotalAproveitado(int totalAproveitado) {
+        this.totalAproveitado = totalAproveitado;
+    }
+    
+    
     
     public int getId() {
         return this.id;
@@ -97,5 +108,9 @@ public class Atividade implements InterfaceManter{
             this.nome = nome;
             AtividadeDAO.getInstancia().buscarPorNome(this);
         }
+    }
+    
+    public ArrayList<Atividade> buscarTodos() throws SQLException, ClassNotFoundException{
+        return AtividadeDAO.getInstancia().buscaTodos();
     }
 }

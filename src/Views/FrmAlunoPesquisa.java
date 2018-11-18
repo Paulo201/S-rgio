@@ -8,6 +8,7 @@ package Views;
 import Controllers.ControllerAlunoPesquisa;
 import Models.Aluno;
 import Models.Configuracao;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -88,7 +89,7 @@ public class FrmAlunoPesquisa extends javax.swing.JInternalFrame {
         tabela.setNumRows(0);
     }
 
-     public void preencheCamposAlteracao(Aluno aluno) {
+     public void preencheCamposAlteracao(Aluno aluno) throws SQLException, ClassNotFoundException {
         if (aluno != null) {
             this.matricula.setText(String.valueOf(aluno.getMatricula()));
             this.nome.setText(aluno.getNome());
@@ -286,6 +287,7 @@ public class FrmAlunoPesquisa extends javax.swing.JInternalFrame {
         advertencia.setEnabled(false);
         jScrollPane2.setViewportView(advertencia);
 
+        btnSalvar.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\accept.png")); // NOI18N
         btnSalvar.setText("Salvar");
         btnSalvar.setEnabled(false);
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -294,6 +296,7 @@ public class FrmAlunoPesquisa extends javax.swing.JInternalFrame {
             }
         });
 
+        btnCancelar.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\back.png")); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.setEnabled(false);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -302,6 +305,7 @@ public class FrmAlunoPesquisa extends javax.swing.JInternalFrame {
             }
         });
 
+        btnExcluir.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\cancel.png")); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.setEnabled(false);
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -416,7 +420,7 @@ public class FrmAlunoPesquisa extends javax.swing.JInternalFrame {
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
                     .addComponent(btnCancelar)

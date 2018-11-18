@@ -171,6 +171,7 @@ public class FrmCategoriaPesquisa extends javax.swing.JInternalFrame {
         setMaximizable(true);
         setTitle("Categoria");
 
+        btnCancelar.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\back.png")); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.setEnabled(false);
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -189,6 +190,7 @@ public class FrmCategoriaPesquisa extends javax.swing.JInternalFrame {
 
         limiteHoras.setEnabled(false);
 
+        btnExcluir.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\cancel.png")); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.setEnabled(false);
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
@@ -245,6 +247,7 @@ public class FrmCategoriaPesquisa extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(tableCategoria);
         tableCategoria.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
+        btnSalvar.setIcon(new javax.swing.ImageIcon("C:\\Users\\willi\\Desktop\\Icones\\accept.png")); // NOI18N
         btnSalvar.setText("Salvar");
         btnSalvar.setEnabled(false);
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {

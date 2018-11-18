@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -116,7 +117,29 @@ public class CursoDAO {
         }
     }
    
-    
+    public ArrayList<Curso> buscaTodos() throws SQLException, ClassNotFoundException {
+        
+        Connection conexao = dao.getConexao();
+        PreparedStatement stmt = null;
+        ResultSet result = null;
+        ArrayList<Curso> cursos = new ArrayList<>();
+        try {
+            stmt = conexao.prepareStatement("SELECT * FROM CURSO ORDER BY ID");
+            result = stmt.executeQuery();
+            
+            while (result.next()) {
+                Curso curso = new Curso();
+                curso.setId(result.getInt("id"));
+                curso.setNome(result.getString("nome"));
+                curso.setMaximoHorasComplementares(result.getInt("quant_horas_complementares"));
+                
+                cursos.add(curso);
+            }
+        } finally {
+            Conexao.fecharConexao(conexao, stmt, result);
+            return cursos;
+        }
+    }
    
     
     private int find() throws SQLException, ClassNotFoundException {

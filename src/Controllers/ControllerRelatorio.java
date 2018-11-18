@@ -49,7 +49,9 @@ public class ControllerRelatorio {
                 try {
                    
                     Aluno aluno = new Aluno();
+                    aluno.setMatricula(Integer.parseInt(this.view.getMatricula().trim()));
                     aluno.buscar(Integer.parseInt(this.view.getMatricula()));
+                    aluno.setAtividades(aluno.buscarAtividades());
                     aluno.emitirRelatorio();
                 
                 } catch (SQLException | ClassNotFoundException ex) {

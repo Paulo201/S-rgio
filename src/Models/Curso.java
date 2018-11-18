@@ -2,6 +2,7 @@ package Models;
 
 import DAO.CursoDAO;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -84,6 +85,13 @@ public class Curso implements InterfaceManter {
             CursoDAO.getInstancia().buscarPorNome(this);
         }
     }
+    
+    
+    public ArrayList<Curso> buscarTodosCursos() throws SQLException, ClassNotFoundException{
+        
+        return CursoDAO.getInstancia().buscaTodos();
+    
+    } 
     
     @Override
     public void excluir() throws ClassNotFoundException, SQLException {

@@ -71,7 +71,7 @@ public class ControllerFuncionarioPesquisa implements InterfaceObserver{
                 }
             } else {
                 try {
-                    this.model.buscaFuncionario(Integer.parseInt(this.view.getPesquisa()));
+                    this.model.buscarNomeFuncionario(this.view.getPesquisa());
                 } catch (SQLException | ClassNotFoundException ex) {
                     this.view.mostraMensagem("Não foi possível buscar o funcionario. Mensagem retornada: " + ex.getMessage());
                     this.view.limpaCampos();

@@ -87,6 +87,13 @@ public class Funcionario implements InterfaceManter{
             FuncionarioDAO.getInstancia().buscar(this);
         }
     }
+    
+    public void buscarPorNome(String nome) throws SQLException, ClassNotFoundException{
+        if(nome != null){
+            this.nome = nome;
+            FuncionarioDAO.getInstancia().buscarPorNome(this);
+        }
+    }
 
     @Override
     public void excluir() throws ClassNotFoundException, SQLException {

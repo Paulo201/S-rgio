@@ -84,8 +84,16 @@ public class Aluno extends Document implements InterfaceManter{
         this.situacao = situacao;
     }
 
-    public int getQuantHoras() {
-        return quantHoras;
+    public int getQuantHoras() throws SQLException, ClassNotFoundException {
+        
+        int x = 0;
+        ArrayList<Atividade> atividades = this.buscarAtividades();
+        for(Atividade atividadees: atividades){
+            x += atividadees.getTotalAproveitado();
+        }
+        
+        this.quantHoras = x;
+        return this.quantHoras;
     }
 
     public void setQuantHoras(int quantHoras) {
@@ -108,10 +116,14 @@ public class Aluno extends Document implements InterfaceManter{
         this.advertencia = advertencia;
     }
 
-    public ArrayList<Atividade> getAtividades() {
-        return atividades;
+    public void setAtividades(ArrayList<Atividade> atividades) {
+        this.atividades = atividades;
     }
-
+    
+    public ArrayList<Atividade> getAtividades() {
+        return this.atividades;
+    }
+    
     public int addAtividade(Atividade atividade) throws SQLException, ClassNotFoundException {
         
         /*Retorna o total aproveitado dessa atividade*/
@@ -119,13 +131,20 @@ public class Aluno extends Document implements InterfaceManter{
         if (atividade != null) {
             int somaAtividadePorCategoria = this.buscarHorasPorCategoria(atividade);
             if(atividade.getQuantHoras() > atividade.getCategoria().getLimiteHoras()){
-                return atividade.getCategoria().getLimiteHoras();
+                atividade.setTotalAproveitado(0);
+                this.atividades.add(atividade);
+                //return atividade.getCategoria().getLimiteHoras();
+                return 0;
             }
             else{
                 if(somaAtividadePorCategoria == 0 || somaAtividadePorCategoria + atividade.getQuantHoras() <= atividade.getCategoria().getLimiteHoras()){
+                    atividade.setTotalAproveitado(atividade.getQuantHoras());
+                    this.atividades.add(atividade);
                     return atividade.getQuantHoras();
                 }
                 if (atividade.getCategoria().getLimiteHoras() - somaAtividadePorCategoria >= 0){
+                    atividade.setTotalAproveitado(atividade.getCategoria().getLimiteHoras() - somaAtividadePorCategoria);
+                    this.atividades.add(atividade);
                     return (atividade.getCategoria().getLimiteHoras() - somaAtividadePorCategoria);
                 }
             
@@ -293,15 +312,17 @@ public class Aluno extends Document implements InterfaceManter{
             tableAtividades.setSpacingBefore(20);
             tableAtividades.setWidthPercentage(100);
             
-            for(Atividade atividade: this.atividades){
+            ArrayList<Atividade> atividades = this.buscarAtividades();
+                    
+            for(Atividade atividade: atividades){
                 
                 tableAtividades.addCell(atividade.getNomeAtividade());
                 tableAtividades.addCell(atividade.getCategoria().getNomeCategoria());
                 tableAtividades.addCell(atividade.getCategoria().getLimiteHoras()+"");
-                int horasAproveitadas = this.buscarHorasAproveitadas(atividade);
-                if (horasAproveitadas >= 0){//retorna -1 quando ou o aluno é null, ou a atividade passada é null
-                    tableAtividades.addCell(horasAproveitadas+"");
-                }
+                //int horasAproveitadas = this.buscarHorasAproveitadas(atividade);
+                //if (horasAproveitadas >= 0){//retorna -1 quando ou o aluno é null, ou a atividade passada é null
+                    tableAtividades.addCell(atividade.getTotalAproveitado()+"");//horasAproveitadas+"");
+                //}
                 
             }
             
@@ -322,7 +343,7 @@ public class Aluno extends Document implements InterfaceManter{
             
             cellTotal.setColspan(1);
 
-            total.addCell(this.quantHoras+"");
+            total.addCell(this.getQuantHoras()+"");
             
             documento.add(total);
             
@@ -410,7 +431,7 @@ public class Aluno extends Document implements InterfaceManter{
     
     public ArrayList<Atividade> buscarAtividades() throws SQLException, ClassNotFoundException{
         if(this != null){
-            AlunoDAO.getInstancia().buscarAtividades(this);
+             AlunoDAO.getInstancia().buscarAtividades(this);
         }
         return this.getAtividades();
     }
